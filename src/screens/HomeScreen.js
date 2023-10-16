@@ -1,19 +1,25 @@
-import { View, Text, Image, StyleSheet,TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { LinearGradient } from 'expo-linear-gradient'
-import Colors from '../../assets/constants/Colors';
-import { Ionicons } from '@expo/vector-icons';
-import { FloatingAction } from 'react-native-floating-action';
-import { Camera } from 'expo-camera';
-import * as ImagePicker from 'expo-image-picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { translation } from '../lang_model/utils';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
+import React, { useEffect, useState } from "react";
+import { LinearGradient } from "expo-linear-gradient";
+import Colors from "../../assets/constants/Colors";
+import { Ionicons } from "@expo/vector-icons";
+import { FloatingAction } from "react-native-floating-action";
+import { Camera } from "expo-camera";
+import * as ImagePicker from "expo-image-picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { translation } from "../lang_model/utils";
 
-const HomeScreen = () => {
-  
+const HomeScreen = ({ navigation }) => {
   const takePhoto = async () => {
     const { status } = await Camera.requestCameraPermissionsAsync();
-      if (status === 'granted') {
+    if (status === "granted") {
       const photo = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
@@ -21,16 +27,16 @@ const HomeScreen = () => {
         quality: 1,
       });
       if (!photo.canceled) {
-        console.log('Taken photo:', photo);
+        console.log("Taken photo:", photo);
       }
     } else {
-      console.log('Camera permission denied');
+      console.log("Camera permission denied");
     }
   };
 
   const chooseImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status === 'granted') {
+    if (status === "granted") {
       const image = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
@@ -38,37 +44,38 @@ const HomeScreen = () => {
         quality: 1,
       });
       if (!image.canceled) {
-        console.log('Selected image:', image);
+        console.log("Selected image:", image);
       }
     } else {
-      console.log('Media library permission denied');
+      console.log("Media library permission denied");
     }
   };
 
-  const [selectedLang,setSelectedLang]=useState(0)
-  useEffect(()=>{
-    getLang()
-  },[])
-  const getLang=async()=>{
-    setSelectedLang(parseInt(await AsyncStorage.getItem('LANG')))
-  }
+  const [selectedLang, setSelectedLang] = useState(0);
+  useEffect(() => {
+    getLang();
+  }, []);
+  const getLang = async () => {
+    setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
+  };
 
   const LogInWithIcon = ({ iconName, onPress, buttonTitle }) => {
     return (
       <TouchableOpacity
         activeOpacity={0.8}
         style={{
-          width: '40%',
+          width: "40%",
           paddingHorizontal: 12,
           paddingVertical: 24,
-          backgroundColor: '#caf299',
+          backgroundColor: "#caf299",
           borderWidth: 2,
           borderColor: Colors.white,
           borderRadius: 10,
-          alignItems: 'center',
-          justifyContent: 'center',
+          alignItems: "center",
+          justifyContent: "center",
         }}
-        onPress={onPress}>
+        onPress={onPress}
+      >
         <Ionicons
           name={iconName}
           style={{
@@ -82,7 +89,8 @@ const HomeScreen = () => {
             fontSize: 14,
             color: Colors.black,
             marginBottom: 4,
-          }}>
+          }}
+        >
           {buttonTitle}
         </Text>
       </TouchableOpacity>
@@ -91,87 +99,116 @@ const HomeScreen = () => {
 
   const actions = [
     {
-      text: 'Take Image',
-      icon: require('../../assets/images/camera.png'),
-      name: 'takeImage',
+      text: "Take Image",
+      icon: require("../../assets/images/camera.png"),
+      name: "takeImage",
       position: 1,
     },
     {
-      text: 'Choose Image',
-      icon: require('../../assets/images/gallery.png'),
-      name: 'chooseImage',
+      text: "Choose Image",
+      icon: require("../../assets/images/gallery.png"),
+      name: "chooseImage",
       position: 2,
     },
   ];
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <LinearGradient
-        colors={['#FFFEFE', '#FFFEFE', '#99ff99']}
-        style={{ width: '100%', height: '100%' }}>
-        
-        <View style={{ alignItems: 'center', marginTop: 10 }}>
-              <Text style={{fontSize:25}}>
-              {selectedLang==0?translation[9].English:selectedLang==1?translation[9].Sinhala:null}
-              </Text>
-              <Image
-                source={require('../../assets/images/farmer.png')}
-                style={{ width: 300, height: 300 }}
-              />
+        colors={["#FFFEFE", "#FFFEFE", "#99ff99"]}
+        style={{ width: "100%", height: "100%" }}
+      >
+        <View style={{ alignItems: "center", marginTop: 60 }}>
+          <Text style={{ fontSize: 25 }}>
+            {selectedLang == 0
+              ? translation[9].English
+              : selectedLang == 1
+              ? translation[9].Sinhala
+              : null}
+          </Text>
+          <Image
+            source={require("../../assets/images/farmer.png")}
+            style={{ width: 300, height: 300 }}
+          />
         </View>
 
         <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-around',
-              marginTop: 40,
-              marginBottom: 25,
-            }}>
-              
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-around",
+            marginTop: 40,
+            marginBottom: 25,
+          }}
+        >
           <LogInWithIcon
-              iconName="stats-chart"
-              onPress={() => console.log('google')}
-              buttonTitle={selectedLang==0?translation[10].English:selectedLang==1?translation[10].Sinhala:null}
-
-            />
-            <LogInWithIcon
-              iconName="rainy"
-              onPress={() => console.log('google')}
-              buttonTitle= {selectedLang==0?translation[11].English:selectedLang==1?translation[11].Sinhala:null}
-
-            />
-
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-around',
-              marginTop: 10,
-            }}>
+            iconName="leaf"
+            onPress={() => navigation.navigate("Model")}
+            buttonTitle={
+              selectedLang == 0
+                ? translation[13].English
+                : selectedLang == 1
+                ? translation[13].Sinhala
+                : null
+            }
+          />
           <LogInWithIcon
-              iconName="chatbox-ellipses"
-              onPress={() => console.log('google')}
-              buttonTitle={selectedLang==0?translation[12].English:selectedLang==1?translation[12].Sinhala:null}
+            iconName="rainy"
+            onPress={() => console.log("google")}
+            buttonTitle={
+              selectedLang == 0
+                ? translation[11].English
+                : selectedLang == 1
+                ? translation[11].Sinhala
+                : null
+            }
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-around",
+            marginTop: 3,
+          }}
+        >
+          <LogInWithIcon
+            iconName="chatbox-ellipses"
+            onPress={() => console.log("google")}
+            buttonTitle={
+              selectedLang == 0
+                ? translation[12].English
+                : selectedLang == 1
+                ? translation[12].Sinhala
+                : null
+            }
+          />
+          <LogInWithIcon
+            iconName="podium-sharp"
+            onPress={() => console.log("google")}
+            buttonTitle={
+              selectedLang == 0
+                ? translation[10].English
+                : selectedLang == 1
+                ? translation[10].Sinhala
+                : null
+            }
+          />
+        </View>
 
-            />
-
-          </View>
-          
-          <FloatingAction
+        <FloatingAction
           actions={actions}
+          style={styles.floating}
           onPressItem={(name) => {
-            if (name === 'takeImage') {
+            if (name === "takeImage") {
               takePhoto();
-            } else if (name === 'chooseImage') {
-              chooseImage()
+            } else if (name === "chooseImage") {
+              chooseImage();
             }
           }}
         />
-        
       </LinearGradient>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -183,13 +220,14 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    color: '#333333',
+    color: "#333333",
   },
   actionButtonIcon: {
     fontSize: 20,
     height: 22,
-    color: 'white',
+    color: "white",
+  },
+  floating: {
+    marginRight: 100,
   },
 });
-
-
