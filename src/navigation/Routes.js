@@ -6,6 +6,8 @@ import HomeScreen from "../screens/HomeScreen";
 import SettingScreen from "../screens/SettingScreen";
 import { Ionicons } from "react-native-vector-icons";
 import ModelScreen from "../screens/ModelScreen";
+import HarvestScreen from "../screens/HarvestScreen";
+import CommunityScreen from "../screens/CommunityScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,7 +36,7 @@ const HomeTabScreen = () => (
         tabBarIcon: ({ color, size }) => (
           <Ionicons name={tabBarIcons.Home} color={color} size={size} />
         ),
-        headerShown: false, // Hide the header for this screen
+        headerShown: false,
       }}
     />
     <Tab.Screen
@@ -44,7 +46,7 @@ const HomeTabScreen = () => (
         tabBarIcon: ({ color, size }) => (
           <Ionicons name={tabBarIcons.Profile} color={color} size={size} />
         ),
-        headerShown: false, // Hide the header for this screen
+        headerShown: false,
       }}
     />
   </Tab.Navigator>
@@ -69,6 +71,16 @@ const Routes = ({ user }) => {
       <Stack.Screen
         name="Model"
         component={ModelScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Harvest"
+        component={HarvestScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Community"
+        component={CommunityScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

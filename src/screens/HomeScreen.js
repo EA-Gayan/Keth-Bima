@@ -174,7 +174,7 @@ const HomeScreen = ({ navigation }) => {
         >
           <LogInWithIcon
             iconName="chatbox-ellipses"
-            onPress={() => console.log("google")}
+            onPress={() => navigation.navigate("Community")}
             buttonTitle={
               selectedLang == 0
                 ? translation[12].English
@@ -185,7 +185,7 @@ const HomeScreen = ({ navigation }) => {
           />
           <LogInWithIcon
             iconName="podium-sharp"
-            onPress={() => console.log("google")}
+            onPress={() => navigation.navigate("Harvest")}
             buttonTitle={
               selectedLang == 0
                 ? translation[10].English
