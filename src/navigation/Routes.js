@@ -8,6 +8,7 @@ import { Ionicons } from "react-native-vector-icons";
 import ModelScreen from "../screens/ModelScreen";
 import HarvestScreen from "../screens/HarvestScreen";
 import CommunityScreen from "../screens/CommunityScreen";
+import BarChartScreen from "../screens/BarChartScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -79,8 +80,8 @@ const Routes = ({ user }) => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Community"
-        component={CommunityScreen}
+        name="BarChart"
+        component={BarChartScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
