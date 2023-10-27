@@ -84,6 +84,11 @@ const Routes = ({ user }) => {
         component={BarChartScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="Community"
+        component={CommunityScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

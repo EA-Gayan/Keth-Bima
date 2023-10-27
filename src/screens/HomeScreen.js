@@ -138,7 +138,6 @@ const HomeScreen = ({ navigation }) => {
             alignItems: "center",
             justifyContent: "space-around",
             marginTop: 40,
-            marginBottom: 25,
           }}
         >
           <LogInWithIcon
@@ -168,8 +167,8 @@ const HomeScreen = ({ navigation }) => {
           style={{
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "space-around",
-            marginTop: 3,
+            justifyContent: "space-evenly",
+            marginTop: 15,
           }}
         >
           <LogInWithIcon
@@ -185,7 +184,7 @@ const HomeScreen = ({ navigation }) => {
           />
           <LogInWithIcon
             iconName="podium-sharp"
-            onPress={() => navigation.navigate("Harvest")}
+            onPress={() => navigation.navigate("BarChart")}
             buttonTitle={
               selectedLang == 0
                 ? translation[10].English
@@ -196,17 +195,18 @@ const HomeScreen = ({ navigation }) => {
           />
         </View>
 
-        <FloatingAction
-          actions={actions}
-          style={styles.floating}
-          onPressItem={(name) => {
-            if (name === "takeImage") {
-              takePhoto();
-            } else if (name === "chooseImage") {
-              chooseImage();
-            }
-          }}
-        />
+        <View style={styles.fabContainer}>
+          <FloatingAction
+            actions={actions}
+            onPressItem={(name) => {
+              if (name === "takeImage") {
+                takePhoto();
+              } else if (name === "chooseImage") {
+                chooseImage();
+              }
+            }}
+          />
+        </View>
       </LinearGradient>
     </SafeAreaView>
   );
@@ -229,5 +229,10 @@ const styles = StyleSheet.create({
   },
   floating: {
     marginRight: 100,
+  },
+  fabContainer: {
+    position: "absolute",
+    bottom: -25,
+    right: -15,
   },
 });

@@ -24,8 +24,6 @@ const AuthStack = () => {
         setShowLogin(true);
       }
     });
-
-    // Clean up the listener when the component unmounts
     return () => unsubscribe();
   }, []);
 

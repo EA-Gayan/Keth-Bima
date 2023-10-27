@@ -1,5 +1,5 @@
 export const translation = [
-  // onboarding 0
+  // onboarding 0-2
   {
     English: "Keth Bima",
     Sinhala: "කෙත් බිම",
@@ -13,7 +13,7 @@ export const translation = [
     Sinhala: "භාෂාව තෝරන්න",
   },
 
-  // login 3
+  // login 3-8
   {
     English: "Sign In",
     Sinhala: "පිවිසෙන්න​",
@@ -39,7 +39,7 @@ export const translation = [
     Sinhala: "ලියාපදිංචිවන්න​",
   },
 
-  //Home 9
+  //Home 9-13
   {
     English: "Welcome",
     Sinhala: "පිළිගනිමු",
@@ -59,5 +59,19 @@ export const translation = [
   {
     English: "Analysis",
     Sinhala: "වාර්තා​",
+  },
+
+  //Harvest 14-16
+  {
+    English: "Year",
+    Sinhala: "වර්ෂය",
+  },
+  {
+    English: "Select the Season",
+    Sinhala: "කන්නය​",
+  },
+  {
+    English: "Quantity",
+    Sinhala: "අස්වනු ප්‍රමාණය​",
   },
 ];

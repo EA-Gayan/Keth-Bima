@@ -5,20 +5,30 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import DropDownPicker from "react-native-dropdown-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { DB } from "../../firebaseInit";
 import { collection, addDoc } from "firebase/firestore";
 import { Alert } from "react-native";
+import { translation } from "../lang_model/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HarvestScreen = ({ navigation }) => {
+  const [selectedLang, setSelectedLang] = useState(0);
+  useEffect(() => {
+    getLang();
+  }, []);
+  const getLang = async () => {
+    setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
+  };
+
   const handleSubmit = async () => {
     if (year && qty && value) {
       try {
-        // Create a new document in the "harvests" collection with the entered data
         const docRef = await addDoc(collection(DB, "harvesting"), {
           year,
           quantity: Number(qty),
@@ -75,57 +85,64 @@ const HarvestScreen = ({ navigation }) => {
             borderRadius: 100,
             position: "absolute",
             top: 50,
-            left: 10,
+            left: 2,
             zIndex: 100,
           }}
         >
-          <Ionicons name="arrow-back-outline" size={32} color="black" />
+          <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate("BarChart")}
-          style={{
-            backgroundColor: "white",
-            width: 40,
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: 100,
-            position: "absolute",
-            top: 50,
-            right: 10,
-            zIndex: 100,
-          }}
-        >
-          <Ionicons name="arrow-forward-outline" size={32} color="black" />
-        </TouchableOpacity>
+
         <Image
           source={require("../../assets/images/records.png")}
-          style={{ width: 220, height: 220, marginTop: 120, marginRight: 40 }}
+          style={{ width: 350, height: 350, marginTop: 50, marginRight: 20 }}
         />
-        <TextInput
-          placeholder="Enter the Year"
-          value={year}
-          onChangeText={(text) => setYear(text)}
-          style={styles.yearinput}
-        />
-        <DropDownPicker
-          placeholder="Select the Season"
-          style={styles.dropDownStyle}
-          open={open}
-          value={value}
-          items={items}
-          setOpen={setOpen}
-          setValue={setValue}
-          setItems={setItems}
-          dropDownContainerStyle={styles.dropDownStyle}
-        />
-        <TextInput
-          placeholder="Quantity"
-          value={qty}
-          onChangeText={(text) => setQty(text)}
-          style={styles.qtyInput}
-        />
-        <TouchableOpacity style={styles.saveButton} onPress={handleSubmit}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder={
+              selectedLang == 0
+                ? translation[14].English
+                : selectedLang == 1
+                ? translation[14].Sinhala
+                : null
+            }
+            value={year}
+            onChangeText={(text) => setYear(text)}
+            style={styles.yearinput}
+          />
+          <DropDownPicker
+            placeholder={
+              selectedLang == 0
+                ? translation[15].English
+                : selectedLang == 1
+                ? translation[15].Sinhala
+                : null
+            }
+            style={styles.dropDownStyle}
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+            dropDownContainerStyle={styles.dropDownStyle}
+          />
+          <TextInput
+            placeholder={
+              selectedLang == 0
+                ? translation[16].English
+                : selectedLang == 1
+                ? translation[16].Sinhala
+                : null
+            }
+            value={qty}
+            onChangeText={(text) => setQty(text)}
+            style={styles.qtyInput}
+          />
+        </View>
+        <TouchableOpacity
+          style={styles.saveButton}
+          onPress={() => navigation.navigate("Harvest")}
+        >
           <Text style={styles.saveButtonText}>Submit</Text>
         </TouchableOpacity>
       </LinearGradient>
@@ -134,6 +151,15 @@ const HarvestScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  inputContainer: {
+    borderWidth: 2,
+    borderColor: "black",
+    borderRadius: 20,
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 320,
+  },
   yearinput: {
     paddingVertical: 8.5,
     paddingHorizontal: 20,
@@ -142,10 +168,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: "#ffffff",
     borderColor: "black",
-    borderWidth: 2,
+    borderWidth: 1,
     marginBottom: 20,
-    marginTop: 80,
-    width: 300,
+    width: 250,
+    marginTop: 20,
   },
 
   dropDownStyle: {
@@ -153,10 +179,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: "#ffffff",
     borderColor: "black",
-    borderWidth: 2,
     borderRadius: 20,
-    width: 300,
-    marginLeft: 45,
+    width: 250,
+    marginLeft: 22,
   },
   qtyInput: {
     paddingVertical: 8.5,
@@ -166,22 +191,26 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: "#ffffff",
     borderColor: "black",
-    borderWidth: 2,
+    borderWidth: 1,
     marginBottom: 20,
-    width: 300,
+    width: 250,
     marginTop: 20,
   },
   saveButton: {
-    backgroundColor: "#007BFF",
-    borderRadius: 20,
-    padding: 10,
-    alignItems: "center",
+    width: "50%",
+    height: 50,
+    borderWidth: 1.5,
+    borderRadius: 15,
+    position: "absolute",
+    alignSelf: "center",
     justifyContent: "center",
-    width: 300,
-    height: 48,
+    alignItems: "center",
+    backgroundColor: "#b69cff",
+    borderColor: "white",
+    marginTop: 680,
   },
   saveButtonText: {
-    color: "white",
+    color: "black",
     fontSize: 16,
   },
 });

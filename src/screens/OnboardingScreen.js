@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   selectLangaugeBtn: {
     width: "50%",
     height: 50,
-    borderWidth: 0.2,
+    borderWidth: 1.5,
     borderRadius: 15,
     position: "absolute",
     alignSelf: "center",
