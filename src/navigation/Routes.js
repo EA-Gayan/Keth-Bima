@@ -9,6 +9,7 @@ import ModelScreen from "../screens/ModelScreen";
 import HarvestScreen from "../screens/HarvestScreen";
 import CommunityScreen from "../screens/CommunityScreen";
 import BarChartScreen from "../screens/BarChartScreen";
+import WeatherScreen from "../screens/WeatherScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -87,6 +88,11 @@ const Routes = ({ user }) => {
       <Stack.Screen
         name="Community"
         component={CommunityScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Weather"
+        component={WeatherScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

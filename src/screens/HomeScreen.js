@@ -136,7 +136,7 @@ const HomeScreen = ({ navigation }) => {
           style={{
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "space-around",
+            justifyContent: "space-evenly",
             marginTop: 40,
           }}
         >
@@ -153,7 +153,7 @@ const HomeScreen = ({ navigation }) => {
           />
           <LogInWithIcon
             iconName="rainy"
-            onPress={() => console.log("google")}
+            onPress={() => navigation.navigate("Weather")}
             buttonTitle={
               selectedLang == 0
                 ? translation[11].English
