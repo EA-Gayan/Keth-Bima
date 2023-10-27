@@ -118,7 +118,7 @@ const HomeScreen = ({ navigation }) => {
         colors={["#FFFEFE", "#FFFEFE", "#99ff99"]}
         style={{ width: "100%", height: "100%" }}
       >
-        <View style={{ alignItems: "center", marginTop: 60 }}>
+        <View style={{ alignItems: "center", marginTop: 100 }}>
           <Text style={{ fontSize: 25 }}>
             {selectedLang == 0
               ? translation[9].English

@@ -91,7 +91,7 @@ const BarChartScreen = ({ navigation }) => {
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
 
-        <View style={{ alignItems: "center", marginTop: 100 }}>
+        <View style={{ alignItems: "center", marginTop: 150 }}>
           <Text style={{ fontSize: 20 }}>Previous Records</Text>
         </View>
 
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     position: "absolute",
     alignSelf: "center",
-    marginTop: 580,
+    marginTop: 630,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#b69cff",
