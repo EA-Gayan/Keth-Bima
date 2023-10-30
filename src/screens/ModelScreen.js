@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import {
   Text,
-  Button,
   Image,
   SafeAreaView,
   TouchableOpacity,
@@ -12,10 +11,22 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import LottieView from "lottie-react-native";
+import * as tf from '@tensorflow/tfjs-react-native';
 
 const ModelScreen = ({ navigation }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const animation = useRef(null);
+  const [model, setModel] = useState(null);
+  const [predictions, setPredictions] = useState([]);
+
+  useEffect(() => {
+    async function loadModel() {
+      // Replace 'your_model_url_here' with the actual URL to your Teachable Machine model.
+      const loadedModel = await tf.loadLayersModel('your_model_url_here');
+      setModel(loadedModel);
+    }
+    loadModel();
+  }, []);
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -27,15 +38,33 @@ const ModelScreen = ({ navigation }) => {
 
     if (!result.canceled) {
       setSelectedImage(result.uri);
+      classifyImage(result.uri);
+    }
+  };
+
+  const classifyImage = async (imageUri) => {
+    if (model) {
+      const image = new Image();
+      image.src = imageUri;
+      await image.decode();
+
+      const tensor = tf.browser.fromPixels(image).resizeNearestNeighbor([YOUR_IMAGE_SIZE]).toFloat();
+      const normalized = tensor.div(255.0);
+      const input = normalized.reshape([1, YOUR_IMAGE_SIZE, YOUR_IMAGE_SIZE, 3]); // Adjust dimensions based on your model
+
+      const predictions = await model.predict(input).array();
+
+      // Process and display predictions.
+      setPredictions(predictions);
     }
   };
 
   return (
+    <LinearGradient
+    colors={["#FFFEFE", "#FFFEFE", "#99ff99"]} 
+    style={{ flex: 1 }}
+  >
     <SafeAreaView>
-      <LinearGradient
-        colors={["#FFFEFE", "#FFFEFE", "#99ff99"]}
-        style={{ width: "100%", height: "100%" }}
-      />
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => navigation.goBack()}
@@ -53,17 +82,19 @@ const ModelScreen = ({ navigation }) => {
       >
         <Ionicons name="arrow-back-outline" size={32} color="black" />
       </TouchableOpacity>
-      <LottieView
-        autoPlay
-        ref={animation}
-        style={{
-          width: 200,
-          height: 200,
-          marginTop: 100,
-          backgroundColor: "transparent",
-        }}
-        source={require("../../assets/animation/searching.json")}
-      />
+
+      <View style={styles.animationContainer}>
+        <LottieView
+          autoPlay
+          ref={animation}
+          style={{
+            width: 200,
+            height: 200,
+          }}
+          source={require("../../assets/animation/searching.json")}
+        />
+      </View>
+
       <TouchableOpacity style={styles.pickButton} onPress={pickImage}>
         <Ionicons name={"cloud-upload-outline"} size={50} />
         <Text style={styles.pickButtonText}>Choose Image</Text>
@@ -80,14 +111,28 @@ const ModelScreen = ({ navigation }) => {
           }}
         />
       )}
+              {predictions.length > 0 && (
+          <View>
+            <Text>Predictions:</Text>
+            <Text>{JSON.stringify(predictions, null, 2)}</Text>
+          </View>
+        )}
     </SafeAreaView>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
+  animationContainer: {
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    marginTop:300  
+  },
   pickButton: {
     width: "70%",
-    height: "25%",
+    height: "60%",
     borderWidth: 2,
     borderRadius: 15,
     position: "absolute",
@@ -96,7 +141,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fcfcfc",
     borderColor: "blue",
-    marginTop: 300,
+    marginTop: 450,
   },
   pickButtonText: {
     color: "blue",
