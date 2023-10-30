@@ -1,21 +1,32 @@
-import { Button, Image, SafeAreaView, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import {
+  Text,
+  Button,
+  Image,
+  SafeAreaView,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import LottieView from "lottie-react-native";
 
 const ModelScreen = ({ navigation }) => {
-  const [image, setImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const animation = useRef(null);
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
+      quality: 1,
     });
 
-    if (!result.cancelled) {
-      setImage(result.uri);
+    if (!result.canceled) {
+      setSelectedImage(result.uri);
     }
   };
 
@@ -25,8 +36,6 @@ const ModelScreen = ({ navigation }) => {
         colors={["#FFFEFE", "#FFFEFE", "#99ff99"]}
         style={{ width: "100%", height: "100%" }}
       />
-
-      {/* back button */}
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => navigation.goBack()}
@@ -44,12 +53,55 @@ const ModelScreen = ({ navigation }) => {
       >
         <Ionicons name="arrow-back-outline" size={32} color="black" />
       </TouchableOpacity>
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
-      {image && (
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+      <LottieView
+        autoPlay
+        ref={animation}
+        style={{
+          width: 200,
+          height: 200,
+          marginTop: 100,
+          backgroundColor: "transparent",
+        }}
+        source={require("../../assets/animation/searching.json")}
+      />
+      <TouchableOpacity style={styles.pickButton} onPress={pickImage}>
+        <Ionicons name={"cloud-upload-outline"} size={50} />
+        <Text style={styles.pickButtonText}>Choose Image</Text>
+      </TouchableOpacity>
+
+      {selectedImage && (
+        <Image
+          source={{ uri: selectedImage }}
+          style={{
+            width: 200,
+            height: 200,
+            alignSelf: "center",
+            marginTop: 20,
+          }}
+        />
       )}
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  pickButton: {
+    width: "70%",
+    height: "25%",
+    borderWidth: 2,
+    borderRadius: 15,
+    position: "absolute",
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fcfcfc",
+    borderColor: "blue",
+    marginTop: 300,
+  },
+  pickButtonText: {
+    color: "blue",
+    fontSize: 16,
+  },
+});
 
 export default ModelScreen;
