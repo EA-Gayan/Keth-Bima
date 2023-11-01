@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "permissions": {
@@ -24,7 +22,6 @@
           "usages": ["read", "write"]
         }
       }
-      
     },
     "android": {
       "adaptiveIcon": {
@@ -38,7 +35,8 @@
         "mediaLibrary": {
           "usages": ["read", "write"]
         }
-      }    },
+      }
+    },
     "web": {
       "favicon": "./assets/favicon.png"
     }
