@@ -70,24 +70,6 @@ const ModelScreen = ({ navigation }) => {
           <Ionicons name={"cloud-upload-outline"} size={50} />
           <Text style={styles.pickButtonText}>Choose Image</Text>
         </TouchableOpacity>
-
-        {selectedImage && (
-          <Image
-            source={{ uri: selectedImage }}
-            style={{
-              width: 200,
-              height: 200,
-              alignSelf: "center",
-              marginTop: 20,
-            }}
-          />
-        )}
-        {predictions.length > 0 && (
-          <View>
-            <Text>Predictions:</Text>
-            <Text>{JSON.stringify(predictions, null, 2)}</Text>
-          </View>
-        )}
       </SafeAreaView>
     </LinearGradient>
   );
