@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
+  Pressable,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
@@ -53,23 +54,25 @@ const ModelScreen = ({ navigation }) => {
         >
           <Ionicons name="arrow-back-outline" size={32} color="black" />
         </TouchableOpacity>
-
-        <View style={styles.animationContainer}>
-          <LottieView
-            autoPlay
-            ref={animation}
-            style={{
-              width: 200,
-              height: 200,
-            }}
-            source={require("../../assets/animation/searching.json")}
-          />
-        </View>
-
-        <TouchableOpacity style={styles.pickButton} onPress={pickImage}>
-          <Ionicons name={"cloud-upload-outline"} size={50} />
-          <Text style={styles.pickButtonText}>Choose Image</Text>
+        <TouchableOpacity onPress={pickImage}>
+          <View style={styles.animationContainer}>
+            <LottieView
+              autoPlay
+              ref={animation}
+              style={{
+                width: 200,
+                height: 200,
+              }}
+              source={require("../../assets/animation/searching.json")}
+            />
+          </View>
+          <Text style={styles.des}>Choose image</Text>
         </TouchableOpacity>
+        <View style={styles.loc}>
+          <Pressable colors="#33A036" style={styles.button} onPress={""}>
+            <Text style={styles.text}>Confirm</Text>
+          </Pressable>
+        </View>
       </SafeAreaView>
     </LinearGradient>
   );
@@ -81,24 +84,32 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
-    marginTop: 300,
+    marginTop: 400,
   },
-  pickButton: {
-    width: "70%",
-    height: "60%",
-    borderWidth: 2,
-    borderRadius: 15,
-    position: "absolute",
-    alignSelf: "center",
-    justifyContent: "center",
+
+  des: {
+    marginLeft: "38%",
+    marginTop: 100,
+    fontWeight: "bold",
+  },
+  button: {
     alignItems: "center",
-    backgroundColor: "#fcfcfc",
-    borderColor: "blue",
-    marginTop: 450,
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    borderRadius: 2,
   },
-  pickButtonText: {
-    color: "blue",
+  text: {
     fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "black",
+  },
+  loc: {
+    alignItems: "center",
   },
 });
 
