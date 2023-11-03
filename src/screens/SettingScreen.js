@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { FIREBASE_AUTH } from "../../firebaseInit";
-import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 
 const ProfileScreen = ({ navigation }) => {
@@ -25,95 +24,100 @@ const ProfileScreen = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => navigation.goBack()}
-        style={{
-          backgroundColor: "white",
-          width: 40,
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: 100,
-          position: "absolute",
-          top: 50,
-          left: 2,
-          zIndex: 100,
-        }}
+      <ImageBackground
+        style={{ width: "100%", height: "100%" }}
+        source={require("../../assets/images/bg3.jpg")}
       >
-        <Ionicons name="chevron-back" size={32} color="black" />
-      </TouchableOpacity>
-      <View style={styles.image9Stack}>
-        <ImageBackground
-          // source={require("../assets/images/roses.jpg")}
-          resizeMode="cover"
-          style={styles.image9}
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.goBack()}
+          style={{
+            backgroundColor: "white",
+            width: 40,
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 100,
+            position: "absolute",
+            top: 50,
+            left: 2,
+            zIndex: 100,
+          }}
         >
-          <Text style={styles.profile}>Profile</Text>
-          <View style={styles.rect5}>
-            <View style={styles.image2Row}>
-              <Image
-                source={require("../../assets/images/profile.png")}
-                resizeMode="contain"
-                style={styles.image2}
-              />
-              <View style={styles.bittScottMangetColumn}>
-                <Text style={styles.name}>{user.displayName}</Text>
-                <Text style={styles.email}> {user.email}</Text>
+          <Ionicons name="chevron-back" size={32} color="black" />
+        </TouchableOpacity>
+        <View style={styles.image9Stack}>
+          <ImageBackground
+            // source={require("../../assets/images/bg.jpg")}
+            resizeMode="cover"
+            style={styles.image9}
+          >
+            <Text style={styles.profile}>Profile</Text>
+            <View style={styles.rect5}>
+              <View style={styles.image2Row}>
+                <Image
+                  source={require("../../assets/images/profile.png")}
+                  resizeMode="contain"
+                  style={styles.image2}
+                />
+                <View style={styles.bittScottMangetColumn}>
+                  <Text style={styles.name}>{user.displayName}</Text>
+                  <Text style={styles.email}> {user.email}</Text>
+                </View>
               </View>
             </View>
+          </ImageBackground>
+          <View style={styles.rect}>
+            <TouchableOpacity style={styles.rect2}>
+              <View style={styles.image3Row}>
+                <Ionicons
+                  name="create-outline"
+                  size={32}
+                  style={{ marginLeft: 10, marginTop: 15 }}
+                />
+                <Text style={styles.editUserAccount}>Edit user account</Text>
+                <Ionicons
+                  name="chevron-forward"
+                  size={32}
+                  color="black"
+                  style={{ marginLeft: 40, marginTop: 15 }}
+                />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.rect3}>
+              <View style={styles.image3Row}>
+                <Ionicons
+                  name="call-outline"
+                  size={32}
+                  style={{ marginLeft: 10, marginTop: 15 }}
+                />
+                <Text style={styles.helpAndSupport}>Help and Support</Text>
+                <Ionicons
+                  name="chevron-forward"
+                  size={32}
+                  color="black"
+                  style={{ marginLeft: 40, marginTop: 15 }}
+                />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.rect4} onPress={handleLogout}>
+              <View style={styles.image3Row}>
+                <Ionicons
+                  name="log-out-outline"
+                  size={32}
+                  style={{ marginLeft: 10, marginTop: 15 }}
+                />
+                <Text style={styles.logout}>Signout</Text>
+                <Ionicons
+                  name="chevron-forward"
+                  size={32}
+                  color="black"
+                  style={{ marginLeft: 100, marginTop: 15 }}
+                />
+              </View>
+            </TouchableOpacity>
           </View>
-        </ImageBackground>
-        <View style={styles.rect}>
-          <TouchableOpacity style={styles.rect2}>
-            <View style={styles.image3Row}>
-              <Ionicons
-                name="create-outline"
-                size={32}
-                style={{ marginLeft: 10, marginTop: 15 }}
-              />
-              <Text style={styles.editUserAccount}>Edit user account</Text>
-              <Ionicons
-                name="chevron-forward"
-                size={32}
-                color="black"
-                style={{ marginLeft: 40, marginTop: 15 }}
-              />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.rect3}>
-            <View style={styles.image3Row}>
-              <Ionicons
-                name="call-outline"
-                size={32}
-                style={{ marginLeft: 10, marginTop: 15 }}
-              />
-              <Text style={styles.helpAndSupport}>Help and Support</Text>
-              <Ionicons
-                name="chevron-forward"
-                size={32}
-                color="black"
-                style={{ marginLeft: 40, marginTop: 15 }}
-              />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.rect4} onPress={handleLogout}>
-            <View style={styles.image3Row}>
-              <Ionicons
-                name="log-out-outline"
-                size={32}
-                style={{ marginLeft: 10, marginTop: 15 }}
-              />
-              <Text style={styles.logout}>Signout</Text>
-              <Ionicons
-                name="chevron-forward"
-                size={32}
-                color="black"
-                style={{ marginLeft: 100, marginTop: 15 }}
-              />
-            </View>
-          </TouchableOpacity>
         </View>
-      </View>
+      </ImageBackground>
     </View>
   );
 };
@@ -121,17 +125,17 @@ const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
   },
   image9: {
     width: 416,
     height: 401,
   },
   profile: {
-    color: "white",
-    marginTop: 113,
+    color: "black",
+    marginTop: 130,
     marginLeft: 183,
     fontSize: 24,
+    fontWeight: "bold",
   },
   rect5: {
     width: 247,

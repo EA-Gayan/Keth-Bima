@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  ImageBackground,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
@@ -65,36 +66,31 @@ const HarvestScreen = ({ navigation }) => {
   ]);
 
   return (
-    <SafeAreaView>
-      <LinearGradient
-        colors={["#FFFEFE", "#FFFEFE", "#99ff99"]}
+    <ImageBackground
+      style={{ width: "100%", height: "100%" }}
+      source={require("../../assets/images/bg3.jpg")}
+    >
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.goBack()}
         style={{
-          width: "100%",
-          height: "100%",
+          backgroundColor: "white",
+          width: 40,
           alignItems: "center",
+          justifyContent: "center",
+          borderRadius: 100,
+          position: "absolute",
+          top: 50,
+          left: 2,
+          zIndex: 100,
         }}
       >
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => navigation.goBack()}
-          style={{
-            backgroundColor: "white",
-            width: 40,
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: 100,
-            position: "absolute",
-            top: 50,
-            left: 2,
-            zIndex: 100,
-          }}
-        >
-          <Ionicons name="chevron-back" size={32} color="black" />
-        </TouchableOpacity>
-
+        <Ionicons name="chevron-back" size={32} color="black" />
+      </TouchableOpacity>
+      <View style={{ alignItems: "center" }}>
         <Image
           source={require("../../assets/images/records.png")}
-          style={{ width: 350, height: 350, marginTop: 50, marginRight: 20 }}
+          style={{ width: 250, height: 250, marginTop: 50, marginRight: 20 }}
         />
         <View style={styles.inputContainer}>
           <TextInput
@@ -145,14 +141,14 @@ const HarvestScreen = ({ navigation }) => {
         >
           <Text style={styles.saveButtonText}>Submit</Text>
         </TouchableOpacity>
-      </LinearGradient>
-    </SafeAreaView>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   inputContainer: {
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: "black",
     borderRadius: 20,
     padding: 10,
@@ -191,7 +187,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: "#ffffff",
     borderColor: "black",
-    borderWidth: 1,
+    borderWidth: 0.5,
     marginBottom: 20,
     width: 250,
     marginTop: 20,
@@ -199,19 +195,20 @@ const styles = StyleSheet.create({
   saveButton: {
     width: "50%",
     height: 50,
-    borderWidth: 1.5,
+    borderWidth: 0.5,
     borderRadius: 15,
     position: "absolute",
     alignSelf: "center",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#b69cff",
+    backgroundColor: "#009272",
     borderColor: "white",
     marginTop: 680,
   },
   saveButtonText: {
-    color: "black",
+    color: "white",
     fontSize: 16,
+    fontWeight: "bold",
   },
 });
 

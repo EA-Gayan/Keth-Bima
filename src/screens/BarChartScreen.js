@@ -4,13 +4,12 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  ImageBackground,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { DB } from "../../firebaseInit";
 import { collection, getDocs } from "firebase/firestore";
 import { LineChart, StackedBarChart } from "react-native-chart-kit";
-import { SafeAreaView } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 
 const BarChartScreen = ({ navigation }) => {
@@ -64,14 +63,10 @@ const BarChartScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView>
-      <LinearGradient
-        colors={["#FFFEFE", "#FFFEFE", "#99ff99"]}
-        style={{
-          width: "100%",
-          height: "100%",
-          alignItems: "center",
-        }}
+    <View style={styles.container}>
+      <ImageBackground
+        style={{ width: "100%", height: "100%" }}
+        source={require("../../assets/images/bg3.jpg")}
       >
         <TouchableOpacity
           activeOpacity={0.8}
@@ -91,8 +86,10 @@ const BarChartScreen = ({ navigation }) => {
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
 
-        <View style={{ alignItems: "center", marginTop: 150 }}>
-          <Text style={{ fontSize: 20 }}>Previous Records</Text>
+        <View style={{ alignItems: "center", marginTop: 100 }}>
+          <Text style={{ fontSize: 25, color: "black", fontWeight: "bold" }}>
+            Previous Records
+          </Text>
         </View>
 
         <View style={styles.inputContainer}>
@@ -122,12 +119,15 @@ const BarChartScreen = ({ navigation }) => {
         >
           <Text style={styles.saveButtonText}>Add records</Text>
         </TouchableOpacity>
-      </LinearGradient>
-    </SafeAreaView>
+      </ImageBackground>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   chart: {
     alignItems: "center",
     marginTop: 50,
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     marginTop: 630,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#b69cff",
+    backgroundColor: "#009272",
     borderColor: "white",
   },
   saveButtonText: {

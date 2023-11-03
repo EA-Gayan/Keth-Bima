@@ -41,8 +41,8 @@ export const translation = [
 
   //Home 9-13
   {
-    English: "Welcome",
-    Sinhala: "පිළිගනිමු",
+    English: "Welcome to Keth Bima",
+    Sinhala: "කෙත්බිම වෙත​ පිළිගනිමු",
   },
   {
     English: "Data",
@@ -54,7 +54,7 @@ export const translation = [
   },
   {
     English: "Community",
-    Sinhala: "එකමුතුව​",
+    Sinhala: "සමූහය​",
   },
   {
     English: "Analysis",

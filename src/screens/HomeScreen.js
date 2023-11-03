@@ -3,12 +3,10 @@ import {
   Text,
   Image,
   StyleSheet,
-  SafeAreaView,
+  ImageBackground,
   TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { LinearGradient } from "expo-linear-gradient";
-import Colors from "../../assets/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { FloatingAction } from "react-native-floating-action";
 import { Camera } from "expo-camera";
@@ -67,9 +65,9 @@ const HomeScreen = ({ navigation }) => {
           width: "40%",
           paddingHorizontal: 12,
           paddingVertical: 24,
-          backgroundColor: "#caf299",
-          borderWidth: 2,
-          borderColor: Colors.white,
+          backgroundColor: "white",
+          borderWidth: 1.5,
+          borderColor: "#c1c1c1",
           borderRadius: 10,
           alignItems: "center",
           justifyContent: "center",
@@ -80,15 +78,16 @@ const HomeScreen = ({ navigation }) => {
           name={iconName}
           style={{
             fontSize: 26,
-            color: Colors.black,
+            color: "#079470",
             marginBottom: 4,
           }}
         />
         <Text
           style={{
             fontSize: 14,
-            color: Colors.black,
+            color: "#079470",
             marginBottom: 4,
+            fontWeight: "bold",
           }}
         >
           {buttonTitle}
@@ -113,13 +112,13 @@ const HomeScreen = ({ navigation }) => {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <LinearGradient
-        colors={["#FFFEFE", "#FFFEFE", "#99ff99"]}
+    <View style={styles.container}>
+      <ImageBackground
         style={{ width: "100%", height: "100%" }}
+        source={require("../../assets/images/bg3.jpg")}
       >
         <View style={{ alignItems: "center", marginTop: 100 }}>
-          <Text style={{ fontSize: 25, color: "#C84831" }}>
+          <Text style={{ fontSize: 25, color: "black", fontWeight: "bold" }}>
             {selectedLang == 0
               ? translation[9].English
               : selectedLang == 1
@@ -207,8 +206,8 @@ const HomeScreen = ({ navigation }) => {
             }}
           />
         </View>
-      </LinearGradient>
-    </SafeAreaView>
+      </ImageBackground>
+    </View>
   );
 };
 
