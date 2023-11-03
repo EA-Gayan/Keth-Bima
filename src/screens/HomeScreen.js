@@ -193,19 +193,6 @@ const HomeScreen = ({ navigation }) => {
             }
           />
         </View>
-
-        <View style={styles.fabContainer}>
-          <FloatingAction
-            actions={actions}
-            onPressItem={(name) => {
-              if (name === "takeImage") {
-                takePhoto();
-              } else if (name === "chooseImage") {
-                chooseImage();
-              }
-            }}
-          />
-        </View>
       </ImageBackground>
     </View>
   );
@@ -229,9 +216,5 @@ const styles = StyleSheet.create({
   floating: {
     marginRight: 100,
   },
-  fabContainer: {
-    position: "absolute",
-    bottom: -25,
-    right: -15,
-  },
+
 });

@@ -8,7 +8,7 @@ import {
   ImageBackground,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-// import Camera from '../components/Camera';
+import Camera from '../../assets/constants/Camera';
 
 const ModelScreen = ({ navigation }) => {
   return (
@@ -34,14 +34,23 @@ const ModelScreen = ({ navigation }) => {
         >
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
-        <View style={styles.container}>
+
           <View style={styles.rect2StackStack}>
             <View style={styles.rect2Stack}>
-
               <View style={styles.rect}>
-                <Text style={styles.loremIpsum}>Hi! Welcome to Keth Bima</Text>
+                <Text style={styles.loremIpsum}>Its very Simple!</Text>
+                <View style={styles.rect7}>
+                  <View style={styles.pointColumnRow}>
+                    <View style={styles.pointColumn}>
+                      <Text style={styles.point}>✓ Open camera</Text>
+                      <Text style={styles.point}>✓ Capture affcted leaf</Text>
+                      <Text style={styles.point}>✓ Upload it</Text>
+                      <Text style={styles.point}>✓ You get it</Text>
+                    </View>
+                  </View>
+                </View>
                 <View style={styles.rect4}>
-                  <Text style={styles.healYourCrop}>Heal Your Crop!</Text>
+                  <Text style={styles.healYourCrop}>Identify Disease Here!</Text>
                   <View style={styles.image3Row}>
                     <Image
                       source={require("../../assets/images/qr.png")}
@@ -59,45 +68,17 @@ const ModelScreen = ({ navigation }) => {
                       style={styles.image4}
                     ></Image>
                   </View>
-                  {/* <Camera navigation={this.props.navigation} /> */}
+                  <Camera/>
                 </View>
 
-                <View style={styles.rect7}>
-                  <View style={styles.today14JulColumnRow}>
-                    <View style={styles.today14JulColumn}>
-                      <Text style={styles.today14Jul}>Today, 14 Jul</Text>
-                      <Text style={styles.today15}>27.7° C</Text>
-                      <Text style={styles.sunset632Pm}>Sunset 6.32 PM</Text>
-                    </View>
-                    <Image
-                      // source={require('../assets/images/rain.png')}
-                      resizeMode="contain"
-                      style={styles.image9}
-                    ></Image>
-                  </View>
-                  <Text style={styles.rainUntilAfternoon}>
-                    Rain until afternoon 75%
-                  </Text>
-                </View>
               </View>
               <Image
-                // source={require('../assets/images/animation_500_kcit151v.gif')}
+                source={require('../../assets/animation/Animation.gif')}
                 resizeMode="contain"
                 style={styles.image2}
               ></Image>
-              <Image
-                // source={require('../assets/images/logo.png')}
-                resizeMode="contain"
-                style={styles.image10}
-              ></Image>
             </View>
-            <Image
-              // source={require('../assets/images/blob1.png')}
-              resizeMode="cover"
-              style={styles.rect3}
-            ></Image>
           </View>
-        </View>
       </ImageBackground>
     </View>
   );
@@ -117,7 +98,7 @@ const styles = StyleSheet.create({
   rect: {
     top: 90,
     width: 278,
-    height: 513,
+    height: 550,
     position: "absolute",
     backgroundColor: "#ffffff",
     borderRadius: 35,
@@ -139,10 +120,10 @@ const styles = StyleSheet.create({
   },
   rect4: {
     width: 238,
-    height: 176,
+    height: 250,
     backgroundColor: "rgba(255,255,255,1)",
     borderRadius: 27,
-    marginTop: 30,
+    marginTop: 45,
     marginLeft: 20,
     shadowColor: "rgba(0,0,0,1)",
     shadowOffset: {
@@ -152,12 +133,17 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowOpacity: 0.16,
     shadowRadius: 10,
+    alignItems:"center",
+    justifyContent:"center"
   },
   healYourCrop: {
     color: "#195F57",
     fontSize: 18,
     marginTop: 14,
-    marginLeft: 21,
+  },
+  point:{
+    fontSize:15,
+    lineHeight:30
   },
   image3: {
     width: 38,
@@ -176,17 +162,6 @@ const styles = StyleSheet.create({
     marginLeft: 7,
     marginTop: 3,
   },
-  image7: {
-    width: 16,
-    height: 34,
-    marginLeft: 1,
-    marginTop: 13,
-  },
-  image5: {
-    width: 47,
-    height: 53,
-    marginLeft: 2,
-  },
   image3Row: {
     height: 53,
     flexDirection: "row",
@@ -195,23 +170,9 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
 
-  previousPictures: {
-    color: "#195F57",
-    fontSize: 14,
-    marginTop: 9,
-    marginLeft: 14,
-  },
-
-  rect8Row: {
-    height: 36,
-    flexDirection: "row",
-    marginTop: 8,
-    marginLeft: 17,
-    marginRight: 14,
-  },
   rect7: {
     width: 238,
-    height: 126,
+    height: 160,
     backgroundColor: "rgba(255,255,255,1)",
     borderRadius: 27,
     marginTop: 17,
@@ -225,70 +186,36 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.16,
     shadowRadius: 10,
   },
-  today14Jul: {
-    color: "#195F57",
-    fontSize: 14,
-  },
-  today15: {
-    color: "#195F57",
-    fontSize: 30,
-    marginTop: 6,
-  },
-  sunset632Pm: {
-    color: "#195F57",
-    fontSize: 13,
-    marginTop: 3,
-    marginLeft: 1,
-    width: 90,
-  },
-  today14JulColumn: {
-    width: 84,
-    marginTop: 2,
+
+pointColumn: {
+    width: "100%",
+    marginTop: 4,
   },
   image9: {
     width: 78,
     height: 71,
     marginLeft: 46,
   },
-  today14JulColumnRow: {
+  pointColumnRow: {
     height: 72,
     flexDirection: "row",
     marginTop: 14,
     marginLeft: 14,
     marginRight: 16,
   },
-  rainUntilAfternoon: {
-    color: "#195F57",
-    fontSize: 13,
-    marginTop: 18,
-    marginLeft: 15,
-  },
+
   image2: {
-    top: 492,
-    left: 270,
+    marginTop:600,
+    left: 240,
     width: 131,
     height: 155,
     position: "absolute",
   },
-  sunset633: {
-    top: 178,
-    left: 64,
-    position: "absolute",
-    color: "#121212",
-    fontSize: 13,
-  },
-  image10: {
-    top: 20,
-    bottom: 20,
-    left: -5,
-    width: 120,
-    height: 35,
-    position: "absolute",
-  },
+
   rect2Stack: {
     top: 0,
     left: 57,
-    width: 402,
+    width: 502,
     height: 647,
     position: "absolute",
   },
@@ -300,9 +227,10 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   rect2StackStack: {
-    width: 459,
+    width: 659,
     height: 692,
-    marginLeft: -50,
+    marginTop:50,
+    right:20
   },
 });
 export default ModelScreen;

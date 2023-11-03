@@ -58,7 +58,7 @@ const WeatherScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    loadForecast("galle");
+    loadForecast("colombo");
   }, []);
 
   if (!forecast) {
@@ -134,7 +134,7 @@ const WeatherScreen = ({ navigation }) => {
           style={{ marginTop: 10 }}
         >
           <Text style={styles.title}>Current Weather</Text>
-          <Text style={{ textAlign: "center" }}>Your Location</Text>
+          <Text style={{ textAlign: "center" }}>Colombo</Text>
 
           <View style={styles.current}>
             <Image style={styles.largeIcon} source={{ uri: weatherIconUrl }} />
@@ -184,7 +184,7 @@ const WeatherScreen = ({ navigation }) => {
               const weatherIconUrl = `https://openweathermap.org/img/wn/${item.weather[0].icon}.png`;
 
               return (
-                <View style={[styles.card, { marginLeft: 20 }]}>
+                <View style={[styles.card, { marginLeft: 25 }]}>
                   <Text style={styles.hourlyForecastHour}>{day}</Text>
                   <Image
                     style={styles.forecastIcon}
@@ -263,14 +263,13 @@ const styles = StyleSheet.create({
   extraInfo: {
     flexDirection: "row",
     justifyContent: "space-around",
-    gap: 25,
   },
   text: {
     fontSize: 15,
     fontWeight: "bold",
   },
   subtitle: {
-    marginTop: 170,
+    marginTop: 190,
     marginLeft: 20,
     fontWeight: "bold",
     fontSize: 15,
@@ -312,7 +311,7 @@ const styles = StyleSheet.create({
     elevation: 7,
     shadowOpacity: 1,
     shadowRadius: 4,
-    left: 15,
+    left: 20,
   },
 });
 
