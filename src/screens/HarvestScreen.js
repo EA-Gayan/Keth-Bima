@@ -1,69 +1,86 @@
-import {
-  Image,
-  Text,
-  SafeAreaView,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  ImageBackground,
-} from "react-native";
 import React, { useState, useEffect } from "react";
-import { LinearGradient } from "expo-linear-gradient";
-import DropDownPicker from "react-native-dropdown-picker";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { DB } from "../../firebaseInit";
-import { collection, addDoc } from "firebase/firestore";
-import { Alert } from "react-native";
-import { translation } from "../lang_model/utils";
+import { firestore, collection, addDoc } from "../../firebaseInit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { number, object } from 'yup';
+import { DB } from "../../firebaseInit";
 
 const HarvestScreen = ({ navigation }) => {
   const [selectedLang, setSelectedLang] = useState(0);
+  const [formData, setFormData] = useState({
+    year: '',
+    yala: '',
+    maha: '',
+  });
+
+  const [formErrors, setFormErrors] = useState({
+    year: '',
+    yala: '',
+    maha: '',
+  });
+
   useEffect(() => {
     getLang();
   }, []);
+
   const getLang = async () => {
     setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
   };
 
-  const handleSubmit = async () => {
-    if (year && qty && value) {
-      try {
-        const docRef = await addDoc(collection(DB, "harvesting"), {
-          year,
-          quantity: Number(qty),
-          season: value,
-        });
-
-        setYear("");
-        setQty("");
-        setValue(null);
-
-        // Show a success alert
-        Alert.alert("Success", "Data saved successfully", [
-          {
-            text: "OK",
-            onPress: () => navigation.navigate("BarChart"),
-          },
-        ]);
-      } catch (error) {
-        console.error("Error saving data: ", error);
-        Alert.alert("Error", "An error occurred while saving data");
-      }
-    } else {
-      console.error("Please fill in all fields before saving.");
-    }
+  const handleFormChange = (field, value) => {
+    setFormData({
+      ...formData,
+      [field]: value,
+    });
   };
 
-  const [year, setYear] = useState("");
-  const [qty, setQty] = useState("");
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: "Yala", value: "yala" },
-    { label: "Maha", value: "maha" },
-  ]);
+  const validateForm = () => {
+    let errors = {};
+    const schema = object({
+      year: number().required('Year is required'),
+      yala: number().required('Yala quantity is required'),
+      maha: number().required('Maha quantity is required'),
+    });
+
+    schema.validate(formData, { abortEarly: false })
+      .then(() => {
+        setFormErrors({});
+      })
+      .catch((error) => {
+        const newErrors = {};
+        error.inner.forEach((err) => {
+          newErrors[err.path] = err.message;
+        });
+        setFormErrors(newErrors);
+      });
+  };
+
+  const handleFormSubmit = async () => {
+    // Validate the form before submitting
+    validateForm();
+  
+    // Check if there are any errors in the form
+    if (Object.keys(formErrors).length === 0) {
+      try {
+        // Submit the form data to Firestore
+        const dataRef = collection(firestore, 'harvesting');
+        await addDoc(dataRef, formData);
+  
+        // Clear the form
+        setFormData({
+          year: '',
+          yala: '',
+          maha: '',
+        });
+  
+        // Optionally show a success message or navigate to another screen
+      } catch (error) {
+        console.error("Firestore Error:", error);
+      }
+    }
+  };
+  
 
   return (
     <ImageBackground
@@ -90,55 +107,36 @@ const HarvestScreen = ({ navigation }) => {
       <View style={{ alignItems: "center" }}>
         <Image
           source={require("../../assets/images/records.png")}
-          style={{ width: 250, height: 250, marginTop: 50, marginRight: 20 }}
+          style={{ width: 250, height: 250, marginTop: 50, marginRight: 20 }} />
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.label}>Year:</Text>
+        <TextInput
+          style={styles.input}
+          value={formData.year}
+          onChangeText={(value) => handleFormChange("year", value)}
         />
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder={
-              selectedLang == 0
-                ? translation[14].English
-                : selectedLang == 1
-                ? translation[14].Sinhala
-                : null
-            }
-            value={year}
-            onChangeText={(text) => setYear(text)}
-            style={styles.yearinput}
-          />
-          <DropDownPicker
-            placeholder={
-              selectedLang == 0
-                ? translation[15].English
-                : selectedLang == 1
-                ? translation[15].Sinhala
-                : null
-            }
-            style={styles.dropDownStyle}
-            open={open}
-            value={value}
-            items={items}
-            setOpen={setOpen}
-            setValue={setValue}
-            setItems={setItems}
-            dropDownContainerStyle={styles.dropDownStyle}
-          />
-          <TextInput
-            placeholder={
-              selectedLang == 0
-                ? translation[16].English
-                : selectedLang == 1
-                ? translation[16].Sinhala
-                : null
-            }
-            value={qty}
-            onChangeText={(text) => setQty(text)}
-            style={styles.qtyInput}
-          />
-        </View>
+        <Text style={styles.error}>{formErrors.year}</Text>
+
+        <Text style={styles.label}>Yala Quantity:</Text>
+        <TextInput
+          style={styles.input}
+          value={formData.yala}
+          onChangeText={(value) => handleFormChange("yala", value)}
+        />
+        <Text style={styles.error}>{formErrors.yala}</Text>
+
+        <Text style={styles.label}>Maha Quantity:</Text>
+        <TextInput
+          style={styles.input}
+          value={formData.maha}
+          onChangeText={(value) => handleFormChange("maha", value)}
+        />
+        <Text style={styles.error}>{formErrors.maha}</Text>
+
         <TouchableOpacity
           style={styles.saveButton}
-          onPress={() => navigation.navigate("Harvest")}
-        >
+          onPress={handleFormSubmit}>
           <Text style={styles.saveButtonText}>Submit</Text>
         </TouchableOpacity>
       </View>
@@ -147,63 +145,40 @@ const HarvestScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 20,
-    padding: 10,
+  container: {
+    padding: 20,
     alignItems: "center",
-    justifyContent: "center",
-    width: 320,
   },
-  yearinput: {
-    paddingVertical: 8.5,
-    paddingHorizontal: 20,
-    fontSize: 14,
-    color: "#000000",
-    borderRadius: 20,
-    backgroundColor: "#ffffff",
-    borderColor: "black",
+  label: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginVertical: 5,
+  },
+  input: {
+    width: "80%",
+    height: 40,
+    borderColor: "gray",
     borderWidth: 1,
-    marginBottom: 20,
-    width: 250,
-    marginTop: 20,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    borderRadius: 20
+  },
+  error: {
+    color: "red",
   },
 
-  dropDownStyle: {
-    paddingVertical: 8.5,
-    paddingHorizontal: 20,
-    backgroundColor: "#ffffff",
-    borderColor: "black",
-    borderRadius: 20,
-    width: 250,
-    marginLeft: 22,
-  },
-  qtyInput: {
-    paddingVertical: 8.5,
-    paddingHorizontal: 20,
-    fontSize: 14,
-    color: "#000000",
-    borderRadius: 20,
-    backgroundColor: "#ffffff",
-    borderColor: "black",
-    borderWidth: 0.5,
-    marginBottom: 20,
-    width: 250,
-    marginTop: 20,
-  },
   saveButton: {
-    width: "50%",
+    width: "60%",
     height: 50,
-    borderWidth: 0.5,
+    borderWidth: 1.5,
     borderRadius: 15,
     position: "absolute",
     alignSelf: "center",
+    marginTop: 350,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#009272",
     borderColor: "white",
-    marginTop: 680,
   },
   saveButtonText: {
     color: "white",

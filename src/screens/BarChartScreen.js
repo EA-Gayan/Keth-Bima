@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { DB } from "../../firebaseInit";
 import { collection, getDocs } from "firebase/firestore";
-import { LineChart, StackedBarChart } from "react-native-chart-kit";
+import { StackedBarChart } from "react-native-chart-kit";
 import { Ionicons } from "@expo/vector-icons";
 
 const BarChartScreen = ({ navigation }) => {
@@ -17,6 +17,30 @@ const BarChartScreen = ({ navigation }) => {
   const [startYear, setStartYear] = useState(2022);
   const [endYear, setEndYear] = useState(2023);
 
+  function ChartComponent() {
+    const [data, setData] = useState([]);
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        const dataRef = firestore().collection('yourCollectionName');
+        const snapshot = await dataRef.get();
+  
+        const chartData = snapshot.docs.map((doc) => {
+          const year = doc.data().year;
+          const yala = doc.data().yala;
+          const maha = doc.data().maha;
+  
+          return { year, yala, maha };
+        });
+  
+        setData(chartData);
+      };
+  
+      fetchData();
+    }, []);
+  
+    // Render your chart using 'data' state
+  }
   useEffect(() => {
     getData(startYear, endYear);
   }, [startYear, endYear]);
@@ -62,6 +86,23 @@ const BarChartScreen = ({ navigation }) => {
     },
   };
 
+  function StackedBarChartComponent({ data }) {
+    const chartData = {
+      labels: data.map((item) => item.year),
+      datasets: [
+        {
+          data: data.map((item) => item.yala),
+          color: (opacity = 1) => `rgba(0, 128, 0, ${opacity})`, // Yala color
+          legend: 'Yala',
+        },
+        {
+          data: data.map((item) => item.maha),
+          color: (opacity = 1) => `rgba(0, 0, 128, ${opacity})`, // Maha color
+          legend: 'Maha',
+        },
+      ],
+    };
+  }
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -106,11 +147,16 @@ const BarChartScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.chart}>
-          <StackedBarChart
+        <StackedBarChart
             data={chartData}
             width={300}
             height={220}
-            chartConfig={chartConfig}
+            yAxisLabel="Quantity"
+            chartConfig={{
+              backgroundGradientFrom: '#f0f0f0',
+              backgroundGradientTo: '#f0f0f0',
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            }}
           />
         </View>
         <TouchableOpacity
