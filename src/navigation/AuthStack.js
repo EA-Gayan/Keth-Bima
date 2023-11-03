@@ -54,7 +54,7 @@ const AuthStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Setting"
+        name="Profile"
         component={SettingScreen}
         options={{ headerShown: false }}
       />

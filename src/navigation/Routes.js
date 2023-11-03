@@ -42,7 +42,7 @@ const HomeTabScreen = () => (
       }}
     />
     <Tab.Screen
-      name="Settings"
+      name="Profile"
       component={SettingScreen}
       options={{
         tabBarIcon: ({ color, size }) => (
