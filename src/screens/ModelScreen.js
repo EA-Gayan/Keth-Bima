@@ -37,13 +37,9 @@ const ModelScreen = ({ navigation }) => {
         <View style={styles.container}>
           <View style={styles.rect2StackStack}>
             <View style={styles.rect2Stack}>
-              <Image
-                // source={require('../assets/images/blob1.png')}
-                resizeMode="cover"
-                style={styles.rect2}
-              ></Image>
+
               <View style={styles.rect}>
-                <Text style={styles.loremIpsum}>Hi! Welcome to Plant Safe</Text>
+                <Text style={styles.loremIpsum}>Hi! Welcome to Keth Bima</Text>
                 <View style={styles.rect4}>
                   <Text style={styles.healYourCrop}>Heal Your Crop!</Text>
                   <View style={styles.image3Row}>
