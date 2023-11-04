@@ -13,8 +13,8 @@ import {
   Alert,
   Dimensions,
   FlatList,
+  TextInput
 } from "react-native";
-import * as Location from "expo-location";
 import { Ionicons } from "@expo/vector-icons";
 
 const openWeatherKey = "ee4d9149db4c74f12281fd1e2df8e224";
@@ -97,6 +97,15 @@ const WeatherScreen = ({ navigation }) => {
 
     return filteredData;
   };
+      const onLocationInputChange = (text) => {
+        setLocationInput(text);
+      };
+
+      const handleLocationSearch = () => {
+        if (locationInput.trim() !== "") {
+          loadForecast(locationInput);
+        }
+      };
 
   // Use the filtered data for the FlatList
   const filteredNext3DaysData = filterNext3DaysData();
@@ -134,8 +143,17 @@ const WeatherScreen = ({ navigation }) => {
           style={{ marginTop: 10 }}
         >
           <Text style={styles.title}>Current Weather</Text>
-          <Text style={{ textAlign: "center" }}>Colombo</Text>
-
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+          <TextInput
+            style={styles.locationInput}
+            placeholder="Enter Location"
+            onChangeText={onLocationInputChange}
+            value={locationInput}
+          />
+          <TouchableOpacity onPress={handleLocationSearch} style={styles.searchButton}>
+            <Ionicons name="search" size={20} color="black" />
+          </TouchableOpacity>
+        </View>
           <View style={styles.current}>
             <Image style={styles.largeIcon} source={{ uri: weatherIconUrl }} />
             <Text style={styles.currentTemp}>
@@ -218,7 +236,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 30,
+    marginTop: 15,
   },
   largeIcon: {
     width: 250,
