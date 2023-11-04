@@ -1,79 +1,99 @@
-import react, { useState } from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   Image,
   TouchableOpacity,
-  Alert
-} from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions';
-import axios from 'axios';
-import Loader from './Loader'
+  Alert,
+} from
+ 
+'react-native';
+import * as MediaLibrary from
+ 
+'expo-media-library';
+import * as ImagePicker from
+ 
+'expo-image-picker';
+import axios from
+ 
+'axios';
+import Loader from './Loader';
 import Modal from 'react-native-modal';
 
-const Camera = (props) => {
+const CameraSet = (props) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const pickFromGallery = async () => {
-    setIsVisible(false);
-    const { granted } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (granted) {
-      let data = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1 // 1 means high quality
-      });
-      if (!data.canceled) {
-        let newFile = {
-          uri: data.uri,
-          type: `test/${data.uri.split('.')[1]}`,
-          name: `test.${data.uri.split('.')[1]}`
-        };
-        onUpload(newFile);
+  // Handle checking permissions for both camera and gallery
+  const handlePermissions = async () => {
+    const { status } = await MediaLibrary.getPermissionsAsync();
+    if (status !== 'granted') {
+      const { status } = await MediaLibrary.requestPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert(
+          'Camera and Gallery Permissions Required',
+          'Please grant camera and gallery permissions to access your photos and take pictures.',
+        );
+        return;
       }
-    } else {
-      Alert.alert('You need to give permissions');
     }
   };
 
+  // Handle taking a picture from the camera
   const pickFromCamera = async () => {
     setIsVisible(false);
-    const { granted } = await Permissions.askAsync(Permissions.CAMERA);
-    if (granted) {
-      let data = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1 
-      });
-      if (!data.canceled) {
-        let newFile = {
-          uri: data.uri,
-          type: `test/${data.uri.split('.')[1]}`,
-          name: `test.${data.uri.split('.')[1]}`
-        };
-        onUpload(newFile);
-      }
-    } else {
-      Alert.alert('You need to give permissions');
+    await handlePermissions();
+
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      const newFile = {
+        uri: result.uri,
+        type: `test/<span class="math-inline">\{result\.uri\.split\('\.'\)\[1\]\}\`,
+name\: \`test\.</span>{result.uri.split('.')[1]}`,
+      };
+      onUpload(newFile);
     }
   };
 
+  // Handle selecting a picture from the gallery
+  const pickFromGallery = async () => {
+    setIsVisible(false);
+    await handlePermissions();
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      const newFile = {
+        uri: result.uri,
+        type: `test/<span class="math-inline">\{result\.uri\.split\('\.'\)\[1\]\}\`,
+name\: \`test\.</span>{result.uri.split('.')[1]}`,
+      };
+      onUpload(newFile);
+    }
+  };
+
+  // Handle uploading the selected image to Cloudinary
   const onUpload = async (image) => {
+    setIsLoading(true);
     const data = new FormData();
     data.append('file', image);
     data.append('upload_preset', 'plantsApp');
     data.append('cloud_name', 'dark123');
 
     try {
-      setIsLoading(true);
       const response = await axios.post(
         `https://api.cloudinary.com/v1_1/dark123/image/upload`,
-        data
+        data,
       );
       if (response) {
         setIsLoading(false);
@@ -85,11 +105,10 @@ const Camera = (props) => {
     }
   };
 
+  // Show the modal to choose between camera or gallery
   const onShowModal = () => {
-    setIsVisible(true);
-  };
-
-
+    setIsVisible(true)
+  }
     return (
       <View style={styles.rect5Stack}>
         <Loader isLoading={isLoading} />
@@ -239,4 +258,4 @@ const styles = StyleSheet.create({
     marginLeft: 180
   }
 });
-export default Camera;
+export default CameraSet;

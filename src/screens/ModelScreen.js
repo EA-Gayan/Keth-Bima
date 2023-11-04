@@ -8,7 +8,7 @@ import {
   ImageBackground,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import Camera from '../../assets/constants/Camera';
+import CameraSet from "../../assets/constants/Camera";
 
 const ModelScreen = ({ navigation }) => {
   return (
@@ -68,7 +68,7 @@ const ModelScreen = ({ navigation }) => {
                       style={styles.image4}
                     ></Image>
                   </View>
-                  <Camera/>
+                  <CameraSet/>
                 </View>
 
               </View>
