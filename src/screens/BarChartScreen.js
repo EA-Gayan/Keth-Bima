@@ -4,8 +4,8 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   ImageBackground,
+  TouchableOpacity
 } from 'react-native';
 import { collection, getDocs } from 'firebase/firestore';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,45 +13,40 @@ import { DB } from '../../firebaseInit';
 import { StackedBarChart } from 'react-native-chart-kit';
 
 const BarChartScreen = ({ navigation }) => {
-  const [harvData, setHarvData] = useState([]);
-  const [startYear, setStartYear] = useState(2022);
-  const [endYear, setEndYear] = useState(2023);
+  const [harvestData, setHarvestData] = useState({ labels: [] });
+  const [startYear, setStartYear] = useState('');
+  const [endYear, setEndYear] = useState('');
 
   useEffect(() => {
-    getData(startYear, endYear);
+    const fetchData = async () => {
+      try {
+        const snapshot = await getDocs(collection(DB, 'harvesting'));
+        if (snapshot.empty) {
+          console.log('No data available');
+          return;
+        }
+        const data = snapshot.docs.map((doc) => doc.data());
+
+        // Filter data based on selected range
+        const filteredData = data.filter(
+          (item) =>
+            (startYear === '' || item.year >= startYear) &&
+            (endYear === '' || item.year <= endYear)
+        );
+
+        const chartData = {
+          labels: filteredData.map((item) => item.year),
+          legend: ['Yala', 'Maha'],
+          data: filteredData.map((item) => [Number(item.yala), Number(item.maha)]),
+          barColors: ['#9F71D8', '#36BC15'],
+        };
+        setHarvestData(chartData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
   }, [startYear, endYear]);
-
-  const getData = async (startYear, endYear) => {
-    try {
-      const harvDataCollectionRef = collection(DB, 'harvesting');
-      const response = await getDocs(harvDataCollectionRef);
-
-      const harData = response.docs
-        .map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }))
-        .filter((item) => item.season === 'yala' || item.season === 'maha')
-        .filter((item) => item.year >= startYear && item.year <= endYear);
-
-      setHarvData(harData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const yalaData = harvData.filter((item) => item.season === 'yala');
-  const mahaData = harvData.filter((item) => item.season === 'maha');
-
-  const chartData = {
-    labels: harvData.map((item) => item.year),
-    legend: ['Yala', 'Maha'],
-    data: [
-      yalaData.map((item) => item.quantity),
-      mahaData.map((item) => item.quantity),
-    ],
-    barColors: ['#9F71D8', '#36BC15'],
-  };
 
   return (
     <View style={styles.container}>
@@ -75,34 +70,38 @@ const BarChartScreen = ({ navigation }) => {
           <TextInput
             style={styles.input}
             placeholder="Start Year"
-            onChangeText={(text) => setStartYear(parseInt(text))}
+            keyboardType="numeric"
+            value={startYear}
+            onChangeText={(text) => setStartYear(text)}
           />
           <TextInput
             style={styles.input}
             placeholder="End Year"
-            onChangeText={(text) => setEndYear(parseInt(text))}
+            keyboardType="numeric"
+            value={endYear}
+            onChangeText={(text) => setEndYear(text)}
           />
         </View>
 
         <View style={styles.chart}>
-          <StackedBarChart
-            data={chartData}
-            width={300}
-            height={220}
-            yAxisLabel="Quantity"
-            chartConfig={{
-              backgroundGradientFrom: '#f0f0f0',
-              backgroundGradientTo: '#f0f0f0',
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            }}
-          />
+          {harvestData.labels.length > 0 ? (
+            <StackedBarChart
+              data={harvestData}
+              width={300}
+              height={300}
+              yAxisLabel="Quantity"
+              chartConfig={{
+                backgroundGradientFrom: '#f0f0f0',
+                backgroundGradientTo: '#f0f0f0',
+                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              }}
+            />
+          ) : (
+            <Text>No data available</Text>
+          )}
         </View>
-
-        <TouchableOpacity
-          style={styles.saveButton}
-          onPress={() => navigation.navigate('Harvest')}
-        >
-          <Text style={styles.saveButtonText}>Add records</Text>
+        <TouchableOpacity style={styles.saveButton} onPress={()=>navigation.navigate("Harvest")}>
+          <Text style={styles.saveButtonText}>Add Records</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -138,30 +137,31 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#616161',
     padding: 8,
-    marginHorizontal: 30,
+    marginHorizontal: 10,
     width: 100,
     borderRadius: 15,
   },
+  chart: {
+    alignItems: 'center',
+    marginTop: 70,
+  },
   saveButton: {
-    width: '50%',
+    width: "60%",
     height: 50,
     borderWidth: 1.5,
     borderRadius: 15,
-    position: 'absolute',
-    alignSelf: 'center',
-    marginTop: 630,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#009272',
-    borderColor: 'white',
+    position: "absolute",
+    alignSelf: "center",
+    marginTop: 700,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#009272",
+    borderColor: "white",
   },
   saveButtonText: {
-    color: 'black',
+    color: "white",
     fontSize: 16,
-  },
-  chart: {
-    alignItems: 'center',
-    marginTop: 50,
+    fontWeight: "bold",
   },
 });
 

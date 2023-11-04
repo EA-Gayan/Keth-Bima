@@ -69,22 +69,27 @@ import { DB } from "../../firebaseInit";
                 style={styles.input}
                 value={year}
                 onChangeText={(year) => setYear(year)}
+                keyboardType="numeric"
+
               />
 
-              <Text style={styles.label}>Yala Quantity:</Text>
+              <Text style={styles.label}>Yala Quantity(bushels):</Text>
               <TextInput
                 style={styles.input}
                 value={yala}
                 onChangeText={(yala) => setYala(yala)}
+                keyboardType="numeric"
+
               />
 
-              <Text style={styles.label}>Maha Quantity:</Text>
+              <Text style={styles.label}>Maha Quantity(bushels):</Text>
               <TextInput
                 style={styles.input}
                 value={maha}
                 onChangeText={(maha) => setMaha(maha)}
-              />
+                keyboardType="numeric"
 
+              />
               <TouchableOpacity style={styles.saveButton} onPress={handleFormSubmit}>
                 <Text style={styles.saveButtonText}>Submit</Text>
               </TouchableOpacity>
