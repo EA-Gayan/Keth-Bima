@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { FloatingAction } from "react-native-floating-action";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -216,5 +215,4 @@ const styles = StyleSheet.create({
   floating: {
     marginRight: 100,
   },
-
 });

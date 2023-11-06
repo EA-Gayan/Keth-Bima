@@ -10,6 +10,8 @@ import HarvestScreen from "../screens/HarvestScreen";
 import CommunityScreen from "../screens/CommunityScreen";
 import BarChartScreen from "../screens/BarChartScreen";
 import WeatherScreen from "../screens/WeatherScreen";
+import DiseaseListScreen from "../screens/DiseaseListScreen";
+import DiseaseDetailedScreen from "../screens/DiseaseDetailedScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -27,6 +29,7 @@ const AuthStackScreen = () => (
 const tabBarIcons = {
   Home: "home-outline",
   Profile: "person-circle-outline",
+  DiseaseList: "leaf-outline",
 };
 
 const HomeTabScreen = () => (
@@ -35,8 +38,22 @@ const HomeTabScreen = () => (
       name="Home"
       component={HomeScreen}
       options={{
-        tabBarIcon: ({ color, size }) => (
-          <Ionicons name={tabBarIcons.Home} color={color} size={size} />
+        tabBarIcon: () => (
+          <Ionicons name={tabBarIcons.Home} color={"#0f801b"} size={25} />
+        ),
+        headerShown: false,
+      }}
+    />
+    <Tab.Screen
+      name="Diseases"
+      component={DiseaseListScreen}
+      options={{
+        tabBarIcon: () => (
+          <Ionicons
+            name={tabBarIcons.DiseaseList}
+            color={"#0f801b"}
+            size={25}
+          />
         ),
         headerShown: false,
       }}
@@ -45,8 +62,8 @@ const HomeTabScreen = () => (
       name="Profile"
       component={SettingScreen}
       options={{
-        tabBarIcon: ({ color, size }) => (
-          <Ionicons name={tabBarIcons.Profile} color={color} size={size} />
+        tabBarIcon: () => (
+          <Ionicons name={tabBarIcons.Profile} color={"#0f801b"} size={25} />
         ),
         headerShown: false,
       }}
@@ -93,6 +110,11 @@ const Routes = ({ user }) => {
       <Stack.Screen
         name="Weather"
         component={WeatherScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="DetailedScreen"
+        component={DiseaseDetailedScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
