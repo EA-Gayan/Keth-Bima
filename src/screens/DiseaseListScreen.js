@@ -11,15 +11,40 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 
 const DATA = [
-  { id: 1, name: "Alder", species: "Alnus" },
-  { id: 2, name: "Black alder", species: "Alnus glutinosa, Ilex verticillata" },
-  { id: 3, name: "Common alder", species: "Alnus glutinosa" },
-  { id: 4, name: "False alder", species: "Ilex verticillata" },
-  { id: 5, name: "Gray alder", species: "Alnus incana" },
+  {
+    id: 1,
+    name: "Rice Blast",
+    species: "Fungus, Magnaporthe grisea<",
+    image: require("../../assets/images/RiceBlast.jpg"),
+  },
+  {
+    id: 2,
+    name: "Brown Spot",
+    species: "Fungus Cochliobolus miyabeanus",
+    image: require("../../assets/images/BrownSpot.jpg"),
+  },
+  {
+    id: 3,
+    name: "Leaf scald",
+    species: "ungus, – Monographella albescens",
+    image: require("../../assets/images/LeafScald.jpg"),
+  },
+  {
+    id: 4,
+    name: "Narrow brown leaf spot",
+    species: "Fungus, Sphaerulina oryzina",
+    image: require("../../assets/images/NarrowBrownSpot.jpg"),
+  },
+  {
+    id: 5,
+    name: "Bacterial Leaf Blight",
+    species: "Bacteria, Xanthomonas oryzae pv. oryzae.",
+    image: require("../../assets/images/blb.jpg"),
+  },
 ];
 
 const DiseaseListScreen = ({ navigation }) => {
-  const renderPlantDisease = (plant) => {
+  const renderPlantDisease = ({ item }) => {
     return (
       <TouchableOpacity
         style={styles.rect3}
@@ -30,14 +55,14 @@ const DiseaseListScreen = ({ navigation }) => {
         <View style={styles.rect6Row}>
           <View style={styles.rect6}>
             <Image
-              source={require("../../assets/images/RiceBlast.jpg")}
+              source={item.image}
               resizeMode="cover"
               style={styles.plantImage}
             />
           </View>
           <View style={styles.diseaseColumn}>
-            <Text style={styles.disease}>Rice Blast</Text>
-            <Text style={styles.agent}>Fungus, Magnaporthe grisea</Text>
+            <Text style={styles.disease}>{item.name}</Text>
+            <Text style={styles.agent}>{item.species}</Text>
           </View>
           <Image
             source={require("../../assets/images/next.png")}
@@ -167,8 +192,9 @@ const styles = StyleSheet.create({
     height: 76,
   },
   disease: {
-    color: "#195F57",
+    color: "#0f3833",
     bottom: 7,
+    fontWeight: "bold",
   },
   agent: {
     color: "#195F57",
