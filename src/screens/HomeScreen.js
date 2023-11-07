@@ -119,9 +119,9 @@ const HomeScreen = ({ navigation }) => {
         <View style={{ alignItems: "center", marginTop: 100 }}>
           <Text style={{ fontSize: 25, color: "black", fontWeight: "bold" }}>
             {selectedLang == 0
-              ? translation[9].English
+              ? translation[10].English
               : selectedLang == 1
-              ? translation[9].Sinhala
+              ? translation[10].Sinhala
               : null}
           </Text>
           <Image
@@ -143,9 +143,9 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate("Model")}
             buttonTitle={
               selectedLang == 0
-                ? translation[13].English
+                ? translation[14].English
                 : selectedLang == 1
-                ? translation[13].Sinhala
+                ? translation[14].Sinhala
                 : null
             }
           />
@@ -154,9 +154,9 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate("Weather")}
             buttonTitle={
               selectedLang == 0
-                ? translation[11].English
+                ? translation[12].English
                 : selectedLang == 1
-                ? translation[11].Sinhala
+                ? translation[12].Sinhala
                 : null
             }
           />
@@ -174,9 +174,9 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate("Community")}
             buttonTitle={
               selectedLang == 0
-                ? translation[12].English
+                ? translation[13].English
                 : selectedLang == 1
-                ? translation[12].Sinhala
+                ? translation[13].Sinhala
                 : null
             }
           />
@@ -185,9 +185,9 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate("BarChart")}
             buttonTitle={
               selectedLang == 0
-                ? translation[10].English
+                ? translation[11].English
                 : selectedLang == 1
-                ? translation[10].Sinhala
+                ? translation[11].Sinhala
                 : null
             }
           />

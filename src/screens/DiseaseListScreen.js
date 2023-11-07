@@ -38,7 +38,7 @@ const DATA = [
   {
     id: 5,
     name: "Bacterial Leaf Blight",
-    species: "Bacteria, Xanthomonas oryzae pv. oryzae.",
+    species: "Bacteria, Xanthomonas oryzae pv.",
     image: require("../../assets/images/blb.jpg"),
   },
 ];

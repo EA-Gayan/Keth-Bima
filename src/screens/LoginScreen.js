@@ -14,6 +14,7 @@ import { FIREBASE_AUTH } from "../../firebaseInit";
 import { signInWithEmailAndPassword } from "@firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { translation } from "../lang_model/utils";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -45,6 +46,25 @@ const LoginScreen = ({ navigation }) => {
     }
   };
 
+  const signInWithGoogle = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      // This gives you a Google Access Token. You can use it to access Google services.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+
+      // Navigate to the Home screen or perform any other action upon successful sign-in.
+      navigation.navigate("Home");
+    } catch (error) {
+      console.log(error);
+      alert("Google Sign-In failed");
+    }
+  };
+
+  //common component changes
   const LogInWithIcon = ({ iconName, onPress, buttonTitle }) => {
     return (
       <TouchableOpacity
@@ -286,10 +306,31 @@ const LoginScreen = ({ navigation }) => {
         >
           <LogInWithIcon
             iconName="logo-google"
-            onPress={() => console.log("google")}
+            onPress={() => signInWithGoogle()}
             buttonTitle="Google"
           />
         </View>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate("ForgotPassword")}
+          style={{
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: Colors.accent,
+            }}
+          >
+            {selectedLang == 0
+              ? translation[9].English
+              : selectedLang == 1
+              ? translation[9].Sinhala
+              : null}
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => navigation.navigate("Register")}
@@ -308,20 +349,19 @@ const LoginScreen = ({ navigation }) => {
             }}
           >
             {selectedLang == 0
-              ? translation[5].English
+              ? translation[7].English
               : selectedLang == 1
-              ? translation[5].Sinhala
+              ? translation[7].Sinhala
               : null}
             <Text
               style={{
                 color: Colors.accent,
               }}
             >
-              {" "}
               {selectedLang == 0
-                ? translation[6].English
+                ? translation[8].English
                 : selectedLang == 1
-                ? translation[6].Sinhala
+                ? translation[8].Sinhala
                 : null}
             </Text>
           </Text>

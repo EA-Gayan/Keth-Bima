@@ -35,11 +35,15 @@ export const translation = [
     Sinhala: "සාමාජිකයකු නොවේනම් ?",
   },
   {
-    English: "Register Here ?",
+    English: "Register Here",
+    Sinhala: "ලියාපදිංචිවන්න​",
+  },
+  {
+    English: "forgot password ?",
     Sinhala: "ලියාපදිංචිවන්න​",
   },
 
-  //Home 9-13
+  //Home 10-14
   {
     English: "Welcome to Keth Bima",
     Sinhala: "කෙත්බිම වෙත​ පිළිගනිමු",
@@ -61,7 +65,7 @@ export const translation = [
     Sinhala: "වාර්තා​",
   },
 
-  //Harvest 14-16
+  //Harvest 15-17
   {
     English: "Year",
     Sinhala: "වර්ෂය",
