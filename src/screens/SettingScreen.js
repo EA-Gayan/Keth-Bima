@@ -25,7 +25,7 @@ const ProfileScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        style={{ width: "100%", height: "100%" }}
+        style={{resizeMode: 'cover', width: "100%", height: "100%" }}
         source={require("../../assets/images/bg3.jpg")}
       >
         <TouchableOpacity

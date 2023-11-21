@@ -36,10 +36,10 @@ import { DB } from "../../firebaseInit";
   
 
   return (
-      <ImageBackground
-            style={{ width: '100%', height: '100%' }}
-            source={require('../../assets/images/bg3.jpg')}
-          >
+        <ImageBackground
+        style={{resizeMode: 'cover', width: "100%", height: "100%" }}
+        source={require("../../assets/images/bg3.jpg")}
+      >
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => navigation.goBack()}

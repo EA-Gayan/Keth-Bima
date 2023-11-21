@@ -23,6 +23,7 @@ const LoginScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const auth = FIREBASE_AUTH;
+const provider = new GoogleAuthProvider();
 
   const [selectedLang, setSelectedLang] = useState(0);
   useEffect(() => {
@@ -36,7 +37,7 @@ const LoginScreen = ({ navigation }) => {
     setLoading(true);
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log(response);
+      // console.log(response);
       navigation.navigate("Home");
     } catch (error) {
       console.log(error);
@@ -48,21 +49,27 @@ const LoginScreen = ({ navigation }) => {
 
   const signInWithGoogle = async () => {
     try {
-      const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
-      // This gives you a Google Access Token. You can use it to access Google services.
+      // This gives you a Google Access Token. You can use it to access the Google API.
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       // The signed-in user info.
       const user = result.user;
-
-      // Navigate to the Home screen or perform any other action upon successful sign-in.
-      navigation.navigate("Home");
+      // IdP data available using getAdditionalUserInfo(result)
+      // ...
     } catch (error) {
-      console.log(error);
-      alert("Google Sign-In failed");
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorMessage)
+      const email = error.customData?.email; // Use optional chaining
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
     }
   };
+  
+  
 
   //common component changes
   const LogInWithIcon = ({ iconName, onPress, buttonTitle }) => {

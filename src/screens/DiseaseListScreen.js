@@ -26,7 +26,7 @@ const DATA = [
   {
     id: 3,
     name: "Leaf scald",
-    species: "ungus, – Monographella albescens",
+    species: "Fungus, – Monographella albescens",
     image: require("../../assets/images/LeafScald.jpg"),
   },
   {
@@ -77,7 +77,7 @@ const DiseaseListScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        style={{ width: "100%", height: "100%" }}
+        style={{resizeMode: 'cover', width: "100%", height: "100%" }}
         source={require("../../assets/images/bg3.jpg")}
       >
         <TouchableOpacity
