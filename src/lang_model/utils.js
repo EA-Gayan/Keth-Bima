@@ -78,4 +78,22 @@ export const translation = [
     English: "Quantity",
     Sinhala: "අස්වනු ප්‍රමාණය​",
   },
+  //Harvest 18-21
+
+  {
+    English: "Current Weather",
+    Sinhala: "කාලගුණය​​",
+  },
+  {
+    English: "Feels like",
+    Sinhala: "උෂ්ණත්වය​",
+  },
+  {
+    English: "Humidity",
+    Sinhala: "ආද්‍රතාව​​",
+  },
+  {
+    English: "Next 3-Day Forecas",
+    Sinhala: "ඉදිරි දින 3",
+  },
 ];

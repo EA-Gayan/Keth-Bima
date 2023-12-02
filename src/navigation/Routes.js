@@ -117,6 +117,16 @@ const Routes = ({ user }) => {
         component={DiseaseDetailedScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="Hispa"
+        component={Hispa}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LeafeBlight"
+        component={LeafeBlight}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

@@ -13,13 +13,21 @@ import {
   Alert,
   Dimensions,
   FlatList,
-  TextInput
+  TextInput,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const openWeatherKey = "ee4d9149db4c74f12281fd1e2df8e224";
 const weatherUrl = "https://api.openweathermap.org/data/2.5/weather?";
 const forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?";
+
+const [selectedLang, setSelectedLang] = useState(0);
+useEffect(() => {
+  getLang();
+}, []);
+const getLang = async () => {
+  setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
+};
 
 const WeatherScreen = ({ navigation }) => {
   const [forecast, setForecast] = useState(null);
@@ -97,15 +105,15 @@ const WeatherScreen = ({ navigation }) => {
 
     return filteredData;
   };
-      const onLocationInputChange = (text) => {
-        setLocationInput(text);
-      };
+  const onLocationInputChange = (text) => {
+    setLocationInput(text);
+  };
 
-      const handleLocationSearch = () => {
-        if (locationInput.trim() !== "") {
-          loadForecast(locationInput);
-        }
-      };
+  const handleLocationSearch = () => {
+    if (locationInput.trim() !== "") {
+      loadForecast(locationInput);
+    }
+  };
 
   // Use the filtered data for the FlatList
   const filteredNext3DaysData = filterNext3DaysData();
@@ -142,18 +150,33 @@ const WeatherScreen = ({ navigation }) => {
           }
           style={{ marginTop: 10 }}
         >
-          <Text style={styles.title}>Current Weather</Text>
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-          <TextInput
-            style={styles.locationInput}
-            placeholder="Enter Location"
-            onChangeText={onLocationInputChange}
-            value={locationInput}
-          />
-          <TouchableOpacity onPress={handleLocationSearch} style={styles.searchButton}>
-            <Ionicons name="search" size={20} color="black" />
-          </TouchableOpacity>
-        </View>
+          <Text style={styles.title}>
+            {selectedLang == 0
+              ? translation[18].English
+              : selectedLang == 1
+              ? translation[18].Sinhala
+              : null}
+          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <TextInput
+              style={styles.locationInput}
+              placeholder="Enter Location"
+              onChangeText={onLocationInputChange}
+              value={locationInput}
+            />
+            <TouchableOpacity
+              onPress={handleLocationSearch}
+              style={styles.searchButton}
+            >
+              <Ionicons name="search" size={20} color="black" />
+            </TouchableOpacity>
+          </View>
           <View style={styles.current}>
             <Image style={styles.largeIcon} source={{ uri: weatherIconUrl }} />
             <Text style={styles.currentTemp}>
@@ -172,7 +195,13 @@ const WeatherScreen = ({ navigation }) => {
                 <Text style={styles.text}>
                   {Math.round(forecast.main.feels_like - 273.15)} °C
                 </Text>
-                <Text style={styles.text}>Feels like</Text>
+                <Text style={styles.text}>
+                  {selectedLang == 0
+                    ? translation[19].English
+                    : selectedLang == 1
+                    ? translation[19].Sinhala
+                    : null}
+                </Text>
               </View>
               <View style={styles.info}>
                 <Ionicons
@@ -183,12 +212,18 @@ const WeatherScreen = ({ navigation }) => {
                 <Text style={styles.text}>
                   {Math.round(forecast.main.humidity)} °C
                 </Text>
-                <Text style={styles.text}>Humidity</Text>
+                <Text style={styles.text}>
+                  {selectedLang == 0
+                    ? translation[20].English
+                    : selectedLang == 1
+                    ? translation[20].Sinhala
+                    : null}
+                </Text>
               </View>
             </View>
           </View>
 
-          <Text style={styles.subtitle}>Next 3-Day Forecast</Text>
+          <Text style={styles.subtitle}></Text>
 
           <FlatList
             horizontal
