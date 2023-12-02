@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const LeafBlight = ({ navigation }) => {
+const Hispa = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -23,32 +23,32 @@ const LeafBlight = ({ navigation }) => {
         <Ionicons name="chevron-back" size={32} color="black" />
       </TouchableOpacity>
       <View style={styles.imageStack}>
-        <Image
+        {/* <Image
           source={require("../../assets/images/green-field.jpg")}
           resizeMode="contain"
           style={styles.image}
-        />
+        /> */}
         <View style={styles.al}>
           <View style={styles.rect}>
             <View style={styles.amarylissPotatoColumnRow}>
               <View style={styles.amarylissPotatoColumn}>
                 <Text style={styles.amarylissPotato}>Rice blast</Text>
                 <View style={styles.image3Row}>
-                  <Image
+                  {/* <Image
                     source={require("../../assets/images/check.png")}
                     resizeMode="contain"
                     style={styles.image3}
-                  />
+                  /> */}
                   <Text style={styles.maimoSweden}>
                     Fungus, Magnaporthe grisea
                   </Text>
                 </View>
               </View>
-              <Image
+              {/* <Image
                 source={require("../../assets/images/green.png")}
                 resizeMode="contain"
                 style={styles.image2}
-              />
+              /> */}
             </View>
             <View style={styles.rect2}>
               <View style={styles.image4Row}>
@@ -221,4 +221,4 @@ const styles = StyleSheet.create({
     marginTop: -16,
   },
 });
-export default LeafBlight;
+export default Hispa;

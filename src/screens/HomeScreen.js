@@ -182,7 +182,7 @@ const HomeScreen = ({ navigation }) => {
           />
           <LogInWithIcon
             iconName="podium-sharp"
-            onPress={() => navigation.navigate("BarChart")}
+            onPress={() => navigation.navigate("Hispa")}
             buttonTitle={
               selectedLang == 0
                 ? translation[11].English

@@ -16,24 +16,25 @@ import {
   TextInput,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { translation } from "../lang_model/utils";
 
 const openWeatherKey = "ee4d9149db4c74f12281fd1e2df8e224";
 const weatherUrl = "https://api.openweathermap.org/data/2.5/weather?";
 const forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?";
-
-const [selectedLang, setSelectedLang] = useState(0);
-useEffect(() => {
-  getLang();
-}, []);
-const getLang = async () => {
-  setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
-};
 
 const WeatherScreen = ({ navigation }) => {
   const [forecast, setForecast] = useState(null);
   const [fiveDayForecast, setFiveDayForecast] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [locationInput, setLocationInput] = useState("");
+
+  const [selectedLang, setSelectedLang] = useState(0);
+  useEffect(() => {
+    getLang();
+  }, []);
+  const getLang = async () => {
+    setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
+  };
 
   const loadForecast = async (city) => {
     setRefreshing(true);
@@ -223,7 +224,13 @@ const WeatherScreen = ({ navigation }) => {
             </View>
           </View>
 
-          <Text style={styles.subtitle}></Text>
+          <Text style={styles.subtitle}>
+            {selectedLang == 0
+              ? translation[21].English
+              : selectedLang == 1
+              ? translation[21].Sinhala
+              : null}
+          </Text>
 
           <FlatList
             horizontal

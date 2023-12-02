@@ -12,6 +12,9 @@ import BarChartScreen from "../screens/BarChartScreen";
 import WeatherScreen from "../screens/WeatherScreen";
 import DiseaseListScreen from "../screens/DiseaseListScreen";
 import DiseaseDetailedScreen from "../screens/DiseaseDetailedScreen";
+import Hisapa from "../screens/DiseaseScreens/Hispa";
+import LeafBlight from "../screens/DiseaseScreens/LeafBlight";
+import Hispa from "../screens/DiseaseScreens/Hispa";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -124,7 +127,7 @@ const Routes = ({ user }) => {
       />
       <Stack.Screen
         name="LeafeBlight"
-        component={LeafeBlight}
+        component={LeafBlight}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
