@@ -12,9 +12,12 @@ import BarChartScreen from "../screens/BarChartScreen";
 import WeatherScreen from "../screens/WeatherScreen";
 import DiseaseListScreen from "../screens/DiseaseListScreen";
 import DiseaseDetailedScreen from "../screens/DiseaseDetailedScreen";
-import Hisapa from "../screens/DiseaseScreens/Hispa";
 import LeafBlight from "../screens/DiseaseScreens/LeafBlight";
 import Hispa from "../screens/DiseaseScreens/Hispa";
+import LeafBlast from "../screens/DiseaseScreens/LeafBlast";
+import Healthy from "../screens/DiseaseScreens/Healthy";
+import LeafScald from "../screens/DiseaseScreens/LeafScald";
+import BrownSpot from "../screens/DiseaseScreens/BrownSpot";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -126,8 +129,28 @@ const Routes = ({ user }) => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="LeafeBlight"
+        name="LeafBlight"
         component={LeafBlight}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LeafBlast"
+        component={LeafBlast}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LeafScald"
+        component={LeafScald}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Healthy"
+        component={Healthy}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BrownSpot"
+        component={BrownSpot}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

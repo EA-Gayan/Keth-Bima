@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const Hispa = ({ navigation }) => {
+const BrownSpot = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={styles.container}>
@@ -40,20 +40,13 @@ const Hispa = ({ navigation }) => {
               </View>
               <View style={styles.rect2}>
                 <Text style={styles.amarylissTitle2}>
-                  <Text style={styles.heading}>If the disease spread fast</Text>
+                  <Text style={styles.heading}>Within the crop season</Text>
                   <Text style={styles.need}>
                     {"\n"}
-                    {"\n"} ✅ Hexconazole 50G/L EC – dissolve 32 ml in 16 l of
-                    water (8-10 tanks per acre)
+                    {"\n"} ✅ Application of urea in recommended dosages or
+                    application of urea based on leaf colour chart.
                     {"\n"}
-                    {"\n"} ✅ Propiconazole 250 G/L EC – dissolve 16 ml in 16 l
-                    of water (8-10 tanks per acre)
-                    {"\n"}
-                    {"\n"} ✅ Thiophanate methyl 70% WP – dissolve 16 g in 16 l
-                    of water (8-10 tanks per acre)
-                    {"\n"}
-                    {"\n"} ✅ Tebuconazole 250g/l EC – dissolve 10 ml in 16 l of
-                    water (8-10 tanks per acre)
+                    {"\n"} ✅ Weed management
                   </Text>
                 </Text>
               </View>
@@ -62,17 +55,16 @@ const Hispa = ({ navigation }) => {
                   <Text style={styles.heading}>If the crop is infected,</Text>
                   <Text style={styles.need}>
                     {"\n"}
-                    {"\n"} ✅ Deep ploughing to bury infested plant residues
-                    into the soil
-                    {"\n"}
-                    {"\n"} ✅ Use of recommended seed rate i. e. 2 bushels per
-                    acre (direct sowing).
-                    {"\n"}
-                    {"\n"} ✅ Maintaining an average level plant population in
-                    the field
-                    {"\n"}
                     {"\n"} ✅ Addition of burnt paddy husk (250 kg per acre) to
                     the soil during land preparation.
+                    {"\n"}
+                    {"\n"} ✅ Abstain addition of disease infected straw.
+                    {"\n"}
+                    {"\n"} ✅ Treatment of seed paddy by dipping in hot water
+                    (53-54OC) for 10-12 minutes
+                    {"\n"}
+                    {"\n"} ✅ Treatment of seeds with a seed-protectant
+                    fungicide
                   </Text>
                 </Text>
               </View>
@@ -103,7 +95,7 @@ const styles = StyleSheet.create({
   rect: {
     top: 249,
     width: 363,
-    height: 659,
+    height: 520,
     backgroundColor: "rgba(255,255,255,1)",
     borderRadius: 27,
   },
@@ -134,7 +126,7 @@ const styles = StyleSheet.create({
   },
   rect2: {
     width: 345,
-    height: 250,
+    height: 150,
     backgroundColor: "white",
     borderRadius: 16,
     flexDirection: "row",
@@ -159,7 +151,7 @@ const styles = StyleSheet.create({
 
   rect3: {
     width: 345,
-    height: 300,
+    height: 210,
     backgroundColor: "white",
     borderRadius: 16,
     flexDirection: "row",
@@ -181,4 +173,4 @@ const styles = StyleSheet.create({
     marginTop: -16,
   },
 });
-export default Hispa;
+export default BrownSpot;

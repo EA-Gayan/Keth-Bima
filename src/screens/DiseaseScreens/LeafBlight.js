@@ -1,82 +1,83 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const LeafBlight = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => navigation.goBack()}
-        style={{
-          backgroundColor: "white",
-          width: 35,
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: 100,
-          position: "absolute",
-          top: 50,
-          left: 10,
-          zIndex: 100,
-        }}
-      >
-        <Ionicons name="chevron-back" size={32} color="black" />
-      </TouchableOpacity>
-      <View style={styles.imageStack}>
-        {/* <Image
-          source={require("../../assets/images/green-field.jpg")}
-          resizeMode="contain"
-          style={styles.image}
-        /> */}
-        <View style={styles.al}>
-          <View style={styles.rect}>
-            <View style={styles.amarylissPotatoColumnRow}>
-              <View style={styles.amarylissPotatoColumn}>
-                <Text style={styles.amarylissPotato}>Rice blast</Text>
-                <View style={styles.image3Row}>
-                  {/* <Image
-                    source={require("../../assets/images/check.png")}
-                    resizeMode="contain"
-                    style={styles.image3}
-                  /> */}
-                  <Text style={styles.maimoSweden}>
-                    Fungus, Magnaporthe grisea
-                  </Text>
+    <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+      <View style={styles.container}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.goBack()}
+          style={{
+            backgroundColor: "white",
+            width: 35,
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 100,
+            position: "absolute",
+            top: 50,
+            left: 10,
+            zIndex: 100,
+          }}
+        >
+          <Ionicons name="chevron-back" size={32} color="black" />
+        </TouchableOpacity>
+        <View style={styles.imageStack}>
+          <View style={styles.al}>
+            <View style={styles.rect}>
+              <View style={styles.amarylissColumnRow}>
+                <View style={styles.amarylissColumn}>
+                  <Text style={styles.amarylissTitle}>Disease Management</Text>
                 </View>
               </View>
-              {/* <Image
-                source={require("../../assets/images/green.png")}
-                resizeMode="contain"
-                style={styles.image2}
-              /> */}
-            </View>
-            <View style={styles.rect2}>
-              <View style={styles.image4Row}>
-                {/* <Image
-                  // source={require("../assets/images/summer.png")}
-                  resizeMode="contain"
-                  style={styles.image4}
-                /> */}
-                <Text style={styles.needSunlight}>Need Sunlight</Text>
-                {/* <Image
-                  // source={require("../assets/images/watering.png")}
-                  resizeMode="contain"
-                  style={styles.image5}
-                /> */}
-                <Text style={styles.waterWeekly}>Water Weekly</Text>
+              <View style={styles.rect2}>
+                <Text style={styles.amarylissTitle2}>
+                  <Text style={styles.heading}>Within the crop season</Text>
+                  <Text style={styles.need}>
+                    {"\n"}
+                    {"\n"} ✅ Application of urea in recommended dosages or
+                    application of urea based on leaf colour chart.
+                    {"\n"}
+                    {"\n"} ✅ Ensure good drainage of fields.
+                  </Text>
+                </Text>
               </View>
-            </View>
-            <View style={styles.rect3}>
-              <Text style={styles.loremIpsum2}>Disease Management </Text>
-              <Text style={styles.loremIpsum1}>
-                Within the crop season Application of urea in recommended
-                dosages or application of urea based on leaf colour chart.
-              </Text>
+              <View style={styles.rect3}>
+                <Text style={styles.amarylissTitle2}>
+                  <Text style={styles.heading}>
+                    Immediately after the disease is observed,
+                  </Text>
+                  <Text style={styles.need}>
+                    {"\n"}
+                    {"\n"} ✅ stop water supply, and let the field dry.
+                    {"\n"}
+                    {"\n"} ✅ When total removal of water is, not possible, try
+                    to out-flow water through drainage ditches or water courses
+                    (wakkada).
+                    {"\n"}
+                    {"\n"} ✅ Water drained from the fields infected with
+                    disease should not be diverted through disease free fields
+                    as much as possible.
+                    {"\n"}
+                    {"\n"} ✅ Once the disease is observed, application of
+                    potassium fertilizer could manage further spread of the
+                    disease.
+                  </Text>
+                </Text>
+              </View>
             </View>
           </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -95,45 +96,33 @@ const styles = StyleSheet.create({
   al: {
     alignItems: "center",
     alignContent: "center",
-    marginLeft: 10,
   },
   rect: {
     top: 249,
-    width: 360,
-    height: 469,
+    width: 363,
+    height: 569,
     backgroundColor: "rgba(255,255,255,1)",
     borderRadius: 27,
   },
-  amarylissPotato: {
+  amarylissTitle: {
     color: "#121212",
     fontSize: 20,
-    marginLeft: 2,
+    fontWeight: "bold",
   },
-
-  image3: {
-    width: 21,
-    height: 15,
-    marginTop: 1,
-  },
-  maimoSweden: {
+  heading: {
     color: "#121212",
-    marginLeft: 3,
+    fontSize: 16,
+    fontWeight: "bold",
   },
-  image3Row: {
-    height: 17,
-    flexDirection: "row",
-    marginTop: 9,
-    marginRight: 35,
-  },
-  amarylissPotatoColumn: {
-    width: 159,
+  amarylissColumn: {
+    width: 200,
   },
   image2: {
     width: 59,
     height: 46,
     marginLeft: 111,
   },
-  amarylissPotatoColumnRow: {
+  amarylissColumnRow: {
     height: 54,
     flexDirection: "row",
     marginTop: 20,
@@ -141,13 +130,14 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   rect2: {
-    width: 326,
-    height: 50,
+    width: 345,
+    height: 130,
     backgroundColor: "white",
     borderRadius: 16,
     flexDirection: "row",
-    marginTop: 13,
-    marginLeft: 18,
+    marginTop: 10,
+    marginBottom: 30,
+    marginLeft: 5,
     shadowColor: "rgba(0,0,0,1)",
     shadowOffset: {
       width: 1,
@@ -157,40 +147,22 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.16,
     shadowRadius: 10,
   },
-  image4: {
-    width: 20,
-    height: 20,
-  },
-  needSunlight: {
-    color: "#121212",
-    marginLeft: 7,
+
+  need: {
+    color: "#141414",
     marginTop: 2,
+    fontSize: 14,
   },
-  image5: {
-    width: 25,
-    height: 20,
-    marginLeft: 69,
-  },
-  waterWeekly: {
-    color: "#121212",
-    marginLeft: 2,
-    marginTop: 2,
-  },
-  image4Row: {
-    height: 20,
-    flexDirection: "row",
-    flex: 1,
-    marginRight: 20,
-    marginLeft: 12,
-    marginTop: 15,
-  },
+
   rect3: {
-    width: 326,
-    height: 202,
+    width: 345,
+    height: 280,
     backgroundColor: "white",
-    borderRadius: 12,
-    marginTop: 30,
-    marginLeft: 18,
+    borderRadius: 16,
+    flexDirection: "row",
+    marginTop: 10,
+    marginBottom: 30,
+    marginLeft: 5,
     shadowColor: "rgba(0,0,0,1)",
     shadowOffset: {
       width: 1,
@@ -199,25 +171,10 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowOpacity: 0.16,
     shadowRadius: 10,
-  },
-  loremIpsum1: {
-    color: "#121212",
-    width: 315,
-    height: 176,
-    textAlign: "justify",
-    marginTop: 30,
-    marginLeft: 6,
-  },
-  loremIpsum2: {
-    color: "#121212",
-    textAlign: "justify",
-    fontSize: 15,
-    top: 10,
-    marginLeft: 6,
   },
   imageStack: {
     width: 482,
-    height: 718,
+    height: 850,
     marginTop: -16,
   },
 });
