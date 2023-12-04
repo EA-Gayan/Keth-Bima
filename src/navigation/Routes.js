@@ -18,7 +18,8 @@ import LeafBlast from "../screens/DiseaseScreens/LeafBlast";
 import Healthy from "../screens/DiseaseScreens/Healthy";
 import LeafScald from "../screens/DiseaseScreens/LeafScald";
 import BrownSpot from "../screens/DiseaseScreens/BrownSpot";
-
+import ChatScreen from "../screens/ChatScreen";
+import AddChatScreen from "../screens/AddChatScreen";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -151,6 +152,16 @@ const Routes = ({ user }) => {
       <Stack.Screen
         name="BrownSpot"
         component={BrownSpot}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Chat"
+        component={ChatScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddChat"
+        component={AddChatScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

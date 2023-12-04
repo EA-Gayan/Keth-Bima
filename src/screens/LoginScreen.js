@@ -5,6 +5,7 @@ import {
   TextInput,
   Image,
   SafeAreaView,
+  ImageBackground,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
@@ -23,7 +24,7 @@ const LoginScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const auth = FIREBASE_AUTH;
-const provider = new GoogleAuthProvider();
+  const provider = new GoogleAuthProvider();
 
   const [selectedLang, setSelectedLang] = useState(0);
   useEffect(() => {
@@ -61,15 +62,13 @@ const provider = new GoogleAuthProvider();
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log(errorMessage)
+      console.log(errorMessage);
       const email = error.customData?.email; // Use optional chaining
       // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
       // ...
     }
   };
-  
-  
 
   //common component changes
   const LogInWithIcon = ({ iconName, onPress, buttonTitle }) => {
@@ -112,9 +111,9 @@ const provider = new GoogleAuthProvider();
 
   return (
     <SafeAreaView>
-      <LinearGradient
-        colors={["#FFFEFE", "#FFFEFE", "#99ff99"]}
+      <ImageBackground
         style={{ width: "100%", height: "100%" }}
+        source={require("../../assets/images/bg3.jpg")}
       >
         <TouchableOpacity
           activeOpacity={0.8}
@@ -214,6 +213,7 @@ const provider = new GoogleAuthProvider();
                   borderRadius: 20,
                   borderColor: "darkgray",
                   borderWidth: 2,
+                  marginTop: 10,
                 }}
               />
               {password.length > 0 && (
@@ -247,13 +247,14 @@ const provider = new GoogleAuthProvider();
               paddingHorizontal: 20,
               alignItems: "center",
               justifyContent: "center",
-              backgroundColor: "#f3d69a",
+              backgroundColor: "#009272",
               borderRadius: 10,
               elevation: 8,
               shadowColor: Colors.accent,
+              marginTop: 30,
             }}
           >
-            <Text>
+            <Text style={{ color: "white" }}>
               {selectedLang == 0
                 ? translation[3].English
                 : selectedLang == 1
@@ -274,7 +275,7 @@ const provider = new GoogleAuthProvider();
             style={{
               flex: 1,
               paddingVertical: 1.0,
-              marginTop: 20,
+              marginTop: 60,
             }}
           />
           <Text
@@ -282,7 +283,7 @@ const provider = new GoogleAuthProvider();
               fontSize: 14,
               opacity: 0.4,
               marginHorizontal: 18,
-              marginTop: 20,
+              marginTop: 60,
               alignItems: "center",
               justifyContent: "center",
             }}
@@ -298,7 +299,7 @@ const provider = new GoogleAuthProvider();
             style={{
               flex: 1,
               paddingVertical: 1.0,
-              marginTop: 20,
+              marginTop: 60,
             }}
           />
         </View>
@@ -307,16 +308,10 @@ const provider = new GoogleAuthProvider();
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-around",
-            marginTop: 20,
+            marginTop: 10,
             marginBottom: 25,
           }}
-        >
-          <LogInWithIcon
-            iconName="logo-google"
-            onPress={() => signInWithGoogle()}
-            buttonTitle="Google"
-          />
-        </View>
+        ></View>
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => navigation.navigate("ForgotPassword")}
@@ -324,11 +319,13 @@ const provider = new GoogleAuthProvider();
             width: "100%",
             alignItems: "center",
             justifyContent: "center",
+            marginTop: -10,
           }}
         >
           <Text
             style={{
               color: Colors.accent,
+              marginTop: 0,
             }}
           >
             {selectedLang == 0
@@ -363,6 +360,7 @@ const provider = new GoogleAuthProvider();
             <Text
               style={{
                 color: Colors.accent,
+                marginTop: 30,
               }}
             >
               {selectedLang == 0
@@ -379,7 +377,7 @@ const provider = new GoogleAuthProvider();
             width: "100%",
           }}
         ></View>
-      </LinearGradient>
+      </ImageBackground>
     </SafeAreaView>
   );
 };

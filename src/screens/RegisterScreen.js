@@ -3,10 +3,10 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  Image,
+  ImageBackground,
   SafeAreaView,
 } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../assets/constants/Colors";
@@ -18,6 +18,8 @@ const RegisterScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [hidePassword, sethidePassword] = useState(true);
   const [username, setUserName] = useState("");
+  const [imageURL, setImageURL] = useState("");
+  const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
 
   const register = async () => {
@@ -89,9 +91,9 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView>
-      <LinearGradient
-        colors={["#FFFEFE", "#FFFEFE", "#99ff99"]}
+      <ImageBackground
         style={{ width: "100%", height: "100%" }}
+        source={require("../../assets/images/bg3.jpg")}
       >
         <TouchableOpacity
           activeOpacity={0.8}
@@ -235,17 +237,18 @@ const RegisterScreen = ({ navigation }) => {
             activeOpacity={0.8}
             style={{
               width: "100%",
+              marginTop: 20,
               paddingVertical: 14,
               paddingHorizontal: 20,
               alignItems: "center",
               justifyContent: "center",
-              backgroundColor: "#f3d69a",
-              borderRadius: 10,
+              backgroundColor: "#009272",
+              borderRadius: 15,
               elevation: 8,
               shadowColor: Colors.accent,
             }}
           >
-            <Text>Register</Text>
+            <Text style={{ color: "white" }}>Register</Text>
           </TouchableOpacity>
         </View>
         <View
@@ -260,7 +263,7 @@ const RegisterScreen = ({ navigation }) => {
             style={{
               flex: 1,
               paddingVertical: 1.0,
-              marginTop: 20,
+              marginTop: 30,
             }}
           />
           <Text
@@ -268,7 +271,7 @@ const RegisterScreen = ({ navigation }) => {
               fontSize: 14,
               opacity: 0.4,
               marginHorizontal: 18,
-              marginTop: 20,
+              marginTop: 30,
             }}
           >
             Or continue With
@@ -278,7 +281,7 @@ const RegisterScreen = ({ navigation }) => {
             style={{
               flex: 1,
               paddingVertical: 1.0,
-              marginTop: 20,
+              marginTop: 30,
             }}
           />
         </View>
@@ -290,13 +293,7 @@ const RegisterScreen = ({ navigation }) => {
             marginTop: 20,
             marginBottom: 25,
           }}
-        >
-          <LogInWithIcon
-            iconName="logo-google"
-            onPress={() => console.log("google")}
-            buttonTitle="Google"
-          />
-        </View>
+        ></View>
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => navigation.navigate("Login")}
@@ -331,7 +328,7 @@ const RegisterScreen = ({ navigation }) => {
             width: "100%",
           }}
         ></View>
-      </LinearGradient>
+      </ImageBackground>
     </SafeAreaView>
   );
 };

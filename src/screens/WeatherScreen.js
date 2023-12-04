@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   subtitle: {
-    marginTop: 190,
+    marginTop: 150,
     marginLeft: 20,
     fontWeight: "bold",
     fontSize: 15,
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 10,
-    marginTop: 20,
+    marginTop: 25,
   },
   hourlyForecastHour: {
     fontSize: 16,

@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
   Text,
   TextInput,
   ImageBackground,
-  TouchableOpacity
-} from 'react-native';
-import { collection, getDocs } from 'firebase/firestore';
-import { Ionicons } from '@expo/vector-icons';
-import { DB } from '../../firebaseInit';
-import { StackedBarChart } from 'react-native-chart-kit';
+  TouchableOpacity,
+} from "react-native";
+import { collection, getDocs } from "firebase/firestore";
+import { Ionicons } from "@expo/vector-icons";
+import { DB } from "../../firebaseInit";
+import { StackedBarChart } from "react-native-chart-kit";
 
 const BarChartScreen = ({ navigation }) => {
   const [harvestData, setHarvestData] = useState({ labels: [] });
-  const [startYear, setStartYear] = useState('');
-  const [endYear, setEndYear] = useState('');
+  const [startYear, setStartYear] = useState("");
+  const [endYear, setEndYear] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const snapshot = await getDocs(collection(DB, 'harvesting'));
+        const snapshot = await getDocs(collection(DB, "harvesting"));
         if (snapshot.empty) {
-          console.log('No data available');
+          console.log("No data available");
           return;
         }
         const data = snapshot.docs.map((doc) => doc.data());
@@ -30,19 +30,22 @@ const BarChartScreen = ({ navigation }) => {
         // Filter data based on selected range
         const filteredData = data.filter(
           (item) =>
-            (startYear === '' || item.year >= startYear) &&
-            (endYear === '' || item.year <= endYear)
+            (startYear === "" || item.year >= startYear) &&
+            (endYear === "" || item.year <= endYear)
         );
 
         const chartData = {
           labels: filteredData.map((item) => item.year),
-          legend: ['Yala', 'Maha'],
-          data: filteredData.map((item) => [Number(item.yala), Number(item.maha)]),
-          barColors: ['#9F71D8', '#36BC15'],
+          legend: ["Yala", "Maha"],
+          data: filteredData.map((item) => [
+            Number(item.yala),
+            Number(item.maha),
+          ]),
+          barColors: ["#9F71D8", "#36BC15"],
         };
         setHarvestData(chartData);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
     fetchData();
@@ -51,7 +54,7 @@ const BarChartScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        style={{resizeMode: 'cover', width: "100%", height: "100%" }}
+        style={{ resizeMode: "cover", width: "100%", height: "100%" }}
         source={require("../../assets/images/bg3.jpg")}
       >
         <TouchableOpacity
@@ -62,7 +65,7 @@ const BarChartScreen = ({ navigation }) => {
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
 
-        <View style={{ alignItems: 'center', marginTop: 100 }}>
+        <View style={{ alignItems: "center", marginTop: 75 }}>
           <Text style={styles.title}>Previous Records</Text>
         </View>
 
@@ -91,8 +94,8 @@ const BarChartScreen = ({ navigation }) => {
               height={300}
               yAxisLabel="Quantity"
               chartConfig={{
-                backgroundGradientFrom: '#f0f0f0',
-                backgroundGradientTo: '#f0f0f0',
+                backgroundGradientFrom: "#f0f0f0",
+                backgroundGradientTo: "#f0f0f0",
                 color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
               }}
             />
@@ -100,7 +103,10 @@ const BarChartScreen = ({ navigation }) => {
             <Text>No data available</Text>
           )}
         </View>
-        <TouchableOpacity style={styles.saveButton} onPress={()=>navigation.navigate("Harvest")}>
+        <TouchableOpacity
+          style={styles.saveButton}
+          onPress={() => navigation.navigate("Harvest")}
+        >
           <Text style={styles.saveButtonText}>Add Records</Text>
         </TouchableOpacity>
       </ImageBackground>
@@ -113,37 +119,37 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backButton: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     width: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 100,
-    position: 'absolute',
+    position: "absolute",
     top: 50,
     left: 2,
     zIndex: 100,
   },
   title: {
     fontSize: 25,
-    color: 'black',
-    fontWeight: 'bold',
+    color: "black",
+    fontWeight: "bold",
   },
   inputContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 80,
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 50,
   },
   input: {
     borderWidth: 2,
-    borderColor: '#616161',
+    borderColor: "#616161",
     padding: 8,
     marginHorizontal: 10,
     width: 100,
     borderRadius: 15,
   },
   chart: {
-    alignItems: 'center',
-    marginTop: 70,
+    alignItems: "center",
+    marginTop: 50,
   },
   saveButton: {
     width: "60%",
@@ -152,7 +158,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     position: "absolute",
     alignSelf: "center",
-    marginTop: 700,
+    marginTop: 630,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#009272",

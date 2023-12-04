@@ -116,7 +116,7 @@ const HomeScreen = ({ navigation }) => {
         style={{ width: "100%", height: "100%" }}
         source={require("../../assets/images/bg3.jpg")}
       >
-        <View style={{ alignItems: "center", marginTop: 100 }}>
+        <View style={{ alignItems: "center", marginTop: 75 }}>
           <Text style={{ fontSize: 25, color: "black", fontWeight: "bold" }}>
             {selectedLang == 0
               ? translation[10].English
@@ -171,7 +171,7 @@ const HomeScreen = ({ navigation }) => {
         >
           <LogInWithIcon
             iconName="chatbox-ellipses"
-            onPress={() => navigation.navigate("Hispa")}
+            onPress={() => navigation.navigate("AddChat")}
             buttonTitle={
               selectedLang == 0
                 ? translation[13].English
