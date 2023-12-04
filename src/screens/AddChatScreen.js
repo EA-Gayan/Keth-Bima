@@ -71,10 +71,7 @@ const AddChatScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
-    height: "100%",
-    alignItems: "center",
-    justifyContent: "center",
+    flex: 1,
   },
   input: {
     height: 55,

@@ -17,6 +17,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { translation } from "../lang_model/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const openWeatherKey = "ee4d9149db4c74f12281fd1e2df8e224";
 const weatherUrl = "https://api.openweathermap.org/data/2.5/weather?";

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,10 +9,19 @@ import {
 } from "react-native";
 import { FIREBASE_AUTH } from "../../firebaseInit";
 import { Ionicons } from "@expo/vector-icons";
+import LanguageModal from "../lang_model/LanguageModal";
+import { translation } from "../lang_model/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ProfileScreen = ({ navigation }) => {
   const auth = FIREBASE_AUTH;
   const user = auth.currentUser;
+
+  const [langModalVisible, setLangModalVisible] = useState(false);
+  const [selectedLang, setSelectedLang] = useState(0);
+  const saveSelectedLang = async (index) => {
+    await AsyncStorage.setItem("LANG", index + "");
+  };
 
   const handleLogout = async () => {
     try {
@@ -67,22 +76,37 @@ const ProfileScreen = ({ navigation }) => {
             </View>
           </ImageBackground>
           <View style={styles.rect}>
-            <TouchableOpacity style={styles.rect2}>
+            <TouchableOpacity style={styles.rect2} onPress={() => {
+              setLangModalVisible(!langModalVisible);
+            }}>
               <View style={styles.image3Row}>
                 <Ionicons
                   name="create-outline"
                   size={32}
                   style={{ marginLeft: 10, marginTop: 15 }}
                 />
-                <Text style={styles.editUserAccount}>Edit user account</Text>
+                <Text style={styles.editUserAccount}>              
+                {selectedLang == 0
+                ? translation[2].English
+                : selectedLang == 1
+                ? translation[2].Sinhala
+                : null}</Text>
                 <Ionicons
                   name="chevron-forward"
                   size={32}
                   color="black"
-                  style={{ marginLeft: 40, marginTop: 15 }}
+                  style={{ marginLeft: 38, marginTop: 15 }}
                 />
               </View>
             </TouchableOpacity>
+            <LanguageModal
+            langModalVisible={langModalVisible}
+            setLangModalVisible={setLangModalVisible}
+            onSelectLang={(x) => {
+              setSelectedLang(x);
+              saveSelectedLang(x);
+            }}
+          />
             <TouchableOpacity style={styles.rect3}>
               <View style={styles.image3Row}>
                 <Ionicons
@@ -90,7 +114,12 @@ const ProfileScreen = ({ navigation }) => {
                   size={32}
                   style={{ marginLeft: 10, marginTop: 15 }}
                 />
-                <Text style={styles.helpAndSupport}>Help and Support</Text>
+                <Text style={styles.helpAndSupport}>                
+                {selectedLang == 0
+                ? translation[22].English
+                : selectedLang == 1
+                ? translation[22].Sinhala
+                : null}</Text>
                 <Ionicons
                   name="chevron-forward"
                   size={32}
@@ -106,7 +135,12 @@ const ProfileScreen = ({ navigation }) => {
                   size={32}
                   style={{ marginLeft: 10, marginTop: 15 }}
                 />
-                <Text style={styles.logout}>Signout</Text>
+                <Text style={styles.logout}>                
+                {selectedLang == 0
+                ? translation[23].English
+                : selectedLang == 1
+                ? translation[23].Sinhala
+                : null}</Text>
                 <Ionicons
                   name="chevron-forward"
                   size={32}

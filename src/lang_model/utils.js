@@ -96,4 +96,15 @@ export const translation = [
     English: "Next 3-Day Forecas",
     Sinhala: "ඉදිරි දින 3",
   },
+
+
+    //Harvest 22-23
+    {
+      English: "Help and Support",
+      Sinhala: "උපකාරක සේවා",
+    },
+    {
+      English: "Signout",
+      Sinhala: "ඉවත්වීම",
+    },
 ];

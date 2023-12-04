@@ -56,7 +56,7 @@ const YourScreen = ({ navigation }) => {
               setLangModalVisible(!langModalVisible);
             }}
           >
-            <Text>
+            <Text style={{ color: "white" }}>
               {selectedLang == 0
                 ? translation[2].English
                 : selectedLang == 1
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 100,
-    backgroundColor: "#f3d69a",
+    backgroundColor: "#009272",
   },
   arrowButton: {
     position: "absolute",
