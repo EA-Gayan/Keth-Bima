@@ -150,7 +150,7 @@ const WeatherScreen = ({ navigation }) => {
               onRefresh={() => loadForecast(locationInput)}
             />
           }
-          style={{ marginTop: 10 }}
+          style={{ marginTop: 40 }}
         >
           <Text style={styles.title}>
             {selectedLang == 0

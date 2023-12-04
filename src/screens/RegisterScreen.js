@@ -5,12 +5,15 @@ import {
   TextInput,
   ImageBackground,
   SafeAreaView,
+  Image,
 } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../assets/constants/Colors";
-import { FIREBASE_AUTH } from "../../firebaseInit";
+import { collection, addDoc } from "firebase/firestore";
+import { DB, FIREBASE_AUTH } from "../../firebaseInit";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
 
 const RegisterScreen = ({ navigation }) => {
@@ -18,9 +21,25 @@ const RegisterScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [hidePassword, sethidePassword] = useState(true);
   const [username, setUserName] = useState("");
-  const [imageURL, setImageURL] = useState("");
   const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState(null);
   const auth = FIREBASE_AUTH;
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   const register = async () => {
     setLoading(true);
@@ -30,14 +49,13 @@ const RegisterScreen = ({ navigation }) => {
         email,
         password
       );
-
-      // Update the user's display name with the provided username
-      await updateProfile(auth.currentUser, { displayName: username });
-
-      // Create a combined object with response and username
+      const other = addDoc(collection(DB, "users"), {
+        displayName: username,
+        profileImage: image,
+      });
       const registrationData = {
         response: response,
-        username: username,
+        other: other,
       };
 
       console.log(registrationData);
@@ -233,6 +251,34 @@ const RegisterScreen = ({ navigation }) => {
           </View>
 
           <TouchableOpacity
+            onPress={() => pickImage()}
+            activeOpacity={0.8}
+            style={{
+              width: "100%",
+              marginTop: 20,
+              paddingVertical: 14,
+              paddingHorizontal: 20,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#009272",
+              borderRadius: 15,
+              elevation: 8,
+              shadowColor: Colors.accent,
+            }}
+          >
+            {image ? (
+              <Image
+                source={{ uri: image }}
+                style={{ width: 50, height: 50, borderRadius: 25 }}
+              />
+            ) : (
+              <Text style={{ color: "white" }}>
+                Choose profile photo (optional)
+              </Text>
+            )}
+          </TouchableOpacity>
+
+          <TouchableOpacity
             onPress={() => register()}
             activeOpacity={0.8}
             style={{
@@ -317,7 +363,6 @@ const RegisterScreen = ({ navigation }) => {
                 color: Colors.accent,
               }}
             >
-              {" "}
               Login Now
             </Text>
           </Text>

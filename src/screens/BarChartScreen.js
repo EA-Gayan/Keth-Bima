@@ -54,7 +54,7 @@ const BarChartScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        style={{ resizeMode: "cover", width: "100%", height: "100%" }}
+        style={{ resizeMode: "cover", width: "100%", height: "110%" }}
         source={require("../../assets/images/bg3.jpg")}
       >
         <TouchableOpacity
@@ -65,7 +65,7 @@ const BarChartScreen = ({ navigation }) => {
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
 
-        <View style={{ alignItems: "center", marginTop: 75 }}>
+        <View style={{ alignItems: "center", marginTop: 150 }}>
           <Text style={styles.title}>Previous Records</Text>
         </View>
 
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     position: "absolute",
     alignSelf: "center",
-    marginTop: 630,
+    marginTop: 690,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#009272",
