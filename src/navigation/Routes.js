@@ -19,11 +19,8 @@ import LeafScald from "../screens/DiseaseScreens/LeafScald";
 import BrownSpot from "../screens/DiseaseScreens/BrownSpot";
 import UserSelectionScreen from "../screens/UserSelectionScreen";
 import AddChatScreen from "../screens/AddChatScreen";
-<<<<<<< HEAD
 import PredScreen from "../screens/PredScreen";
-=======
 import ChatRoomScreen from "../screens/ChatRoomScreen";
->>>>>>> 67237fb6fecfa6a461ccb53c722a645a0a03b482
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -104,7 +101,7 @@ const Routes = ({ user }) => {
         component={ModelScreen}
         options={{ headerShown: false }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="PredScreen"
         component={PredScreen}
         options={{ headerShown: false }}

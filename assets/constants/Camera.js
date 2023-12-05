@@ -15,13 +15,10 @@ import Modal from "react-native-modal";
 import * as tf from "@tensorflow/tfjs";
 import { manipulateAsync, resize } from "expo-image-manipulator";
 
-
-const CameraSet = ({navigation }) => {
-
+const CameraSet = ({ navigation }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
-
 
   // Handle checking permissions for both camera and gallery
   const handlePermissions = async () => {
@@ -88,16 +85,16 @@ name\: \`test\.</span>{result.uri.split('.')[1]}`,
       });
 
       const img = result.assets[0].uri;
-     
+
       if (!result.canceled) {
         const manipResult = await manipulateAsync(img, [
           {
-            resize: { width: 1024, height: 768  
-          }},
-      ]);
-     
+            resize: { width: 224, height: 224 },
+          },
+        ]);
+
         setImage(manipResult.uri);
-       
+
         navigation.navigate("PredScreen", {
           imgUri: manipResult.uri,
           //base64Img: base64Image,
@@ -107,7 +104,6 @@ name\: \`test\.</span>{result.uri.split('.')[1]}`,
       console.log("error ", error);
     }
   };
-
 
   // Handle uploading the selected image to Cloudinary
   const onUpload = async (image) => {
