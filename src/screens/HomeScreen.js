@@ -171,7 +171,7 @@ const HomeScreen = ({ navigation }) => {
         >
           <LogInWithIcon
             iconName="chatbox-ellipses"
-            onPress={() => navigation.navigate("AddChat")}
+            onPress={() => navigation.navigate("Hispa")}
             buttonTitle={
               selectedLang == 0
                 ? translation[13].English

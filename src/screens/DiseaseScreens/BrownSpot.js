@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useState,useEffect,useRef}from "react";
 import {
   StyleSheet,
   Text,
@@ -8,8 +8,15 @@ import {
   ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useRoute } from "@react-navigation/native";
+
+
 
 const BrownSpot = ({ navigation }) => {
+  const route = useRoute();
+console.log(route.params.imageUri);
+//const imageUri = route.params.imageUri;
+
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={styles.container}>
@@ -31,13 +38,22 @@ const BrownSpot = ({ navigation }) => {
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
         <View style={styles.imageStack}>
+        <Image
+            source={require("../../../assets/images/green-field.jpg")}
+            resizeMode="contain"
+            style={styles.image}
+          />
           <View style={styles.al}>
             <View style={styles.rect}>
+            
               <View style={styles.amarylissColumnRow}>
                 <View style={styles.amarylissColumn}>
                   <Text style={styles.amarylissTitle}>Disease Management</Text>
                 </View>
               </View>
+              <View>
+                <Text style={styles.diseaseTitle}>Disease Name: <Text style={{color:"red"}}>{route.params.class}</Text></Text>
+                </View>
               <View style={styles.rect2}>
                 <Text style={styles.amarylissTitle2}>
                   <Text style={styles.heading}>Within the crop season</Text>
@@ -82,7 +98,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    top: 0,
+    top: -10,
     width: 482,
     height: 315,
     position: "absolute",
@@ -95,7 +111,7 @@ const styles = StyleSheet.create({
   rect: {
     top: 249,
     width: 363,
-    height: 520,
+    height: 550,
     backgroundColor: "rgba(255,255,255,1)",
     borderRadius: 27,
   },
@@ -103,6 +119,13 @@ const styles = StyleSheet.create({
     color: "#121212",
     fontSize: 20,
     fontWeight: "bold",
+  },
+  diseaseTitle: {
+    color: "#121212",
+    fontSize: 18,
+    fontWeight: "bold",
+    marginLeft: 15,
+
   },
   heading: {
     color: "#121212",
@@ -130,7 +153,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 16,
     flexDirection: "row",
-    marginTop: 10,
+    marginTop: 25,
     marginBottom: 30,
     marginLeft: 5,
     shadowColor: "rgba(0,0,0,1)",

@@ -8,8 +8,10 @@ import {
   ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useRoute } from "@react-navigation/native";
 
 const Hispa = ({ navigation }) => {
+  const route = useRoute();
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={styles.container}>
@@ -31,6 +33,11 @@ const Hispa = ({ navigation }) => {
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
         <View style={styles.imageStack}>
+        <Image
+            source={require("../../../assets/images/green-field.jpg")}
+            resizeMode="contain"
+            style={styles.image}
+          />
           <View style={styles.al}>
             <View style={styles.rect}>
               <View style={styles.amarylissColumnRow}>
@@ -38,6 +45,9 @@ const Hispa = ({ navigation }) => {
                   <Text style={styles.amarylissTitle}>Disease Management</Text>
                 </View>
               </View>
+              <View>
+                <Text style={styles.diseaseTitle}>Disease Name: <Text style={{color:"red"}}>{route.params.class}</Text></Text>
+                </View>
               <View style={styles.rect2}>
                 <Text style={styles.amarylissTitle2}>
                   <Text style={styles.heading}>If the disease spread fast</Text>
@@ -85,100 +95,108 @@ const Hispa = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-  },
-  image: {
-    top: 0,
-    width: 482,
-    height: 315,
-    position: "absolute",
-    left: 0,
-  },
-  al: {
-    alignItems: "center",
-    alignContent: "center",
-  },
-  rect: {
-    top: 249,
-    width: 363,
-    height: 659,
-    backgroundColor: "rgba(255,255,255,1)",
-    borderRadius: 27,
-  },
-  amarylissTitle: {
-    color: "#121212",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  heading: {
-    color: "#121212",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  amarylissColumn: {
-    width: 200,
-  },
-  image2: {
-    width: 59,
-    height: 46,
-    marginLeft: 111,
-  },
-  amarylissColumnRow: {
-    height: 54,
-    flexDirection: "row",
-    marginTop: 20,
-    marginLeft: 16,
-    marginRight: 15,
-  },
-  rect2: {
-    width: 345,
-    height: 250,
-    backgroundColor: "white",
-    borderRadius: 16,
-    flexDirection: "row",
-    marginTop: 10,
-    marginBottom: 30,
-    marginLeft: 5,
-    shadowColor: "rgba(0,0,0,1)",
-    shadowOffset: {
-      width: 1,
-      height: 1,
+ 
+    container: {
+      flex: 1,
+      alignItems: "center",
     },
-    elevation: 5,
-    shadowOpacity: 0.16,
-    shadowRadius: 10,
-  },
-
-  need: {
-    color: "#141414",
-    marginTop: 2,
-    fontSize: 14,
-  },
-
-  rect3: {
-    width: 345,
-    height: 300,
-    backgroundColor: "white",
-    borderRadius: 16,
-    flexDirection: "row",
-    marginTop: 10,
-    marginBottom: 30,
-    marginLeft: 5,
-    shadowColor: "rgba(0,0,0,1)",
-    shadowOffset: {
-      width: 1,
-      height: 1,
+    image: {
+      top: -10,
+      width: 482,
+      height: 315,
+      position: "absolute",
+      left: 0,
     },
-    elevation: 5,
-    shadowOpacity: 0.16,
-    shadowRadius: 10,
-  },
-  imageStack: {
-    width: 482,
-    height: 850,
-    marginTop: -16,
-  },
-});
+    al: {
+      alignItems: "center",
+      alignContent: "center",
+    },
+    rect: {
+      top: 249,
+      width: 363,
+      height: 550,
+      backgroundColor: "rgba(255,255,255,1)",
+      borderRadius: 27,
+    },
+    amarylissTitle: {
+      color: "#121212",
+      fontSize: 20,
+      fontWeight: "bold",
+    },
+    diseaseTitle: {
+      color: "#121212",
+      fontSize: 18,
+      fontWeight: "bold",
+      marginLeft: 15,
+  
+    },
+    heading: {
+      color: "#121212",
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+    amarylissColumn: {
+      width: 200,
+    },
+    image2: {
+      width: 59,
+      height: 46,
+      marginLeft: 111,
+    },
+    amarylissColumnRow: {
+      height: 54,
+      flexDirection: "row",
+      marginTop: 20,
+      marginLeft: 16,
+      marginRight: 15,
+    },
+    rect2: {
+      width: 350,
+      height: 180,
+      backgroundColor: "white",
+      borderRadius: 16,
+      flexDirection: "row",
+      marginTop: 25,
+      marginBottom: 10,
+      marginLeft: 5,
+      shadowColor: "rgba(0,0,0,1)",
+      shadowOffset: {
+        width: 1,
+        height: 1,
+      },
+      elevation: 5,
+      shadowOpacity: 0.16,
+      shadowRadius: 10,
+    },
+  
+    need: {
+      color: "#141414",
+      marginTop: 2,
+      fontSize: 14,
+    },
+  
+    rect3: {
+      width: 345,
+      height: 240,
+      backgroundColor: "white",
+      borderRadius: 16,
+      flexDirection: "row",
+      marginTop: 10,
+      marginBottom: 30,
+      marginLeft: 5,
+      shadowColor: "rgba(0,0,0,1)",
+      shadowOffset: {
+        width: 1,
+        height: 1,
+      },
+      elevation: 5,
+      shadowOpacity: 0.16,
+      shadowRadius: 10,
+    },
+    imageStack: {
+      width: 482,
+      height: 850,
+      marginTop: -16,
+    },
+  });
 export default Hispa;

@@ -1,4 +1,4 @@
-import React, { Component ,useState,useEffect} from "react";
+import React, { Component ,useState,useEffect,useRef} from "react";
 import {
   StyleSheet,
   Text,
@@ -6,13 +6,109 @@ import {
   Image,
   TouchableOpacity,
   ImageBackground,
+  Button
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import CameraSet from "../../assets/constants/Camera";
 import { useRoute } from "@react-navigation/native";
+import Loader from "../../assets/constants/Loader";
+import axios from "axios";
 
 
-const ModelScreen = ({ navigation }) => {
+
+const PredScreen = ({ navigation }) => {
+
+  const route = useRoute();
+  const [imageUri, setImageUri] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [result, setResult] = useState(null);
+
+
+
+  useEffect(() => {
+    //console.log("route.params: ",route.params.imgUri);
+    if (route.params) {
+      setImageUri(route.params.imgUri);
+      //setBase64Image(route.params.base64Img);
+    }
+  }, [route.params, imageUri]);
+
+const CallPredictionAPI = async () => {
+    //console.log("CallPredictionAPI");
+    setIsLoading(true);
+    try {
+      
+      // Convert the image file to a FormData object
+      const formData = new FormData();
+      formData.append("file",
+      { 
+        name: "image.jpg",
+        type: "image/jpg",
+        uri: route.params.imgUri
+      }
+      );
+    
+      // Make the API call
+      const response = await axios
+        .post(
+          "https://us-central1-kethbima-406316.cloudfunctions.net/predict34",
+            formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .catch((error) => {
+          console.error(error.message);
+          console.log(error.response.data);
+          setIsLoading(false);
+        })
+        .finally(() => {
+            setIsLoading(false);
+        });
+
+      // Process the response data her
+      setResult(response.data);
+
+    } catch (error) {
+      // Handle errors
+      //console.error(error);
+    }
+  };
+if(result!=null){
+
+  if (result.class === "Healthy") {
+      navigation.navigate("LeafScald",{
+        confidence:result.confidence,
+        class:result.class
+      }); 
+    }else if(result.class=== "Brown Spot"){
+      navigation.navigate("BrownSpot", {
+        confidence:result.confidence,
+        class:result.class
+      });}
+    else if(result.class === "Hispa"){
+      navigation.navigate("Hispa",{
+        confidence:result.confidence,
+        class:result.class
+      });}
+    else if(result.class === "LeafBlast"){
+      navigation.navigate("LeafBlast", {
+        confidence:result.confidence,
+        class:result.class
+      });}
+      else if(result.class === "LeafBlight"){
+        navigation.navigate("LeafBlight",{
+          confidence:result.confidence,
+          class:result.class
+        } );}
+        else if(result.class === "LeafScald"){
+          navigation.navigate("LeafScald",{
+            confidence:result.confidence,
+            class:result.class
+          } );}
+  
+}
 
   return (
     <View style={styles.container}>
@@ -52,8 +148,20 @@ const ModelScreen = ({ navigation }) => {
                     </View>
                   </View>
                 </View>
-                <View style={styles.rect4}>
-                  <Text style={styles.healYourCrop}>Identify Disease Here!</Text>
+                  {imageUri ? (<View style={styles.rect4}>
+                    <Text style={styles.healYourCrop}>Image Preview</Text>
+                <Image source={{ uri: imageUri }} style={styles.image4} />
+                
+                <TouchableOpacity style={styles.buttonUpload} onPress={CallPredictionAPI}>
+                    <Text style={{color:"white"}}>Predict Disease</Text>
+                    <Loader isLoading={isLoading} />
+              </TouchableOpacity>
+                </View>
+                
+                
+                ) :
+                (<View style={styles.rect4}>
+                  <Text style={styles.healYourCrop}>No Image Preview Availble</Text>
                   <View style={styles.image3Row}>
                     <Image
                       source={require("../../assets/images/qr.png")}
@@ -71,9 +179,8 @@ const ModelScreen = ({ navigation }) => {
                       style={styles.image4}
                     ></Image>
                   </View>
-                  <CameraSet navigation={navigation}/>
-                  </View>
-                  
+                  </View>)
+                  }
               </View>
               <Image
                 source={require('../../assets/animation/Animation.gif')}
@@ -123,10 +230,10 @@ const styles = StyleSheet.create({
   },
   rect4: {
     width: 238,
-    height: 250,
+    height: 290,
     backgroundColor: "rgba(255,255,255,1)",
     borderRadius: 27,
-    marginTop: 45,
+    marginTop: 25,
     marginLeft: 20,
     shadowColor: "rgba(0,0,0,1)",
     shadowOffset: {
@@ -141,8 +248,9 @@ const styles = StyleSheet.create({
   },
   healYourCrop: {
     color: "#195F57",
-    fontSize: 18,
+    fontSize: 20,
     marginTop: 14,
+    marginBottom: 18,
   },
   point:{
     fontSize:15,
@@ -160,10 +268,10 @@ const styles = StyleSheet.create({
     marginTop: 14,
   },
   image4: {
-    width: 48,
-    height: 48,
+    width: 175,
+    height: 150,
     marginLeft: 7,
-    marginTop: 3,
+    marginBottom: 20,
   },
   image3Row: {
     height: 53,
@@ -172,6 +280,15 @@ const styles = StyleSheet.create({
     marginLeft: 31,
     marginRight: 20,
   },
+  buttonUpload:{
+    width: 150,
+    height: 40,
+    backgroundColor: "#195F57",
+    borderRadius: 56,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
 
   rect7: {
     width: 238,
@@ -236,4 +353,4 @@ pointColumn: {
     right:20
   },
 });
-export default ModelScreen;
+export default PredScreen;

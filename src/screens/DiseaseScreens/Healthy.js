@@ -7,9 +7,12 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
 const Healthy = ({ navigation }) => {
+  const route = useRoute();
+
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={styles.container}>
@@ -31,6 +34,11 @@ const Healthy = ({ navigation }) => {
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
         <View style={styles.imageStack}>
+        <Image
+            source={require("../../../assets/images/green-field.jpg")}
+            resizeMode="contain"
+            style={styles.image}
+          />
           <View style={styles.al}>
             <View style={styles.rect}>
               <View style={styles.amarylissColumnRow}>
@@ -39,9 +47,15 @@ const Healthy = ({ navigation }) => {
                 </View>
               </View>
               <View style={styles.rect2}>
-                <Text style={styles.amarylissTitle2}>
+                <Text style={styles.heading}>
                   <Text style={styles.heading}>All Good</Text>
                 </Text>
+                <Text style={styles.heading}>
+                <Text style={styles.heading}>No Disease Detected</Text>
+                </Text>
+                <Text style={styles.heading}>
+                  <Text style={styles.heading}>Confidence Level:  <Text style={{color:"green"}}>{route.params.confidence}</Text></Text>
+                  </Text>
               </View>
             </View>
           </View>
@@ -83,6 +97,8 @@ const styles = StyleSheet.create({
     color: "#121212",
     fontSize: 16,
     fontWeight: "bold",
+    marginLeft: 15,
+    padding: 10,
   },
   amarylissColumn: {
     width: 200,
@@ -104,7 +120,7 @@ const styles = StyleSheet.create({
     height: 250,
     backgroundColor: "white",
     borderRadius: 16,
-    flexDirection: "row",
+    flexDirection: "column",
     marginTop: 10,
     marginBottom: 30,
     marginLeft: 8,

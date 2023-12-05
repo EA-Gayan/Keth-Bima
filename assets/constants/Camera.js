@@ -13,10 +13,15 @@ import axios from "axios";
 import Loader from "./Loader";
 import Modal from "react-native-modal";
 import * as tf from "@tensorflow/tfjs";
+import { manipulateAsync, resize } from "expo-image-manipulator";
 
-const CameraSet = (props) => {
+
+const CameraSet = ({navigation }) => {
+
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [image, setImage] = useState(null);
+
 
   // Handle checking permissions for both camera and gallery
   const handlePermissions = async () => {
@@ -75,23 +80,52 @@ name\: \`test\.</span>{result.uri.split('.')[1]}`,
     }
   };
 
+  const getGalleryImage = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 1,
+      });
+
+      const img = result.assets[0].uri;
+     
+      if (!result.canceled) {
+        const manipResult = await manipulateAsync(img, [
+          {
+            resize: { width: 1024, height: 768  
+          }},
+      ]);
+     
+        setImage(manipResult.uri);
+       
+        navigation.navigate("PredScreen", {
+          imgUri: manipResult.uri,
+          //base64Img: base64Image,
+        });
+      }
+    } catch (error) {
+      console.log("error ", error);
+    }
+  };
+
+
   // Handle uploading the selected image to Cloudinary
   const onUpload = async (image) => {
     setIsLoading(true);
     const data = new FormData();
     data.append("file", image);
-    data.append("upload_preset", "plantsApp");
-    data.append("cloud_name", "dark123");
+    // data.append("upload_preset", "plantsApp");
+    // data.append("cloud_name", "dark123");
 
     try {
       const response = await axios.post(
-        `https://api.cloudinary.com/v1_1/dark123/image/upload`,
+        `https://us-central1-kethbima-406316.cloudfunctions.net/predict34`,
         data
       );
       if (response) {
         setIsLoading(false);
         console.log(response.data);
-        props.navigation.navigate("PredictionScreen");
+        //props.navigation.navigate("PredictionScreen");
       }
     } catch (err) {
       console.log(err.message);
@@ -139,7 +173,7 @@ name\: \`test\.</span>{result.uri.split('.')[1]}`,
                   style={styles.modalImage1}
                 ></Image>
               </TouchableOpacity>
-              <TouchableOpacity onPress={pickFromGallery}>
+              <TouchableOpacity onPress={getGalleryImage}>
                 <Image
                   source={require("../../assets/images/memories.png")}
                   resizeMode="contain"

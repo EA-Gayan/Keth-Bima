@@ -8,8 +8,10 @@ import {
   ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useRoute } from "@react-navigation/native";
 
 const LeafScald = ({ navigation }) => {
+  const route = useRoute();
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={styles.container}>
@@ -31,6 +33,11 @@ const LeafScald = ({ navigation }) => {
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
         <View style={styles.imageStack}>
+        <Image
+            source={require("../../../assets/images/green-field.jpg")}
+            resizeMode="contain"
+            style={styles.image}
+          />
           <View style={styles.al}>
             <View style={styles.rect}>
               <View style={styles.amarylissColumnRow}>
@@ -38,6 +45,9 @@ const LeafScald = ({ navigation }) => {
                   <Text style={styles.amarylissTitle}>Disease Management</Text>
                 </View>
               </View>
+              <View>
+                <Text style={styles.diseaseTitle}>Disease Name: <Text style={{color:"red"}}>{route.params.class}</Text></Text>
+                </View>
               <View style={styles.rect2}>
                 <Text style={styles.amarylissTitle2}>
                   <Text style={styles.heading}>If the disease spread fast</Text>
@@ -93,6 +103,13 @@ const styles = StyleSheet.create({
     height: 315,
     position: "absolute",
     left: 0,
+  },
+  diseaseTitle: {
+    color: "#121212",
+    fontSize: 18,
+    fontWeight: "bold",
+    marginLeft: 15,
+
   },
   al: {
     alignItems: "center",

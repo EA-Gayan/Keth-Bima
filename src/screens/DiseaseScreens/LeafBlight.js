@@ -31,6 +31,11 @@ const LeafBlight = ({ navigation }) => {
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
         <View style={styles.imageStack}>
+        <Image
+            source={require("../../../assets/images/green-field.jpg")}
+            resizeMode="contain"
+            style={styles.image}
+          />
           <View style={styles.al}>
             <View style={styles.rect}>
               <View style={styles.amarylissColumnRow}>
@@ -38,6 +43,9 @@ const LeafBlight = ({ navigation }) => {
                   <Text style={styles.amarylissTitle}>Disease Management</Text>
                 </View>
               </View>
+              <View>
+                <Text style={styles.diseaseTitle}>Disease Name: <Text style={{color:"red"}}>{route.params.class}</Text></Text>
+                </View>
               <View style={styles.rect2}>
                 <Text style={styles.amarylissTitle2}>
                   <Text style={styles.heading}>Within the crop season</Text>
@@ -103,6 +111,13 @@ const styles = StyleSheet.create({
     height: 569,
     backgroundColor: "rgba(255,255,255,1)",
     borderRadius: 27,
+  },
+  diseaseTitle: {
+    color: "#121212",
+    fontSize: 18,
+    fontWeight: "bold",
+    marginLeft: 15,
+
   },
   amarylissTitle: {
     color: "#121212",
