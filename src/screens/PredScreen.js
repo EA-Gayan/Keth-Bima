@@ -20,8 +20,6 @@ const PredScreen = ({ navigation }) => {
   const route = useRoute();
   const [imageUri, setImageUri] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [result, setResult] = useState(null);
-
 
 
   useEffect(() => {
@@ -68,47 +66,77 @@ const CallPredictionAPI = async () => {
         });
 
       // Process the response data her
-      setResult(response.data);
+      if (response.data.class === "Healthy") {
+        navigation.navigate("Healthy",{
+          confidence:response.data.confidence,
+          class:response.data.class
+        }); 
+      }else if(response.data.class=== "Brown Spot"){
+        navigation.navigate("BrownSpot", {
+          confidence:response.data.confidence,
+          class:response.data.class
+        });}
+      else if(response.data.class === "Hispa"){
+        navigation.navigate("Hispa",{
+          confidence:response.data.confidence,
+          class:response.data.class
+        });}
+      else if(response.data.class === "LeafBlast"){
+        navigation.navigate("LeafBlast", {
+          confidence:response.data.confidence,
+          class:response.data.class
+        });}
+        else if(response.data.class === "LeafBlight"){
+          navigation.navigate("LeafBlight",{
+            confidence:response.data.confidence,
+            class:response.data.class
+          } );}
+          else if(response.data.class === "LeafScald"){
+            navigation.navigate("LeafScald",{
+              confidence:response.data.confidence,
+              class:response.data.class
+            } );
+  }
 
     } catch (error) {
       // Handle errors
       //console.error(error);
     }
   };
-if(result!=null){
+// if(result!=null){
 
-  if (result.class === "Healthy") {
-      navigation.navigate("LeafScald",{
-        confidence:result.confidence,
-        class:result.class
-      }); 
-    }else if(result.class=== "Brown Spot"){
-      navigation.navigate("BrownSpot", {
-        confidence:result.confidence,
-        class:result.class
-      });}
-    else if(result.class === "Hispa"){
-      navigation.navigate("Hispa",{
-        confidence:result.confidence,
-        class:result.class
-      });}
-    else if(result.class === "LeafBlast"){
-      navigation.navigate("LeafBlast", {
-        confidence:result.confidence,
-        class:result.class
-      });}
-      else if(result.class === "LeafBlight"){
-        navigation.navigate("LeafBlight",{
-          confidence:result.confidence,
-          class:result.class
-        } );}
-        else if(result.class === "LeafScald"){
-          navigation.navigate("LeafScald",{
-            confidence:result.confidence,
-            class:result.class
-          } );}
+//   if (result.class === "Healthy") {
+//       navigation.navigate("Healthy",{
+//         confidence:result.confidence,
+//         class:result.class
+//       }); 
+//     }else if(result.class=== "Brown Spot"){
+//       navigation.navigate("BrownSpot", {
+//         confidence:result.confidence,
+//         class:result.class
+//       });}
+//     else if(result.class === "Hispa"){
+//       navigation.navigate("Hispa",{
+//         confidence:result.confidence,
+//         class:result.class
+//       });}
+//     else if(result.class === "LeafBlast"){
+//       navigation.navigate("LeafBlast", {
+//         confidence:result.confidence,
+//         class:result.class
+//       });}
+//       else if(result.class === "LeafBlight"){
+//         navigation.navigate("LeafBlight",{
+//           confidence:result.confidence,
+//           class:result.class
+//         } );}
+//         else if(result.class === "LeafScald"){
+//           navigation.navigate("LeafScald",{
+//             confidence:result.confidence,
+//             class:result.class
+//           } );}
   
-}
+// }
 
   return (
     <View style={styles.container}>
