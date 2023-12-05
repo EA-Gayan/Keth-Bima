@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect,useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -12,15 +12,30 @@ import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
 import Loader from "./Loader";
 import Modal from "react-native-modal";
-import * as tf from "@tensorflow/tfjs";
 import { manipulateAsync, resize } from "expo-image-manipulator";
+import { Camera } from "expo-camera";
 
 const CameraSet = ({ navigation }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [image, setImage] = useState(null);
+  const type = Camera.Constants.back;
+  const cameraRef = useRef(null);
 
   // Handle checking permissions for both camera and gallery
+  useEffect(() => {
+    (async () => {
+      MediaLibrary.requestPermissionsAsync();
+      const cameraStatus = await Camera.requestCameraPermissionsAsync();
+      setHasCameraPermission(cameraStatus.status === "granted");
+    })();
+  }, []);
+
+  if (hasCameraPermission === false) {
+    return <Text>No Camera Access</Text>;
+  }
+
   const handlePermissions = async () => {
     const { status } = await MediaLibrary.getPermissionsAsync();
     if (status !== "granted") {
@@ -39,43 +54,28 @@ const CameraSet = ({ navigation }) => {
   const pickFromCamera = async () => {
     setIsVisible(false);
     await handlePermissions();
-
-    const result = await ImagePicker.launchCameraAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      const newFile = {
-        uri: result.uri,
-        type: `test/<span class="math-inline">\{result\.uri\.split\('\.'\)\[1\]\}\`,
-name\: \`test\.</span>{result.uri.split('.')[1]}`,
-      };
-      onUpload(newFile);
-    }
+    try {
+      const result = await ImagePicker.launchCameraAsync({
+              allowsEditing: true,
+              aspect: [4, 3],
+              quality: 1,
+            });
+            if (!result.canceled && result.assets && result.assets.length > 0) {
+              const manipResult = await manipulateAsync(result.assets[0].uri, [
+                { resize: { width: 1024, height: 768 } },
+              ]);
+        
+    
+            setImage(manipResult.uri);
+            navigation.navigate("PredScreen", {
+              imgUri: manipResult.uri,
+            });
+          }}
+           catch (error) {
+            console.log("error ", error);
+          }
   };
-
-  // Handle selecting a picture from the gallery
-  const pickFromGallery = async () => {
-    setIsVisible(false);
-    await handlePermissions();
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      const newFile = {
-        uri: result.uri,
-        type: `test/<span class="math-inline">\{result\.uri\.split\('\.'\)\[1\]\}\`,
-name\: \`test\.</span>{result.uri.split('.')[1]}`,
-      };
-      onUpload(newFile);
-    }
-  };
+ 
 
   const getGalleryImage = async () => {
     try {
@@ -276,6 +276,13 @@ const styles = StyleSheet.create({
     color: "red",
     marginTop: 20,
     marginLeft: 180,
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  camera: {
+    flex: 1,
   },
 });
 export default CameraSet;

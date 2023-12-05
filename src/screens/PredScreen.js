@@ -23,12 +23,11 @@ const PredScreen = ({ navigation }) => {
     //console.log("route.params: ",route.params.imgUri);
     if (route.params) {
       setImageUri(route.params.imgUri);
-      //setBase64Image(route.params.base64Img);
+      
     }
   }, [route.params, imageUri]);
 
   const CallPredictionAPI = async () => {
-    //console.log("CallPredictionAPI");
     setIsLoading(true);
     try {
       // Convert the image file to a FormData object
@@ -93,8 +92,8 @@ const PredScreen = ({ navigation }) => {
   }
 
     } catch (error) {
-      // Handle errors
-      //console.error(error);
+      //Handle errors
+      console.error(error);
     }
   };
 
