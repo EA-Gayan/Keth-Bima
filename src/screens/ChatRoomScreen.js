@@ -12,9 +12,10 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { DB } from "../../firebaseInit";
+import { collection, addDoc, onSnapshot } from "firebase/firestore";
 
 const ChatRoomScreen = ({ route }) => {
-  const { selectedUser } = route.params;
+  const { selectedUser, chatRoomId } = route.params;
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const [image, setImage] = useState(null);
@@ -63,14 +64,21 @@ const ChatRoomScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.userDetails}>
-        <Text style={styles.username}>{selectedUser.displayName}</Text>
-        {selectedUser.profileImage && (
-          <Image
-            source={{ uri: selectedUser.profileImage }}
-            style={styles.profilePic}
-          />
-        )}
+      <View style={styles.userDetailsSection}>
+        <View style={styles.userDetails}>
+          <Text style={styles.username}>{selectedUser.displayName}</Text>
+          {selectedUser.profileImage ? (
+            <Image
+              source={{ uri: selectedUser.profileImage }}
+              style={styles.profilePic}
+            />
+          ) : (
+            <Image
+              source={require("../../assets/images/chat.png")}
+              style={styles.profilePic}
+            />
+          )}
+        </View>
       </View>
       <FlatList
         data={messages}
@@ -126,12 +134,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 15,
-    marginTop: 65,
+    marginTop: 40,
   },
   username: {
     fontSize: 18,
     fontWeight: "bold",
     marginRight: 8,
+  },
+  userDetailsSection: {
+    backgroundColor: "#4CAF50", // Customize the background color
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
   },
   profilePic: {
     width: 40,
@@ -144,6 +158,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 8,
     alignSelf: "flex-end",
+    marginTop: 30,
   },
   otherMessage: {
     backgroundColor: "#E0E0E0",
