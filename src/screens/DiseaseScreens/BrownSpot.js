@@ -1,4 +1,4 @@
-import React ,{useState,useEffect,useRef}from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,13 +9,22 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
-
-
+import { translation } from "../../lang_model/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BrownSpot = ({ navigation }) => {
+  const [selectedLang, setSelectedLang] = useState(0);
+
+  useEffect(() => {
+    getLang();
+  }, []);
+  const getLang = async () => {
+    setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
+  };
+
   const route = useRoute();
-console.log(route.params.imageUri);
-//const imageUri = route.params.imageUri;
+  console.log(route.params.imageUri);
+  //const imageUri = route.params.imageUri;
 
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
@@ -38,49 +47,99 @@ console.log(route.params.imageUri);
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
         <View style={styles.imageStack}>
-        <Image
-            source={require("../../../assets/images/green-field.jpg")}
+          <Image
+            source={require("../../../assets/images/aug_0_25.jpg")}
             resizeMode="contain"
             style={styles.image}
           />
           <View style={styles.al}>
             <View style={styles.rect}>
-            
               <View style={styles.amarylissColumnRow}>
                 <View style={styles.amarylissColumn}>
-                  <Text style={styles.amarylissTitle}>Disease Management</Text>
+                  <Text style={styles.amarylissTitle}>
+                    {selectedLang == 0
+                      ? translation[47].English
+                      : selectedLang == 1
+                      ? translation[47].Sinhala
+                      : null}
+                  </Text>
                 </View>
               </View>
               <View>
-                <Text style={styles.diseaseTitle}>Disease Name: <Text style={{color:"red"}}>{route.params.class}</Text></Text>
-                </View>
+                <Text style={styles.diseaseTitle}>
+                  {selectedLang == 0
+                    ? translation[62].English
+                    : selectedLang == 1
+                    ? translation[62].Sinhala
+                    : null}{" "}
+                  <Text style={{ color: "red" }}>{route.params.class}</Text>
+                </Text>
+              </View>
               <View style={styles.rect2}>
                 <Text style={styles.amarylissTitle2}>
-                  <Text style={styles.heading}>Within the crop season</Text>
+                  <Text style={styles.heading}>
+                    {selectedLang == 0
+                      ? translation[63].English
+                      : selectedLang == 1
+                      ? translation[63].Sinhala
+                      : null}
+                  </Text>
                   <Text style={styles.need}>
                     {"\n"}
-                    {"\n"} ✅ Application of urea in recommended dosages or
-                    application of urea based on leaf colour chart.
                     {"\n"}
-                    {"\n"} ✅ Weed management
+                    {selectedLang == 0
+                      ? translation[78].English
+                      : selectedLang == 1
+                      ? translation[78].Sinhala
+                      : null}
+                    {"\n"}
+                    {"\n"}
+                    {selectedLang == 0
+                      ? translation[79].English
+                      : selectedLang == 1
+                      ? translation[79].Sinhala
+                      : null}
                   </Text>
                 </Text>
               </View>
               <View style={styles.rect3}>
                 <Text style={styles.amarylissTitle2}>
-                  <Text style={styles.heading}>If the crop is infected,</Text>
+                  <Text style={styles.heading}>
+                    {selectedLang == 0
+                      ? translation[56].English
+                      : selectedLang == 1
+                      ? translation[56].Sinhala
+                      : null}
+                  </Text>
                   <Text style={styles.need}>
                     {"\n"}
-                    {"\n"} ✅ Addition of burnt paddy husk (250 kg per acre) to
-                    the soil during land preparation.
                     {"\n"}
-                    {"\n"} ✅ Abstain addition of disease infected straw.
+                    {selectedLang == 0
+                      ? translation[80].English
+                      : selectedLang == 1
+                      ? translation[80].Sinhala
+                      : null}
                     {"\n"}
-                    {"\n"} ✅ Treatment of seed paddy by dipping in hot water
-                    (53-54OC) for 10-12 minutes
                     {"\n"}
-                    {"\n"} ✅ Treatment of seeds with a seed-protectant
-                    fungicide
+                    {selectedLang == 0
+                      ? translation[77].English
+                      : selectedLang == 1
+                      ? translation[77].Sinhala
+                      : null}
+                    {"\n"}
+                    {"\n"}
+                    {selectedLang == 0
+                      ? translation[81].English
+                      : selectedLang == 1
+                      ? translation[81].Sinhala
+                      : null}
+                    {"\n"}
+                    {"\n"}
+                    {selectedLang == 0
+                      ? translation[82].English
+                      : selectedLang == 1
+                      ? translation[82].Sinhala
+                      : null}
                   </Text>
                 </Text>
               </View>
@@ -98,11 +157,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    top: -10,
-    width: 482,
-    height: 315,
+    top: 100,
+    width: 150,
+    height: 150,
     position: "absolute",
-    left: 0,
+    left: 160,
   },
   al: {
     alignItems: "center",
@@ -114,18 +173,19 @@ const styles = StyleSheet.create({
     height: 550,
     backgroundColor: "rgba(255,255,255,1)",
     borderRadius: 27,
+    marginTop: 20,
   },
   amarylissTitle: {
     color: "#121212",
     fontSize: 20,
     fontWeight: "bold",
+    marginLeft: -5,
   },
   diseaseTitle: {
     color: "#121212",
     fontSize: 18,
     fontWeight: "bold",
-    marginLeft: 15,
-
+    marginLeft: 5,
   },
   heading: {
     color: "#121212",

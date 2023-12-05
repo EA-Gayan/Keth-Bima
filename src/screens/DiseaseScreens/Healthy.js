@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,10 +9,19 @@ import {
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { translation } from "../../lang_model/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Healthy = ({ navigation }) => {
   const route = useRoute();
+  const [selectedLang, setSelectedLang] = useState(0);
 
+  useEffect(() => {
+    getLang();
+  }, []);
+  const getLang = async () => {
+    setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
+  };
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={styles.container}>
@@ -35,7 +44,7 @@ const Healthy = ({ navigation }) => {
         </TouchableOpacity>
         <View style={styles.imageStack}>
           <Image
-            source={require("../../../assets/images/green-field.jpg")}
+            source={require("../../../assets/images/aug_0_52.jpg")}
             resizeMode="contain"
             style={styles.image}
           />
@@ -43,19 +52,52 @@ const Healthy = ({ navigation }) => {
             <View style={styles.rect}>
               <View style={styles.amarylissColumnRow}>
                 <View style={styles.amarylissColumn}>
-                  <Text style={styles.amarylissTitle}>Disease Management</Text>
+                  <Text style={styles.amarylissTitle}>
+                    {selectedLang == 0
+                      ? translation[47].English
+                      : selectedLang == 1
+                      ? translation[47].Sinhala
+                      : null}
+                  </Text>
                 </View>
               </View>
               <View style={styles.rect2}>
                 <Text style={styles.heading}>
-                  <Text style={styles.heading}>All Good</Text>
+                  <Text style={styles.heading}>
+                    {selectedLang == 0
+                      ? translation[48].English
+                      : selectedLang == 1
+                      ? translation[48].Sinhala
+                      : null}
+                  </Text>
                 </Text>
                 <Text style={styles.heading}>
-                  <Text style={styles.heading}>No Disease Detected</Text>
+                  <Text style={styles.heading}>
+                    {selectedLang == 0
+                      ? translation[49].English
+                      : selectedLang == 1
+                      ? translation[49].Sinhala
+                      : null}
+                  </Text>
                 </Text>
+
                 <Text style={styles.heading}>
-                  <Text style={styles.heading}>Confidence Level:  <Text style={{color:"green"}}>{route.params.confidence}</Text></Text>
+                  <Text style={styles.heading}>
+                    {selectedLang == 0
+                      ? translation[50].English
+                      : selectedLang == 1
+                      ? translation[50].Sinhala
+                      : null}{" "}
+                    <Text style={{ color: "green" }}>
+                      {route.params.confidence}
+                    </Text>
+                  </Text>
                 </Text>
+                <Image
+                  source={require("../../../assets/images/check.jpg")}
+                  resizeMode="contain"
+                  style={styles.imagecheck}
+                />
               </View>
             </View>
           </View>
@@ -71,11 +113,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    top: 0,
-    width: 482,
-    height: 315,
+    top: 100,
+    width: 150,
+    height: 150,
     position: "absolute",
-    left: 0,
+    left: 160,
   },
   al: {
     alignItems: "center",
@@ -84,9 +126,10 @@ const styles = StyleSheet.create({
   rect: {
     top: 249,
     width: 363,
-    height: 369,
+    height: 420,
     backgroundColor: "rgba(255,255,255,1)",
     borderRadius: 27,
+    marginTop: 20,
   },
   amarylissTitle: {
     color: "#121212",
@@ -117,7 +160,7 @@ const styles = StyleSheet.create({
   },
   rect2: {
     width: 345,
-    height: 250,
+    height: 150,
     backgroundColor: "white",
     borderRadius: 16,
     flexDirection: "column",
@@ -134,28 +177,16 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
 
-  rect3: {
-    width: 345,
-    height: 210,
-    backgroundColor: "white",
-    borderRadius: 16,
-    flexDirection: "row",
-    marginTop: 10,
-    marginBottom: 30,
-    marginLeft: 5,
-    shadowColor: "rgba(0,0,0,1)",
-    shadowOffset: {
-      width: 1,
-      height: 1,
-    },
-    elevation: 5,
-    shadowOpacity: 0.16,
-    shadowRadius: 10,
-  },
   imageStack: {
     width: 482,
     height: 850,
     marginTop: -16,
+  },
+  imagecheck: {
+    height: 150,
+    width: 150,
+    marginTop: 50,
+    marginLeft: 80,
   },
 });
 export default Healthy;

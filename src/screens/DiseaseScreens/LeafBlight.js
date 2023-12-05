@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,8 +9,19 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
+import { translation } from "../../lang_model/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LeafBlight = ({ navigation }) => {
+  const [selectedLang, setSelectedLang] = useState(0);
+
+  useEffect(() => {
+    getLang();
+  }, []);
+  const getLang = async () => {
+    setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
+  };
+
   const route = useRoute();
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
@@ -34,7 +45,7 @@ const LeafBlight = ({ navigation }) => {
         </TouchableOpacity>
         <View style={styles.imageStack}>
           <Image
-            source={require("../../../assets/images/green-field.jpg")}
+            source={require("../../../assets/images/aug_0_1203.jpg")}
             resizeMode="contain"
             style={styles.image}
           />
@@ -42,47 +53,90 @@ const LeafBlight = ({ navigation }) => {
             <View style={styles.rect}>
               <View style={styles.amarylissColumnRow}>
                 <View style={styles.amarylissColumn}>
-                  <Text style={styles.amarylissTitle}>Disease Management</Text>
+                  <Text style={styles.amarylissTitle}>
+                    {selectedLang == 0
+                      ? translation[47].English
+                      : selectedLang == 1
+                      ? translation[47].Sinhala
+                      : null}
+                  </Text>
                 </View>
               </View>
               <View>
                 <Text style={styles.diseaseTitle}>
-                  Disease Name:{" "}
+                  {selectedLang == 0
+                    ? translation[62].English
+                    : selectedLang == 1
+                    ? translation[62].Sinhala
+                    : null}
                   <Text style={{ color: "red" }}>{route.params.class}</Text>
                 </Text>
               </View>
               <View style={styles.rect2}>
                 <Text style={styles.amarylissTitle2}>
-                  <Text style={styles.heading}>Within the crop season</Text>
+                  <Text style={styles.heading}>
+                    {selectedLang == 0
+                      ? translation[63].English
+                      : selectedLang == 1
+                      ? translation[63].Sinhala
+                      : null}
+                  </Text>
                   <Text style={styles.need}>
                     {"\n"}
-                    {"\n"} ✅ Application of urea in recommended dosages or
-                    application of urea based on leaf colour chart.
                     {"\n"}
-                    {"\n"} ✅ Ensure good drainage of fields.
+                    {selectedLang == 0
+                      ? translation[64].English
+                      : selectedLang == 1
+                      ? translation[64].Sinhala
+                      : null}
+                    {"\n"}
+                    {"\n"}
+                    {selectedLang == 0
+                      ? translation[65].English
+                      : selectedLang == 1
+                      ? translation[65].Sinhala
+                      : null}
                   </Text>
                 </Text>
               </View>
               <View style={styles.rect3}>
                 <Text style={styles.amarylissTitle2}>
                   <Text style={styles.heading}>
-                    Immediately after the disease is observed,
+                    {selectedLang == 0
+                      ? translation[66].English
+                      : selectedLang == 1
+                      ? translation[66].Sinhala
+                      : null}
                   </Text>
                   <Text style={styles.need}>
                     {"\n"}
-                    {"\n"} ✅ stop water supply, and let the field dry.
                     {"\n"}
-                    {"\n"} ✅ When total removal of water is, not possible, try
-                    to out-flow water through drainage ditches or water courses
-                    (wakkada).
+                    {selectedLang == 0
+                      ? translation[67].English
+                      : selectedLang == 1
+                      ? translation[67].Sinhala
+                      : null}
                     {"\n"}
-                    {"\n"} ✅ Water drained from the fields infected with
-                    disease should not be diverted through disease free fields
-                    as much as possible.
                     {"\n"}
-                    {"\n"} ✅ Once the disease is observed, application of
-                    potassium fertilizer could manage further spread of the
-                    disease.
+                    {selectedLang == 0
+                      ? translation[68].English
+                      : selectedLang == 1
+                      ? translation[68].Sinhala
+                      : null}
+                    {"\n"}
+                    {"\n"}
+                    {selectedLang == 0
+                      ? translation[69].English
+                      : selectedLang == 1
+                      ? translation[69].Sinhala
+                      : null}
+                    {"\n"}
+                    {"\n"}
+                    {selectedLang == 0
+                      ? translation[70].English
+                      : selectedLang == 1
+                      ? translation[70].Sinhala
+                      : null}
                   </Text>
                 </Text>
               </View>
@@ -100,11 +154,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    top: 0,
-    width: 482,
-    height: 315,
+    top: 100,
+    width: 150,
+    height: 150,
     position: "absolute",
-    left: 0,
+    left: 160,
   },
   al: {
     alignItems: "center",
@@ -121,7 +175,7 @@ const styles = StyleSheet.create({
     color: "#121212",
     fontSize: 18,
     fontWeight: "bold",
-    marginLeft: 15,
+    marginLeft: 8,
   },
   amarylissTitle: {
     color: "#121212",
@@ -175,7 +229,7 @@ const styles = StyleSheet.create({
 
   rect3: {
     width: 345,
-    height: 280,
+    height: 320,
     backgroundColor: "white",
     borderRadius: 16,
     flexDirection: "row",
@@ -193,7 +247,7 @@ const styles = StyleSheet.create({
   },
   imageStack: {
     width: 482,
-    height: 850,
+    height: 900,
     marginTop: -16,
   },
 });

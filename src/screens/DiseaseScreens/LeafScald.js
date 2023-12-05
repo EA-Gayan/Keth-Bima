@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,8 +9,19 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
+import { translation } from "../../lang_model/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LeafScald = ({ navigation }) => {
+  const [selectedLang, setSelectedLang] = useState(0);
+
+  useEffect(() => {
+    getLang();
+  }, []);
+  const getLang = async () => {
+    setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
+  };
+
   const route = useRoute();
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
@@ -33,8 +44,8 @@ const LeafScald = ({ navigation }) => {
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
         <View style={styles.imageStack}>
-        <Image
-            source={require("../../../assets/images/green-field.jpg")}
+          <Image
+            source={require("../../../assets/images/aug_0_85.jpg")}
             resizeMode="contain"
             style={styles.image}
           />
@@ -42,45 +53,104 @@ const LeafScald = ({ navigation }) => {
             <View style={styles.rect}>
               <View style={styles.amarylissColumnRow}>
                 <View style={styles.amarylissColumn}>
-                  <Text style={styles.amarylissTitle}>Disease Management</Text>
+                  <Text style={styles.amarylissTitle}>
+                    {selectedLang == 0
+                      ? translation[47].English
+                      : selectedLang == 1
+                      ? translation[47].Sinhala
+                      : null}
+                  </Text>
                 </View>
               </View>
               <View>
-                <Text style={styles.diseaseTitle}>Disease Name: <Text style={{color:"red"}}>{route.params.class}</Text></Text>
-                </View>
+                <Text style={styles.diseaseTitle}>
+                  {selectedLang == 0
+                    ? translation[62].English
+                    : selectedLang == 1
+                    ? translation[62].Sinhala
+                    : null}{" "}
+                  <Text style={{ color: "red" }}>{route.params.class}</Text>
+                </Text>
+              </View>
               <View style={styles.rect2}>
                 <Text style={styles.amarylissTitle2}>
-                  <Text style={styles.heading}>If the disease spread fast</Text>
+                  <Text style={styles.heading}>
+                    {selectedLang == 0
+                      ? translation[51].English
+                      : selectedLang == 1
+                      ? translation[51].Sinhala
+                      : null}
+                  </Text>
                   <Text style={styles.need}>
                     {"\n"}
-                    {"\n"} ✅ Tebuconazole 250g/l EC – dissolve 10 ml in 16 l of
-                    water (8-10 tanks per acre)
                     {"\n"}
-                    {"\n"} ✅ Isoprothiolane 400g/l EC – dissolve 20 ml in 16 l
-                    of water (8-10 tanks per acre)
+                    {selectedLang == 0
+                      ? translation[55].English
+                      : selectedLang == 1
+                      ? translation[55].Sinhala
+                      : null}
                     {"\n"}
-                    {"\n"} ✅ Carbendazim 50% WP/WG – dissolve 11 g/ 11 ml in 16
-                    l of water (8-10 tanks per acre)
                     {"\n"}
-                    {"\n"} ✅ Tricyclazole 75 %WP – dissolve 10 g in 16 l of
-                    water (8-10 tanks per acre)
+                    {selectedLang == 0
+                      ? translation[71].English
+                      : selectedLang == 1
+                      ? translation[71].Sinhala
+                      : null}
+                    {"\n"}
+                    {"\n"}
+                    {selectedLang == 0
+                      ? translation[72].English
+                      : selectedLang == 1
+                      ? translation[72].Sinhala
+                      : null}
+                    {"\n"}
+                    {"\n"}
+                    {selectedLang == 0
+                      ? translation[73].English
+                      : selectedLang == 1
+                      ? translation[73].Sinhala
+                      : null}
                   </Text>
                 </Text>
               </View>
               <View style={styles.rect3}>
                 <Text style={styles.amarylissTitle2}>
-                  <Text style={styles.heading}>If the crop is infected,</Text>
+                  <Text style={styles.heading}>
+                    {selectedLang == 0
+                      ? translation[56].English
+                      : selectedLang == 1
+                      ? translation[56].Sinhala
+                      : null}
+                  </Text>
                   <Text style={styles.need}>
                     {"\n"}
-                    {"\n"} ✅ Use of resistant varieties (Bg 403, Bg 406, Bg
-                    366, Bg 359, Bw 361, Bg 250)
                     {"\n"}
-                    {"\n"} ✅ Use of certified seed paddy free from the disease
+                    {selectedLang == 0
+                      ? translation[74].English
+                      : selectedLang == 1
+                      ? translation[74].Sinhala
+                      : null}
                     {"\n"}
-                    {"\n"} ✅ Addition of burnt paddy husk (250 kg per acre) to
-                    the soil during land preparation.
                     {"\n"}
-                    {"\n"} ✅ Abstain addition of disease infected straw.
+                    {selectedLang == 0
+                      ? translation[75].English
+                      : selectedLang == 1
+                      ? translation[75].Sinhala
+                      : null}
+                    {"\n"}
+                    {"\n"}
+                    {selectedLang == 0
+                      ? translation[76].English
+                      : selectedLang == 1
+                      ? translation[76].Sinhala
+                      : null}
+                    {"\n"}
+                    {"\n"}
+                    {selectedLang == 0
+                      ? translation[77].English
+                      : selectedLang == 1
+                      ? translation[77].Sinhala
+                      : null}
                   </Text>
                 </Text>
               </View>
@@ -96,20 +166,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: "#f5f5f5",
   },
   image: {
-    top: 0,
-    width: 482,
-    height: 315,
+    top: 100,
+    width: 150,
+    height: 150,
     position: "absolute",
-    left: 0,
+    left: 160,
   },
+
   diseaseTitle: {
     color: "#121212",
     fontSize: 18,
     fontWeight: "bold",
     marginLeft: 15,
-
   },
   al: {
     alignItems: "center",
@@ -121,6 +192,7 @@ const styles = StyleSheet.create({
     height: 769,
     backgroundColor: "rgba(255,255,255,1)",
     borderRadius: 27,
+    marginTop: 20,
   },
   amarylissTitle: {
     color: "#121212",
@@ -174,7 +246,7 @@ const styles = StyleSheet.create({
 
   rect3: {
     width: 345,
-    height: 210,
+    height: 200,
     backgroundColor: "white",
     borderRadius: 16,
     flexDirection: "row",
@@ -192,7 +264,7 @@ const styles = StyleSheet.create({
   },
   imageStack: {
     width: 482,
-    height: 850,
+    height: 870,
     marginTop: -16,
   },
 });

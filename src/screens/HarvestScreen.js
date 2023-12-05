@@ -12,11 +12,21 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { collection, addDoc } from "firebase/firestore";
 import { DB } from "../../firebaseInit";
+import { translation } from "../lang_model/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HarvestScreen = ({ navigation }) => {
   const [year, setYear] = useState("");
   const [yala, setYala] = useState("");
   const [maha, setMaha] = useState("");
+  const [selectedLang, setSelectedLang] = useState(0);
+
+  useEffect(() => {
+    getLang();
+  }, []);
+  const getLang = async () => {
+    setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
+  };
 
   const handleFormSubmit = async () => {
     addDoc(collection(DB, "harvesting"), {
@@ -73,7 +83,14 @@ const HarvestScreen = ({ navigation }) => {
         />
       </View>
       <View style={styles.container}>
-        <Text style={styles.label}>Year:</Text>
+        <Text style={styles.label}>
+          {selectedLang == 0
+            ? translation[46].English
+            : selectedLang == 1
+            ? translation[46].Sinhala
+            : null}
+          :
+        </Text>
         <TextInput
           style={styles.input}
           value={year}
@@ -81,7 +98,14 @@ const HarvestScreen = ({ navigation }) => {
           keyboardType="numeric"
         />
 
-        <Text style={styles.label}>Yala Quantity(bushels):</Text>
+        <Text style={styles.label}>
+          {selectedLang == 0
+            ? translation[43].English
+            : selectedLang == 1
+            ? translation[43].Sinhala
+            : null}
+          :
+        </Text>
         <TextInput
           style={styles.input}
           value={yala}
@@ -89,7 +113,14 @@ const HarvestScreen = ({ navigation }) => {
           keyboardType="numeric"
         />
 
-        <Text style={styles.label}>Maha Quantity(bushels):</Text>
+        <Text style={styles.label}>
+          {selectedLang == 0
+            ? translation[44].English
+            : selectedLang == 1
+            ? translation[44].Sinhala
+            : null}
+          :
+        </Text>
         <TextInput
           style={styles.input}
           value={maha}
@@ -97,7 +128,13 @@ const HarvestScreen = ({ navigation }) => {
           keyboardType="numeric"
         />
         <TouchableOpacity style={styles.saveButton} onPress={handleFormSubmit}>
-          <Text style={styles.saveButtonText}>Submit</Text>
+          <Text style={styles.saveButtonText}>
+            {selectedLang == 0
+              ? translation[45].English
+              : selectedLang == 1
+              ? translation[45].Sinhala
+              : null}
+          </Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,8 +16,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const ProfileScreen = ({ navigation }) => {
   const auth = FIREBASE_AUTH;
   const user = auth.currentUser;
-  const [langModalVisible, setLangModalVisible] = useState(false);
   const [selectedLang, setSelectedLang] = useState(0);
+
+  useEffect(() => {
+    getLang();
+  }, []);
+  const getLang = async () => {
+    setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
+  };
+  const [langModalVisible, setLangModalVisible] = useState(false);
   const saveSelectedLang = async (index) => {
     await AsyncStorage.setItem("LANG", index + "");
   };
@@ -59,7 +66,13 @@ const ProfileScreen = ({ navigation }) => {
             resizeMode="cover"
             style={styles.image9}
           >
-            <Text style={styles.profile}>Profile</Text>
+            <Text style={styles.profile}>
+              {selectedLang == 0
+                ? translation[83].English
+                : selectedLang == 1
+                ? translation[83].Sinhala
+                : null}
+            </Text>
             <View style={styles.rect5}>
               <View style={styles.image2Row}>
                 <Image

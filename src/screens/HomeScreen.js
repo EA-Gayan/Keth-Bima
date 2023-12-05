@@ -116,7 +116,7 @@ const HomeScreen = ({ navigation }) => {
         style={{ width: "100%", height: "100%" }}
         source={require("../../assets/images/bg3.jpg")}
       >
-        <View style={{ alignItems: "center", marginTop: 160 }}>
+        <View style={{ alignItems: "center", marginTop: 120 }}>
           <Text style={{ fontSize: 25, color: "black", fontWeight: "bold" }}>
             {selectedLang == 0
               ? translation[10].English

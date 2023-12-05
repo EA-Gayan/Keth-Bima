@@ -12,18 +12,26 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
 import Loader from "../../assets/constants/Loader";
 import axios from "axios";
+import { translation } from "../lang_model/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PredScreen = ({ navigation }) => {
   const route = useRoute();
   const [imageUri, setImageUri] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedLang, setSelectedLang] = useState(0);
 
+  useEffect(() => {
+    getLang();
+  }, []);
+  const getLang = async () => {
+    setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
+  };
 
   useEffect(() => {
     //console.log("route.params: ",route.params.imgUri);
     if (route.params) {
       setImageUri(route.params.imgUri);
-      
     }
   }, [route.params, imageUri]);
 
@@ -60,37 +68,36 @@ const PredScreen = ({ navigation }) => {
 
       // Process the response data her
       if (response.data.class === "Healthy") {
-        navigation.navigate("Healthy",{
-          confidence:response.data.confidence,
-          class:response.data.class
-        }); 
-      }else if(response.data.class=== "Brown Spot"){
+        navigation.navigate("Healthy", {
+          confidence: response.data.confidence,
+          class: response.data.class,
+        });
+      } else if (response.data.class === "Brown Spot") {
         navigation.navigate("BrownSpot", {
-          confidence:response.data.confidence,
-          class:response.data.class
-        });}
-      else if(response.data.class === "Rice Hispa"){
-        navigation.navigate("Hispa",{
-          confidence:response.data.confidence,
-          class:response.data.class
-        });}
-      else if(response.data.class === "Leaf Blast"){
+          confidence: response.data.confidence,
+          class: response.data.class,
+        });
+      } else if (response.data.class === "Rice Hispa") {
+        navigation.navigate("Hispa", {
+          confidence: response.data.confidence,
+          class: response.data.class,
+        });
+      } else if (response.data.class === "Leaf Blast") {
         navigation.navigate("LeafBlast", {
-          confidence:response.data.confidence,
-          class:response.data.class
-        });}
-        else if(response.data.class === "Bacterial Leaf Blight"){
-          navigation.navigate("LeafBlight",{
-            confidence:response.data.confidence,
-            class:response.data.class
-          } );}
-          else if(response.data.class === "Leaf scald"){
-            navigation.navigate("LeafScald",{
-              confidence:response.data.confidence,
-              class:response.data.class
-            } );
-  }
-
+          confidence: response.data.confidence,
+          class: response.data.class,
+        });
+      } else if (response.data.class === "Bacterial Leaf Blight") {
+        navigation.navigate("LeafBlight", {
+          confidence: response.data.confidence,
+          class: response.data.class,
+        });
+      } else if (response.data.class === "Leaf scald") {
+        navigation.navigate("LeafScald", {
+          confidence: response.data.confidence,
+          class: response.data.class,
+        });
+      }
     } catch (error) {
       //Handle errors
       console.error(error);
@@ -124,27 +131,69 @@ const PredScreen = ({ navigation }) => {
         <View style={styles.rect2StackStack}>
           <View style={styles.rect2Stack}>
             <View style={styles.rect}>
-              <Text style={styles.loremIpsum}>Its very Simple!</Text>
+              <Text style={styles.loremIpsum}>
+                {selectedLang == 0
+                  ? translation[24].English
+                  : selectedLang == 1
+                  ? translation[24].Sinhala
+                  : null}
+              </Text>
               <View style={styles.rect7}>
                 <View style={styles.pointColumnRow}>
                   <View style={styles.pointColumn}>
-                    <Text style={styles.point}>✓ Open camera</Text>
-                    <Text style={styles.point}>✓ Capture affcted leaf</Text>
-                    <Text style={styles.point}>✓ Upload it</Text>
-                    <Text style={styles.point}>✓ You get it</Text>
+                    <Text style={styles.point}>
+                      {selectedLang == 0
+                        ? translation[25].English
+                        : selectedLang == 1
+                        ? translation[25].Sinhala
+                        : null}
+                    </Text>
+                    <Text style={styles.point}>
+                      {selectedLang == 0
+                        ? translation[26].English
+                        : selectedLang == 1
+                        ? translation[26].Sinhala
+                        : null}
+                    </Text>
+                    <Text style={styles.point}>
+                      {selectedLang == 0
+                        ? translation[27].English
+                        : selectedLang == 1
+                        ? translation[27].Sinhala
+                        : null}
+                    </Text>
+                    <Text style={styles.point}>
+                      {selectedLang == 0
+                        ? translation[28].English
+                        : selectedLang == 1
+                        ? translation[28].Sinhala
+                        : null}
+                    </Text>
                   </View>
                 </View>
               </View>
               {imageUri ? (
                 <View style={styles.rect4}>
-                  <Text style={styles.healYourCrop}>Image Preview</Text>
+                  <Text style={styles.healYourCrop}>
+                    {selectedLang == 0
+                      ? translation[29].English
+                      : selectedLang == 1
+                      ? translation[29].Sinhala
+                      : null}
+                  </Text>
                   <Image source={{ uri: imageUri }} style={styles.image4} />
 
                   <TouchableOpacity
                     style={styles.buttonUpload}
                     onPress={CallPredictionAPI}
                   >
-                    <Text style={{ color: "white" }}>Predict Disease</Text>
+                    <Text style={{ color: "white" }}>
+                      {selectedLang == 0
+                        ? translation[30].English
+                        : selectedLang == 1
+                        ? translation[30].Sinhala
+                        : null}
+                    </Text>
                     <Loader isLoading={isLoading} />
                   </TouchableOpacity>
                 </View>

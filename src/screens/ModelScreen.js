@@ -9,9 +9,19 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import CameraSet from "../../assets/constants/Camera";
-import { useRoute } from "@react-navigation/native";
+import { translation } from "../lang_model/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ModelScreen = ({ navigation }) => {
+  const [selectedLang, setSelectedLang] = useState(0);
+
+  useEffect(() => {
+    getLang();
+  }, []);
+  const getLang = async () => {
+    setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -36,24 +46,66 @@ const ModelScreen = ({ navigation }) => {
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
         <View style={{ alignItems: "center", marginTop: 100 }}>
-          <Text style={styles.title}>Identification</Text>
+          <Text style={styles.title}>
+            {selectedLang == 0
+              ? translation[31].English
+              : selectedLang == 1
+              ? translation[31].Sinhala
+              : null}
+          </Text>
         </View>
         <View style={styles.rect2StackStack}>
           <View style={styles.rect2Stack}>
             <View style={styles.rect}>
-              <Text style={styles.loremIpsum}>Its very Simple!</Text>
+              <Text style={styles.loremIpsum}>
+                {selectedLang == 0
+                  ? translation[24].English
+                  : selectedLang == 1
+                  ? translation[24].Sinhala
+                  : null}
+              </Text>
               <View style={styles.rect7}>
                 <View style={styles.pointColumnRow}>
                   <View style={styles.pointColumn}>
-                    <Text style={styles.point}>✓ Open camera</Text>
-                    <Text style={styles.point}>✓ Capture affcted leaf</Text>
-                    <Text style={styles.point}>✓ Upload it</Text>
-                    <Text style={styles.point}>✓ You get it</Text>
+                    <Text style={styles.point}>
+                      {selectedLang == 0
+                        ? translation[25].English
+                        : selectedLang == 1
+                        ? translation[25].Sinhala
+                        : null}
+                    </Text>
+                    <Text style={styles.point}>
+                      {selectedLang == 0
+                        ? translation[26].English
+                        : selectedLang == 1
+                        ? translation[26].Sinhala
+                        : null}
+                    </Text>
+                    <Text style={styles.point}>
+                      {selectedLang == 0
+                        ? translation[27].English
+                        : selectedLang == 1
+                        ? translation[27].Sinhala
+                        : null}
+                    </Text>
+                    <Text style={styles.point}>
+                      {selectedLang == 0
+                        ? translation[28].English
+                        : selectedLang == 1
+                        ? translation[28].Sinhala
+                        : null}
+                    </Text>
                   </View>
                 </View>
               </View>
               <View style={styles.rect4}>
-                <Text style={styles.healYourCrop}>Identify Disease Here!</Text>
+                <Text style={styles.healYourCrop}>
+                  {selectedLang == 0
+                    ? translation[32].English
+                    : selectedLang == 1
+                    ? translation[32].Sinhala
+                    : null}
+                </Text>
                 <View style={styles.image3Row}>
                   <Image
                     source={require("../../assets/images/qr.png")}

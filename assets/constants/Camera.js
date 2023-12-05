@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,13 +13,21 @@ import axios from "axios";
 import Loader from "./Loader";
 import Modal from "react-native-modal";
 import { manipulateAsync, resize } from "expo-image-manipulator";
-
+import { translation } from "../../src/lang_model/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CameraSet = ({ navigation }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
-  
+  const [selectedLang, setSelectedLang] = useState(0);
+
+  useEffect(() => {
+    getLang();
+  }, []);
+  const getLang = async () => {
+    setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
+  };
 
   // Handle checking permissions for both camera and gallery
   const handlePermissions = async () => {
@@ -42,26 +50,24 @@ const CameraSet = ({ navigation }) => {
     await handlePermissions();
     try {
       const result = await ImagePicker.launchCameraAsync({
-              allowsEditing: true,
-              aspect: [4, 3],
-              quality: 1,
-            });
-            if (!result.canceled && result.assets && result.assets.length > 0) {
-              const manipResult = await manipulateAsync(result.assets[0].uri, [
-                { resize: { width: 1024, height: 768 } },
-              ]);
-        
-    
-            setImage(manipResult.uri);
-            navigation.navigate("PredScreen", {
-              imgUri: manipResult.uri,
-            });
-          }}
-           catch (error) {
-            console.log("error ", error);
-          }
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+      if (!result.canceled && result.assets && result.assets.length > 0) {
+        const manipResult = await manipulateAsync(result.assets[0].uri, [
+          { resize: { width: 1024, height: 768 } },
+        ]);
+
+        setImage(manipResult.uri);
+        navigation.navigate("PredScreen", {
+          imgUri: manipResult.uri,
+        });
+      }
+    } catch (error) {
+      console.log("error ", error);
+    }
   };
- 
 
   const getGalleryImage = async () => {
     try {
@@ -128,7 +134,13 @@ const CameraSet = ({ navigation }) => {
           onShowModal();
         }}
       >
-        <Text style={styles.takeAPicture}>Take a Picture</Text>
+        <Text style={styles.takeAPicture}>
+          {selectedLang == 0
+            ? translation[33].English
+            : selectedLang == 1
+            ? translation[33].Sinhala
+            : null}
+        </Text>
       </TouchableOpacity>
 
       <Image
@@ -146,7 +158,13 @@ const CameraSet = ({ navigation }) => {
           }}
         >
           <View style={styles.modalView}>
-            <Text style={styles.modalHeader}>Choose</Text>
+            <Text style={styles.modalHeader}>
+              {selectedLang == 0
+                ? translation[34].English
+                : selectedLang == 1
+                ? translation[34].Sinhala
+                : null}
+            </Text>
             <View style={styles.modalBody}>
               <TouchableOpacity onPress={pickFromCamera}>
                 <Image
@@ -164,13 +182,31 @@ const CameraSet = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <View style={styles.cameraRow}>
-              <Text style={styles.camera}>Camera</Text>
-              <Text style={styles.gallery}>Gallery</Text>
+              <Text style={styles.camera}>
+                {selectedLang == 0
+                  ? translation[35].English
+                  : selectedLang == 1
+                  ? translation[35].Sinhala
+                  : null}
+              </Text>
+              <Text style={styles.gallery}>
+                {selectedLang == 0
+                  ? translation[36].English
+                  : selectedLang == 1
+                  ? translation[36].Sinhala
+                  : null}
+              </Text>
             </View>
             <TouchableOpacity
               onPress={() => this.setState({ isVisible: false })}
             >
-              <Text style={styles.modalCancel}>Cancel</Text>
+              <Text style={styles.modalCancel}>
+                {selectedLang == 0
+                  ? translation[37].English
+                  : selectedLang == 1
+                  ? translation[37].Sinhala
+                  : null}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -209,7 +245,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   modalView: {
-    width: 239,
+    width: 259,
     height: 157,
     backgroundColor: "white",
     borderRadius: 17,
@@ -242,21 +278,21 @@ const styles = StyleSheet.create({
     bottom: 10,
   },
   cameraRow: {
-    height: 17,
+    height: 19,
     flexDirection: "row",
-    marginTop: 7,
+    marginTop: 9,
     marginLeft: 45,
     marginRight: 48,
   },
   camera: {
     color: "#121212",
     top: 5,
-    left: 2,
+    left: 3,
   },
   gallery: {
     color: "#121212",
     marginLeft: 59,
-    top: 5,
+    top: 1,
   },
   modalCancel: {
     color: "red",

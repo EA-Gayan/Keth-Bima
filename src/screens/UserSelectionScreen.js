@@ -12,11 +12,21 @@ import { DB, FIREBASE_AUTH } from "../../firebaseInit";
 import { collection, getDocs } from "firebase/firestore";
 import { Ionicons } from "@expo/vector-icons";
 import { generateChatRoomId } from "../components/utils";
+import { translation } from "../lang_model/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const UserSelectionScreen = ({ navigation }) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedLang, setSelectedLang] = useState(0);
+
+  useEffect(() => {
+    getLang();
+  }, []);
+  const getLang = async () => {
+    setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
+  };
 
   const fetchUsers = async () => {
     try {
@@ -62,7 +72,14 @@ const UserSelectionScreen = ({ navigation }) => {
             <Ionicons name="chevron-back" size={32} color="black" />
           </TouchableOpacity>
           <View style={{ alignItems: "center", marginTop: 150 }}>
-            <Text style={styles.title}>Chats</Text>
+            <Text style={styles.title}>
+              {" "}
+              {selectedLang == 0
+                ? translation[84].English
+                : selectedLang == 1
+                ? translation[84].Sinhala
+                : null}
+            </Text>
           </View>
           {users.map((user) => (
             <TouchableOpacity

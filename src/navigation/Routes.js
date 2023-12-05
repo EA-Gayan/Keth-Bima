@@ -53,7 +53,7 @@ const HomeTabScreen = () => (
         headerShown: false,
       }}
     />
-    <Tab.Screen
+    {/* <Tab.Screen
       name="Diseases"
       component={DiseaseListScreen}
       options={{
@@ -66,7 +66,7 @@ const HomeTabScreen = () => (
         ),
         headerShown: false,
       }}
-    />
+    /> */}
     <Tab.Screen
       name="Profile"
       component={SettingScreen}

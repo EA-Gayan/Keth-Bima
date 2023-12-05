@@ -11,11 +11,21 @@ import { collection, getDocs } from "firebase/firestore";
 import { Ionicons } from "@expo/vector-icons";
 import { DB } from "../../firebaseInit";
 import { StackedBarChart } from "react-native-chart-kit";
+import { translation } from "../lang_model/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BarChartScreen = ({ navigation }) => {
   const [harvestData, setHarvestData] = useState({ labels: [] });
   const [startYear, setStartYear] = useState("");
   const [endYear, setEndYear] = useState("");
+  const [selectedLang, setSelectedLang] = useState(0);
+
+  useEffect(() => {
+    getLang();
+  }, []);
+  const getLang = async () => {
+    setSelectedLang(parseInt(await AsyncStorage.getItem("LANG")));
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,20 +76,38 @@ const BarChartScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         <View style={{ alignItems: "center", marginTop: 150 }}>
-          <Text style={styles.title}>Previous Records</Text>
+          <Text style={styles.title}>
+            {selectedLang == 0
+              ? translation[38].English
+              : selectedLang == 1
+              ? translation[38].Sinhala
+              : null}
+          </Text>
         </View>
 
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Start Year"
+            placeholder={
+              selectedLang == 0
+                ? translation[41].English
+                : selectedLang == 1
+                ? translation[41].Sinhala
+                : null
+            }
             keyboardType="numeric"
             value={startYear}
             onChangeText={(text) => setStartYear(text)}
           />
           <TextInput
             style={styles.input}
-            placeholder="End Year"
+            placeholder={
+              selectedLang == 0
+                ? translation[42].English
+                : selectedLang == 1
+                ? translation[42].Sinhala
+                : null
+            }
             keyboardType="numeric"
             value={endYear}
             onChangeText={(text) => setEndYear(text)}
@@ -100,14 +128,26 @@ const BarChartScreen = ({ navigation }) => {
               }}
             />
           ) : (
-            <Text>No data available</Text>
+            <Text>
+              {selectedLang == 0
+                ? translation[39].English
+                : selectedLang == 1
+                ? translation[39].Sinhala
+                : null}
+            </Text>
           )}
         </View>
         <TouchableOpacity
           style={styles.saveButton}
           onPress={() => navigation.navigate("Harvest")}
         >
-          <Text style={styles.saveButtonText}>Add Records</Text>
+          <Text style={styles.saveButtonText}>
+            {selectedLang == 0
+              ? translation[40].English
+              : selectedLang == 1
+              ? translation[40].Sinhala
+              : null}
+          </Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
