@@ -7,7 +7,6 @@ import SettingScreen from "../screens/SettingScreen";
 import { Ionicons } from "react-native-vector-icons";
 import ModelScreen from "../screens/ModelScreen";
 import HarvestScreen from "../screens/HarvestScreen";
-import CommunityScreen from "../screens/CommunityScreen";
 import BarChartScreen from "../screens/BarChartScreen";
 import WeatherScreen from "../screens/WeatherScreen";
 import DiseaseListScreen from "../screens/DiseaseListScreen";
@@ -18,9 +17,13 @@ import LeafBlast from "../screens/DiseaseScreens/LeafBlast";
 import Healthy from "../screens/DiseaseScreens/Healthy";
 import LeafScald from "../screens/DiseaseScreens/LeafScald";
 import BrownSpot from "../screens/DiseaseScreens/BrownSpot";
-import ChatScreen from "../screens/ChatScreen";
+import UserSelectionScreen from "../screens/UserSelectionScreen";
 import AddChatScreen from "../screens/AddChatScreen";
+<<<<<<< HEAD
 import PredScreen from "../screens/PredScreen";
+=======
+import ChatRoomScreen from "../screens/ChatRoomScreen";
+>>>>>>> 67237fb6fecfa6a461ccb53c722a645a0a03b482
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -117,8 +120,8 @@ const Routes = ({ user }) => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Community"
-        component={CommunityScreen}
+        name="ChatRoom"
+        component={ChatRoomScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -162,8 +165,8 @@ const Routes = ({ user }) => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Chat"
-        component={ChatScreen}
+        name="UserSelection"
+        component={UserSelectionScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen

@@ -133,7 +133,7 @@ const LoginScreen = ({ navigation }) => {
           <Ionicons name="arrow-back-outline" size={32} color="black" />
         </TouchableOpacity>
 
-        <View style={{ alignItems: "center", marginTop: 90 }}>
+        <View style={{ alignItems: "center", marginTop: 150 }}>
           <Image
             source={require("../../assets/images/keth-bima-logo.png")}
             style={{

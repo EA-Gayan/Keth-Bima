@@ -7,7 +7,7 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import { FIREBASE_AUTH } from "../../firebaseInit";
+import { FIREBASE_AUTH, DB } from "../../firebaseInit";
 import { Ionicons } from "@expo/vector-icons";
 import LanguageModal from "../lang_model/LanguageModal";
 import { translation } from "../lang_model/utils";
@@ -16,7 +16,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const ProfileScreen = ({ navigation }) => {
   const auth = FIREBASE_AUTH;
   const user = auth.currentUser;
-
   const [langModalVisible, setLangModalVisible] = useState(false);
   const [selectedLang, setSelectedLang] = useState(0);
   const saveSelectedLang = async (index) => {
@@ -34,7 +33,7 @@ const ProfileScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        style={{resizeMode: 'cover', width: "100%", height: "100%" }}
+        style={{ resizeMode: "cover", width: "100%", height: "100%" }}
         source={require("../../assets/images/bg3.jpg")}
       >
         <TouchableOpacity
@@ -76,21 +75,25 @@ const ProfileScreen = ({ navigation }) => {
             </View>
           </ImageBackground>
           <View style={styles.rect}>
-            <TouchableOpacity style={styles.rect2} onPress={() => {
-              setLangModalVisible(!langModalVisible);
-            }}>
+            <TouchableOpacity
+              style={styles.rect2}
+              onPress={() => {
+                setLangModalVisible(!langModalVisible);
+              }}
+            >
               <View style={styles.image3Row}>
                 <Ionicons
                   name="create-outline"
                   size={32}
                   style={{ marginLeft: 10, marginTop: 15 }}
                 />
-                <Text style={styles.editUserAccount}>              
-                {selectedLang == 0
-                ? translation[2].English
-                : selectedLang == 1
-                ? translation[2].Sinhala
-                : null}</Text>
+                <Text style={styles.editUserAccount}>
+                  {selectedLang == 0
+                    ? translation[2].English
+                    : selectedLang == 1
+                    ? translation[2].Sinhala
+                    : null}
+                </Text>
                 <Ionicons
                   name="chevron-forward"
                   size={32}
@@ -100,13 +103,13 @@ const ProfileScreen = ({ navigation }) => {
               </View>
             </TouchableOpacity>
             <LanguageModal
-            langModalVisible={langModalVisible}
-            setLangModalVisible={setLangModalVisible}
-            onSelectLang={(x) => {
-              setSelectedLang(x);
-              saveSelectedLang(x);
-            }}
-          />
+              langModalVisible={langModalVisible}
+              setLangModalVisible={setLangModalVisible}
+              onSelectLang={(x) => {
+                setSelectedLang(x);
+                saveSelectedLang(x);
+              }}
+            />
             <TouchableOpacity style={styles.rect3}>
               <View style={styles.image3Row}>
                 <Ionicons
@@ -114,12 +117,13 @@ const ProfileScreen = ({ navigation }) => {
                   size={32}
                   style={{ marginLeft: 10, marginTop: 15 }}
                 />
-                <Text style={styles.helpAndSupport}>                
-                {selectedLang == 0
-                ? translation[22].English
-                : selectedLang == 1
-                ? translation[22].Sinhala
-                : null}</Text>
+                <Text style={styles.helpAndSupport}>
+                  {selectedLang == 0
+                    ? translation[22].English
+                    : selectedLang == 1
+                    ? translation[22].Sinhala
+                    : null}
+                </Text>
                 <Ionicons
                   name="chevron-forward"
                   size={32}
@@ -135,12 +139,13 @@ const ProfileScreen = ({ navigation }) => {
                   size={32}
                   style={{ marginLeft: 10, marginTop: 15 }}
                 />
-                <Text style={styles.logout}>                
-                {selectedLang == 0
-                ? translation[23].English
-                : selectedLang == 1
-                ? translation[23].Sinhala
-                : null}</Text>
+                <Text style={styles.logout}>
+                  {selectedLang == 0
+                    ? translation[23].English
+                    : selectedLang == 1
+                    ? translation[23].Sinhala
+                    : null}
+                </Text>
                 <Ionicons
                   name="chevron-forward"
                   size={32}
@@ -166,7 +171,7 @@ const styles = StyleSheet.create({
   },
   profile: {
     color: "black",
-    marginTop: 130,
+    marginTop: 180,
     marginLeft: 183,
     fontSize: 24,
     fontWeight: "bold",
@@ -184,7 +189,7 @@ const styles = StyleSheet.create({
   image2: {
     width: 50,
     height: 50,
-    marginTop: 10,
+    marginTop: 20,
   },
   name: {
     color: "black",
@@ -193,7 +198,7 @@ const styles = StyleSheet.create({
   },
   email: {
     color: "black",
-    marginTop: 2,
+    marginTop: 12,
     fontWeight: "bold",
   },
   bittScottMangetColumn: {
@@ -204,12 +209,12 @@ const styles = StyleSheet.create({
   image2Row: {
     height: 50,
     flexDirection: "row",
-    marginTop: 14,
+    marginTop: 34,
     marginLeft: 15,
     marginRight: 30,
   },
   rect: {
-    top: 307,
+    marginTop: 380,
     left: 23,
     width: 360,
     height: 438,
