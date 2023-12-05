@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { DB } from "../../firebaseInit";
 
 const ChatRoomScreen = ({ route }) => {
   const { selectedUser } = route.params;
@@ -18,17 +19,32 @@ const ChatRoomScreen = ({ route }) => {
   const [inputMessage, setInputMessage] = useState("");
   const [image, setImage] = useState(null);
 
-  const handleSendMessage = () => {
-    if (inputMessage.trim() !== "" || imagemage) {
-      setMessages([
-        ...messages,
-        { text: inputMessage, image: image, sender: "user" },
-      ]);
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(DB, "chatRooms", chatRoomId, "messages"),
+      (querySnapshot) => {
+        const messagesData = [];
+        querySnapshot.forEach((doc) => {
+          messagesData.push({ id: doc.id, ...doc.data() });
+        });
+        setMessages(messagesData);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [chatRoomId]);
+
+  const handleSendMessage = async () => {
+    if (inputMessage.trim() !== "" || image) {
+      await addDoc(collection(DB, "chatRooms", chatRoomId, "messages"), {
+        text: inputMessage,
+        image: image,
+        sender: "user",
+      });
       setInputMessage("");
       setImage(null);
     }
   };
-
   const handleImagePick = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
