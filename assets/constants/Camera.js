@@ -1,4 +1,4 @@
-import React, { useState,useEffect,useRef } from "react";
+import React, { useState} from "react";
 import {
   StyleSheet,
   Text,
@@ -13,29 +13,15 @@ import axios from "axios";
 import Loader from "./Loader";
 import Modal from "react-native-modal";
 import { manipulateAsync, resize } from "expo-image-manipulator";
-import { Camera } from "expo-camera";
+
 
 const CameraSet = ({ navigation }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [image, setImage] = useState(null);
-  const type = Camera.Constants.back;
-  const cameraRef = useRef(null);
+  
 
   // Handle checking permissions for both camera and gallery
-  useEffect(() => {
-    (async () => {
-      MediaLibrary.requestPermissionsAsync();
-      const cameraStatus = await Camera.requestCameraPermissionsAsync();
-      setHasCameraPermission(cameraStatus.status === "granted");
-    })();
-  }, []);
-
-  if (hasCameraPermission === false) {
-    return <Text>No Camera Access</Text>;
-  }
-
   const handlePermissions = async () => {
     const { status } = await MediaLibrary.getPermissionsAsync();
     if (status !== "granted") {
