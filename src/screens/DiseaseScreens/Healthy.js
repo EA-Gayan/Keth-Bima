@@ -34,7 +34,7 @@ const Healthy = ({ navigation }) => {
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
         <View style={styles.imageStack}>
-        <Image
+          <Image
             source={require("../../../assets/images/green-field.jpg")}
             resizeMode="contain"
             style={styles.image}
@@ -51,11 +51,11 @@ const Healthy = ({ navigation }) => {
                   <Text style={styles.heading}>All Good</Text>
                 </Text>
                 <Text style={styles.heading}>
-                <Text style={styles.heading}>No Disease Detected</Text>
+                  <Text style={styles.heading}>No Disease Detected</Text>
                 </Text>
                 <Text style={styles.heading}>
                   <Text style={styles.heading}>Confidence Level:  <Text style={{color:"green"}}>{route.params.confidence}</Text></Text>
-                  </Text>
+                </Text>
               </View>
             </View>
           </View>

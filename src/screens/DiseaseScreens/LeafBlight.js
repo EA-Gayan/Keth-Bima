@@ -8,8 +8,10 @@ import {
   ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useRoute } from "@react-navigation/native";
 
 const LeafBlight = ({ navigation }) => {
+  const route = useRoute();
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={styles.container}>
@@ -31,7 +33,7 @@ const LeafBlight = ({ navigation }) => {
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
         <View style={styles.imageStack}>
-        <Image
+          <Image
             source={require("../../../assets/images/green-field.jpg")}
             resizeMode="contain"
             style={styles.image}
@@ -44,8 +46,11 @@ const LeafBlight = ({ navigation }) => {
                 </View>
               </View>
               <View>
-                <Text style={styles.diseaseTitle}>Disease Name: <Text style={{color:"red"}}>{route.params.class}</Text></Text>
-                </View>
+                <Text style={styles.diseaseTitle}>
+                  Disease Name:{" "}
+                  <Text style={{ color: "red" }}>{route.params.class}</Text>
+                </Text>
+              </View>
               <View style={styles.rect2}>
                 <Text style={styles.amarylissTitle2}>
                   <Text style={styles.heading}>Within the crop season</Text>
@@ -117,7 +122,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginLeft: 15,
-
   },
   amarylissTitle: {
     color: "#121212",

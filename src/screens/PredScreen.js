@@ -1,4 +1,4 @@
-import React, { Component ,useState,useEffect,useRef} from "react";
+import React, { Component, useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,17 +6,14 @@ import {
   Image,
   TouchableOpacity,
   ImageBackground,
-  Button
+  Button,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
 import Loader from "../../assets/constants/Loader";
 import axios from "axios";
 
-
-
 const PredScreen = ({ navigation }) => {
-
   const route = useRoute();
   const [imageUri, setImageUri] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,26 +27,23 @@ const PredScreen = ({ navigation }) => {
     }
   }, [route.params, imageUri]);
 
-const CallPredictionAPI = async () => {
+  const CallPredictionAPI = async () => {
     //console.log("CallPredictionAPI");
     setIsLoading(true);
     try {
-      
       // Convert the image file to a FormData object
       const formData = new FormData();
-      formData.append("file",
-      { 
+      formData.append("file", {
         name: "image.jpg",
         type: "image/jpg",
-        uri: route.params.imgUri
-      }
-      );
-    
+        uri: route.params.imgUri,
+      });
+
       // Make the API call
       const response = await axios
         .post(
           "https://us-central1-kethbima-406316.cloudfunctions.net/predict34",
-            formData,
+          formData,
           {
             headers: {
               "Content-Type": "multipart/form-data",
@@ -62,7 +56,7 @@ const CallPredictionAPI = async () => {
           setIsLoading(false);
         })
         .finally(() => {
-            setIsLoading(false);
+          setIsLoading(false);
         });
 
       // Process the response data her
@@ -76,22 +70,22 @@ const CallPredictionAPI = async () => {
           confidence:response.data.confidence,
           class:response.data.class
         });}
-      else if(response.data.class === "Hispa"){
+      else if(response.data.class === "Rice Hispa"){
         navigation.navigate("Hispa",{
           confidence:response.data.confidence,
           class:response.data.class
         });}
-      else if(response.data.class === "LeafBlast"){
+      else if(response.data.class === "Leaf Blast"){
         navigation.navigate("LeafBlast", {
           confidence:response.data.confidence,
           class:response.data.class
         });}
-        else if(response.data.class === "LeafBlight"){
+        else if(response.data.class === "Bacterial Leaf Blight"){
           navigation.navigate("LeafBlight",{
             confidence:response.data.confidence,
             class:response.data.class
           } );}
-          else if(response.data.class === "LeafScald"){
+          else if(response.data.class === "Leaf scald"){
             navigation.navigate("LeafScald",{
               confidence:response.data.confidence,
               class:response.data.class
@@ -103,40 +97,6 @@ const CallPredictionAPI = async () => {
       //console.error(error);
     }
   };
-// if(result!=null){
-
-//   if (result.class === "Healthy") {
-//       navigation.navigate("Healthy",{
-//         confidence:result.confidence,
-//         class:result.class
-//       }); 
-//     }else if(result.class=== "Brown Spot"){
-//       navigation.navigate("BrownSpot", {
-//         confidence:result.confidence,
-//         class:result.class
-//       });}
-//     else if(result.class === "Hispa"){
-//       navigation.navigate("Hispa",{
-//         confidence:result.confidence,
-//         class:result.class
-//       });}
-//     else if(result.class === "LeafBlast"){
-//       navigation.navigate("LeafBlast", {
-//         confidence:result.confidence,
-//         class:result.class
-//       });}
-//       else if(result.class === "LeafBlight"){
-//         navigation.navigate("LeafBlight",{
-//           confidence:result.confidence,
-//           class:result.class
-//         } );}
-//         else if(result.class === "LeafScald"){
-//           navigation.navigate("LeafScald",{
-//             confidence:result.confidence,
-//             class:result.class
-//           } );}
-  
-// }
 
   return (
     <View style={styles.container}>
@@ -162,34 +122,38 @@ const CallPredictionAPI = async () => {
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
 
-          <View style={styles.rect2StackStack}>
-            <View style={styles.rect2Stack}>
-              <View style={styles.rect}>
-                <Text style={styles.loremIpsum}>Its very Simple!</Text>
-                <View style={styles.rect7}>
-                  <View style={styles.pointColumnRow}>
-                    <View style={styles.pointColumn}>
-                      <Text style={styles.point}>✓ Open camera</Text>
-                      <Text style={styles.point}>✓ Capture affcted leaf</Text>
-                      <Text style={styles.point}>✓ Upload it</Text>
-                      <Text style={styles.point}>✓ You get it</Text>
-                    </View>
+        <View style={styles.rect2StackStack}>
+          <View style={styles.rect2Stack}>
+            <View style={styles.rect}>
+              <Text style={styles.loremIpsum}>Its very Simple!</Text>
+              <View style={styles.rect7}>
+                <View style={styles.pointColumnRow}>
+                  <View style={styles.pointColumn}>
+                    <Text style={styles.point}>✓ Open camera</Text>
+                    <Text style={styles.point}>✓ Capture affcted leaf</Text>
+                    <Text style={styles.point}>✓ Upload it</Text>
+                    <Text style={styles.point}>✓ You get it</Text>
                   </View>
                 </View>
-                  {imageUri ? (<View style={styles.rect4}>
-                    <Text style={styles.healYourCrop}>Image Preview</Text>
-                <Image source={{ uri: imageUri }} style={styles.image4} />
-                
-                <TouchableOpacity style={styles.buttonUpload} onPress={CallPredictionAPI}>
-                    <Text style={{color:"white"}}>Predict Disease</Text>
+              </View>
+              {imageUri ? (
+                <View style={styles.rect4}>
+                  <Text style={styles.healYourCrop}>Image Preview</Text>
+                  <Image source={{ uri: imageUri }} style={styles.image4} />
+
+                  <TouchableOpacity
+                    style={styles.buttonUpload}
+                    onPress={CallPredictionAPI}
+                  >
+                    <Text style={{ color: "white" }}>Predict Disease</Text>
                     <Loader isLoading={isLoading} />
-              </TouchableOpacity>
+                  </TouchableOpacity>
                 </View>
-                
-                
-                ) :
-                (<View style={styles.rect4}>
-                  <Text style={styles.healYourCrop}>No Image Preview Availble</Text>
+              ) : (
+                <View style={styles.rect4}>
+                  <Text style={styles.healYourCrop}>
+                    No Image Preview Availble
+                  </Text>
                   <View style={styles.image3Row}>
                     <Image
                       source={require("../../assets/images/qr.png")}
@@ -207,16 +171,16 @@ const CallPredictionAPI = async () => {
                       style={styles.image4}
                     ></Image>
                   </View>
-                  </View>)
-                  }
-              </View>
-              <Image
-                source={require('../../assets/animation/Animation.gif')}
-                resizeMode="contain"
-                style={styles.image2}
-              ></Image>
+                </View>
+              )}
             </View>
+            <Image
+              source={require("../../assets/animation/Animation.gif")}
+              resizeMode="contain"
+              style={styles.image2}
+            ></Image>
           </View>
+        </View>
       </ImageBackground>
     </View>
   );
@@ -271,8 +235,8 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowOpacity: 0.16,
     shadowRadius: 10,
-    alignItems:"center",
-    justifyContent:"center"
+    alignItems: "center",
+    justifyContent: "center",
   },
   healYourCrop: {
     color: "#195F57",
@@ -280,9 +244,9 @@ const styles = StyleSheet.create({
     marginTop: 14,
     marginBottom: 18,
   },
-  point:{
-    fontSize:15,
-    lineHeight:30
+  point: {
+    fontSize: 15,
+    lineHeight: 30,
   },
   image3: {
     width: 38,
@@ -308,7 +272,7 @@ const styles = StyleSheet.create({
     marginLeft: 31,
     marginRight: 20,
   },
-  buttonUpload:{
+  buttonUpload: {
     width: 150,
     height: 40,
     backgroundColor: "#195F57",
@@ -316,7 +280,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
 
   rect7: {
     width: 238,
@@ -335,7 +298,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
 
-pointColumn: {
+  pointColumn: {
     width: "100%",
     marginTop: 4,
   },
@@ -353,7 +316,7 @@ pointColumn: {
   },
 
   image2: {
-    marginTop:600,
+    marginTop: 600,
     left: 240,
     width: 131,
     height: 155,
@@ -377,8 +340,8 @@ pointColumn: {
   rect2StackStack: {
     width: 659,
     height: 692,
-    marginTop:50,
-    right:20
+    marginTop: 50,
+    right: 20,
   },
 });
 export default PredScreen;

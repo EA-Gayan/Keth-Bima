@@ -101,7 +101,7 @@ const Routes = ({ user }) => {
         component={ModelScreen}
         options={{ headerShown: false }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="PredScreen"
         component={PredScreen}
         options={{ headerShown: false }}

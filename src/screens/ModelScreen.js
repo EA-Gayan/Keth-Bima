@@ -1,4 +1,4 @@
-import React, { Component ,useState,useEffect} from "react";
+import React, { Component, useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -11,9 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import CameraSet from "../../assets/constants/Camera";
 import { useRoute } from "@react-navigation/native";
 
-
 const ModelScreen = ({ navigation }) => {
-
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -37,51 +35,52 @@ const ModelScreen = ({ navigation }) => {
         >
           <Ionicons name="chevron-back" size={32} color="black" />
         </TouchableOpacity>
-
-          <View style={styles.rect2StackStack}>
-            <View style={styles.rect2Stack}>
-              <View style={styles.rect}>
-                <Text style={styles.loremIpsum}>Its very Simple!</Text>
-                <View style={styles.rect7}>
-                  <View style={styles.pointColumnRow}>
-                    <View style={styles.pointColumn}>
-                      <Text style={styles.point}>✓ Open camera</Text>
-                      <Text style={styles.point}>✓ Capture affcted leaf</Text>
-                      <Text style={styles.point}>✓ Upload it</Text>
-                      <Text style={styles.point}>✓ You get it</Text>
-                    </View>
+        <View style={{ alignItems: "center", marginTop: 100 }}>
+          <Text style={styles.title}>Identification</Text>
+        </View>
+        <View style={styles.rect2StackStack}>
+          <View style={styles.rect2Stack}>
+            <View style={styles.rect}>
+              <Text style={styles.loremIpsum}>Its very Simple!</Text>
+              <View style={styles.rect7}>
+                <View style={styles.pointColumnRow}>
+                  <View style={styles.pointColumn}>
+                    <Text style={styles.point}>✓ Open camera</Text>
+                    <Text style={styles.point}>✓ Capture affcted leaf</Text>
+                    <Text style={styles.point}>✓ Upload it</Text>
+                    <Text style={styles.point}>✓ You get it</Text>
                   </View>
                 </View>
-                <View style={styles.rect4}>
-                  <Text style={styles.healYourCrop}>Identify Disease Here!</Text>
-                  <View style={styles.image3Row}>
-                    <Image
-                      source={require("../../assets/images/qr.png")}
-                      resizeMode="contain"
-                      style={styles.image3}
-                    ></Image>
-                    <Image
-                      source={require("../../assets/images/next.png")}
-                      resizeMode="contain"
-                      style={styles.image6}
-                    ></Image>
-                    <Image
-                      source={require("../../assets/images/paper.png")}
-                      resizeMode="contain"
-                      style={styles.image4}
-                    ></Image>
-                  </View>
-                  <CameraSet navigation={navigation}/>
-                  </View>
-                  
               </View>
-              <Image
-                source={require('../../assets/animation/Animation.gif')}
-                resizeMode="contain"
-                style={styles.image2}
-              ></Image>
+              <View style={styles.rect4}>
+                <Text style={styles.healYourCrop}>Identify Disease Here!</Text>
+                <View style={styles.image3Row}>
+                  <Image
+                    source={require("../../assets/images/qr.png")}
+                    resizeMode="contain"
+                    style={styles.image3}
+                  ></Image>
+                  <Image
+                    source={require("../../assets/images/next.png")}
+                    resizeMode="contain"
+                    style={styles.image6}
+                  ></Image>
+                  <Image
+                    source={require("../../assets/images/paper.png")}
+                    resizeMode="contain"
+                    style={styles.image4}
+                  ></Image>
+                </View>
+                <CameraSet navigation={navigation} />
+              </View>
             </View>
+            <Image
+              source={require("../../assets/animation/Animation.gif")}
+              resizeMode="contain"
+              style={styles.image2}
+            ></Image>
           </View>
+        </View>
       </ImageBackground>
     </View>
   );
@@ -90,6 +89,11 @@ const ModelScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  title: {
+    fontSize: 25,
+    color: "black",
+    fontWeight: "bold",
   },
   rect2: {
     top: -40,
@@ -136,17 +140,17 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowOpacity: 0.16,
     shadowRadius: 10,
-    alignItems:"center",
-    justifyContent:"center"
+    alignItems: "center",
+    justifyContent: "center",
   },
   healYourCrop: {
     color: "#195F57",
     fontSize: 18,
     marginTop: 14,
   },
-  point:{
-    fontSize:15,
-    lineHeight:30
+  point: {
+    fontSize: 15,
+    lineHeight: 30,
   },
   image3: {
     width: 38,
@@ -190,7 +194,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
 
-pointColumn: {
+  pointColumn: {
     width: "100%",
     marginTop: 4,
   },
@@ -208,7 +212,7 @@ pointColumn: {
   },
 
   image2: {
-    marginTop:600,
+    marginTop: 600,
     left: 240,
     width: 131,
     height: 155,
@@ -232,8 +236,8 @@ pointColumn: {
   rect2StackStack: {
     width: 659,
     height: 692,
-    marginTop:50,
-    right:20
+    right: 20,
+    marginTop: -40,
   },
 });
 export default ModelScreen;
