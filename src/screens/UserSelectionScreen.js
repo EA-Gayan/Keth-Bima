@@ -6,13 +6,17 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
-import { DB } from "../../firebaseInit";
+import { DB, FIREBASE_AUTH } from "../../firebaseInit";
 import { collection, getDocs } from "firebase/firestore";
 import { Ionicons } from "@expo/vector-icons";
+import { generateChatRoomId } from "../components/utils";
 
 const UserSelectionScreen = ({ navigation }) => {
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchUsers = async () => {
     try {
@@ -24,6 +28,9 @@ const UserSelectionScreen = ({ navigation }) => {
       setUsers(users);
     } catch (error) {
       console.error("Error fetching users:", error);
+      setError("Error fetching users. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -31,45 +38,63 @@ const UserSelectionScreen = ({ navigation }) => {
     fetchUsers();
   }, []);
 
-  const handleUserSelection = (selectedUser) => {
-    navigation.navigate("ChatRoom", { selectedUser });
+  const handleUserSelection = async (selectedUser) => {
+    const chatRoomId = generateChatRoomId(
+      FIREBASE_AUTH.currentUser.uid,
+      selectedUser.id
+    );
+    navigation.navigate("ChatRoom", {
+      selectedUser,
+      chatRoomId,
+    });
   };
 
   return (
     <ScrollView style={styles.container}>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => navigation.goBack()}
-        style={styles.backButton}
-      >
-        <Ionicons name="chevron-back" size={32} color="black" />
-      </TouchableOpacity>
-      <View style={{ alignItems: "center", marginTop: 150 }}>
-        <Text style={styles.title}>Chats</Text>
-      </View>
-      {users.map((user) => (
-        <TouchableOpacity
-          key={user.id}
-          onPress={() => handleUserSelection(user)}
-          style={styles.userItem}
-        >
-          {user.profileImage ? (
-            <Image
-              source={{ uri: user.profileImage }}
-              style={styles.profilePic}
-            />
-          ) : (
-            <Image
-              source={require("../../assets/images/chat.png")}
-              style={styles.profilePic}
-            />
-          )}
-          <Text style={styles.username}>{user.displayName}</Text>
-        </TouchableOpacity>
-      ))}
+      {loading && <ActivityIndicator size="large" color="#000" />}
+      {!loading && !error && (
+        <>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.goBack()}
+            style={styles.backButton}
+          >
+            <Ionicons name="chevron-back" size={32} color="black" />
+          </TouchableOpacity>
+          <View style={{ alignItems: "center", marginTop: 150 }}>
+            <Text style={styles.title}>Chats</Text>
+          </View>
+          {users.map((user) => (
+            <TouchableOpacity
+              key={user.id}
+              onPress={() => handleUserSelection(user)}
+              style={styles.userItem}
+            >
+              {user.profileImage ? (
+                <Image
+                  source={{ uri: user.profileImage }}
+                  style={styles.profilePic}
+                />
+              ) : (
+                <Image
+                  source={require("../../assets/images/chat.png")}
+                  style={styles.profilePic}
+                />
+              )}
+              <Text style={styles.username}>{user.displayName}</Text>
+            </TouchableOpacity>
+          ))}
+        </>
+      )}
+      {error && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{error}</Text>
+        </View>
+      )}
     </ScrollView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -113,5 +138,15 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontWeight: "bold",
   },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorText: {
+    fontSize: 18,
+    color: "red",
+  },
 });
+
 export default UserSelectionScreen;
